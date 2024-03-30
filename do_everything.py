@@ -3,16 +3,10 @@ import random
 
 from display_tile import TileDisplayer
 from display_ent import MySprite
-
+from dataset import tile_sprites
 
 class DoEvrything():
     def __init__(self):
-        self.tile_sprites = (
-            pg.image.load("./img/tile-blue.png"), 
-            pg.image.load("./img/tile-green.png"), 
-            pg.image.load("./img/tile-red.png"), 
-            pg.image.load("./img/tile-yellow.png"),
-        )
         self.grid_size = 5
         self.group_tile = pg.sprite.RenderPlain()
         self.group_ent = pg.sprite.RenderPlain()
@@ -28,7 +22,7 @@ class DoEvrything():
                 tile_ids.append((i,j))     
 
         for i in tile_ids:
-            tile_image = random.choice(self.tile_sprites)
+            tile_image = random.choice(tile_sprites)
 
             pos_x = 32 + 64 * i[0]
             pos_y = 32 + 64 * i[1]
