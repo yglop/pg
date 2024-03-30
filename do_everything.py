@@ -3,7 +3,7 @@ import random
 
 from display_tile import TileDisplayer
 from display_ent import MySprite
-from dataset import tile_sprites
+from dataset import *
 
 class DoEvrything():
     def __init__(self):
@@ -42,9 +42,8 @@ class DoEvrything():
 
         ## visuals
         for tile_id, tile_data in self.tile_map.items():
-            if tile_data['entity'] == 2:
-                tile = [tile_id, tile_data]  
-                new_ent = MySprite(tile)
+            if tile_data['entity'] != 0:
+                new_ent = MySprite(player_sprite, tile_data['rect'], tile_data['rect.center'])
                 self.group_ent.add(new_ent)
 
     def create_tiles(self):
