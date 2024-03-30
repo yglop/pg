@@ -9,7 +9,7 @@ class DoEvrything():
     def __init__(self):
         self.grid_size = 5
         self.group_tile = pg.sprite.RenderPlain()
-        self.group_ent = pg.sprite.RenderPlain()
+        self.group_ent = dict()
         self.tile_map = dict() 
         self.create_tile_map()
         self.create_ent()
@@ -44,7 +44,7 @@ class DoEvrything():
         for tile_id, tile_data in self.tile_map.items():
             if tile_data['entity'] != 0:
                 new_ent = MySprite(player_sprite, tile_data['rect'], tile_data['rect.center'])
-                self.group_ent.add(new_ent)
+                self.group_ent[tile_data['entity']] = pg.sprite.RenderPlain(new_ent)
 
     def create_tiles(self):
         for tile_id, tile_data in self.tile_map.items():  
@@ -57,6 +57,10 @@ class DoEvrything():
         if self.tile_map[destination_tile]['entity'] != 1:
             self.tile_map[original_tile]['entity'] = 0
             self.tile_map[destination_tile]['entity'] = 2
+
+            update_ent_pos = MySprite(player_sprite, self.tile_map[destination_tile]['rect'], self.tile_map[destination_tile]['rect.center'])
+            self.group_ent[self.tile_map[destination_tile]['entity']] = pg.sprite.RenderPlain(update_ent_pos)
+
             print('move_player:', 'move from', original_tile, 'to', destination_tile)
         else:
             print(destination_tile ,'is enamy tile')
@@ -96,5 +100,7 @@ class DoEvrything():
     def runner(self, event_list, screen):
         self.group_tile.update(event_list, self)
         self.group_tile.draw(screen)
-        self.group_ent.draw(screen)
-        pass
+
+        for ent_id, ent_visual in self.group_ent.items():
+            ent_visual.draw(screen)
+        
