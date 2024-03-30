@@ -39,11 +39,21 @@ class DoEvrything():
         center = self.grid_size // 2
         self.tile_map[(center, center)]['entity'] = 2 
         # enemy
+        enemy_count = 3
+        while enemy_count >= 0:
+            tile_ids = list(self.tile_map.keys())
+            choicen_tile = random.choice(tile_ids)
+            if self.tile_map[choicen_tile]['entity'] == 0:
+                self.tile_map[choicen_tile]['entity'] = 100 + enemy_count
+                enemy_count -= 1
 
         ## visuals
         for tile_id, tile_data in self.tile_map.items():
-            if tile_data['entity'] != 0:
+            if tile_data['entity'] == 2:
                 new_ent = EntityVisual(player_sprite, tile_data['rect'], tile_data['rect.center'])
+                self.ent_visual_dict[tile_data['entity']] = pg.sprite.RenderPlain(new_ent)
+            elif tile_data['entity'] != 0 and tile_data['entity'] != 2:
+                new_ent = EntityVisual(enemy_sprite, tile_data['rect'], tile_data['rect.center'])
                 self.ent_visual_dict[tile_data['entity']] = pg.sprite.RenderPlain(new_ent)
 
     def create_tiles(self):
