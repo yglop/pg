@@ -6,10 +6,11 @@ from display_ent import EntityVisual
 
 from ui_main import UserInterfaceMain
 
-from dataset import *
+from dataset import tile_sprites, player_sprite, enemy_sprite
 
 class DoEvrything():
     def __init__(self):
+        self.UI = UserInterfaceMain()
         self.grid_size = 5
         self.group_tile = pg.sprite.RenderPlain()
         self.ent_visual_dict = dict()
@@ -79,7 +80,7 @@ class DoEvrything():
 
             print('move_player:', 'moved from', original_tile, 'to', destination_tile)
         else:
-            print(destination_tile ,'is enamy tile')
+            print(destination_tile ,'is an enemy tile')
 
     # dont look at this PLEASE
     def try_move_player(self, tile=(0,0)):
@@ -112,10 +113,13 @@ class DoEvrything():
         else:
             print('try_move_player: tile', tile, 'is unreachable')
 
-    def runner(self, event_list, game_screen, ui_screen):
+    def runner(self, event_list, screen):
         self.group_tile.update(event_list, self)
-        self.group_tile.draw(game_screen)
+        self.group_tile.draw(screen)
 
         for ent_id, ent_visual in self.ent_visual_dict.items():
-            ent_visual.draw(game_screen)
+            ent_visual.draw(screen)
+
+        # UI
+        self.UI.button_manager(event_list, screen, self)
         
