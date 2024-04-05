@@ -1,10 +1,9 @@
 import pygame as pg
 import random
 
-from display_tile import TileDisplayer
-from display_ent import EntityVisual
-
-from ui_main import UserInterfaceMain
+from visuals.display_tile import TileDisplayer
+from visuals.display_ent import EntityVisual
+from visuals.ui_main import UserInterfaceMain
 
 from dataset import tile_sprites_64, player_sprite, enemy_sprite
 
