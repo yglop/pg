@@ -6,7 +6,7 @@ from display_ent import EntityVisual
 
 from ui_main import UserInterfaceMain
 
-from dataset import tile_sprites, player_sprite, enemy_sprite
+from dataset import tile_sprites_64, player_sprite, enemy_sprite
 
 class DoEvrything():
     def __init__(self):
@@ -26,7 +26,7 @@ class DoEvrything():
                 tile_ids.append((i,j))     
 
         for i in tile_ids:
-            tile_image = random.choice(tile_sprites)
+            tile_image = random.choice(tile_sprites_64)
 
             pos_x = 32 + 64 * i[0]
             pos_y = 32 + 64 * i[1]
