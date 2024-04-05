@@ -4,7 +4,6 @@ import pygame as pg
 class TileDisplayer(pg.sprite.Sprite):
     def __init__(self, tile):
         super(TileDisplayer, self).__init__()
-        self._layer = 5
         self.tile_id = tile[0]
         self.image = tile[1]['image']
         self.rect = tile[1]['rect']

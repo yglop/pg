@@ -3,6 +3,9 @@ import random
 
 from display_tile import TileDisplayer
 from display_ent import EntityVisual
+
+from ui_main import UserInterfaceMain
+
 from dataset import *
 
 class DoEvrything():
@@ -52,7 +55,7 @@ class DoEvrything():
             if tile_data['entity'] == 2:
                 new_ent = EntityVisual(player_sprite, tile_data['rect'], tile_data['rect.center'])
                 self.ent_visual_dict[tile_data['entity']] = pg.sprite.RenderPlain(new_ent)
-            elif tile_data['entity'] != 0 and tile_data['entity'] != 2:
+            elif tile_data['entity'] not in (0, 2):
                 new_ent = EntityVisual(enemy_sprite, tile_data['rect'], tile_data['rect.center'])
                 self.ent_visual_dict[tile_data['entity']] = pg.sprite.RenderPlain(new_ent)
 
@@ -67,7 +70,7 @@ class DoEvrything():
         destination = self.tile_map[destination_tile]
         origin = self.tile_map[original_tile]
         
-        if destination['entity'] != 1:
+        if destination['entity'] == 0:
             origin['entity'] = 0
             destination['entity'] = 2
 
@@ -109,10 +112,10 @@ class DoEvrything():
         else:
             print('try_move_player: tile', tile, 'is unreachable')
 
-    def runner(self, event_list, screen):
+    def runner(self, event_list, game_screen, ui_screen):
         self.group_tile.update(event_list, self)
-        self.group_tile.draw(screen)
+        self.group_tile.draw(game_screen)
 
         for ent_id, ent_visual in self.ent_visual_dict.items():
-            ent_visual.draw(screen)
+            ent_visual.draw(game_screen)
         

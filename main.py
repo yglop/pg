@@ -3,8 +3,12 @@ from do_everything import DoEvrything
 
 
 pg.init()
-screen = pg.display.set_mode((1200, 800))
-screen.fill((100,100,100))
+actual_screen = pg.display.set_mode((1200, 800))
+game_screen = pg.Surface((1000, 800))
+ui_screen = pg.Surface((200, 800))
+
+game_screen.fill((100,100,100))
+ui_screen.fill((0,0,100))
 clock = pg.time.Clock()        
 
 
@@ -21,8 +25,10 @@ while running:
         if event.type == pg.QUIT:
             running = False
 
-    do_evrything.runner(event_list, screen)
+    do_evrything.runner(event_list, game_screen, ui_screen)
 
+    actual_screen.blit(game_screen, (0, 0))
+    actual_screen.blit(ui_screen, (1000, 0))
     pg.display.flip()
 
 # close pygame
