@@ -114,12 +114,16 @@ class DoEvrything():
             print('try_move_player: tile', tile, 'is unreachable')
 
     def runner(self, event_list, screen):
+        # UI
+        self.UI.button_manager(event_list, screen, self)
+
+        # tiles
         self.group_tile.update(event_list, self)
         self.group_tile.draw(screen)
 
+        ## tile ent's
         for ent_id, ent_visual in self.ent_visual_dict.items():
             ent_visual.draw(screen)
 
-        # UI
-        self.UI.button_manager(event_list, screen, self)
+        
         
