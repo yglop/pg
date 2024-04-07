@@ -3,7 +3,7 @@ from do_everything import DoEvrything
 
 
 pg.init()
-screen = pg.display.set_mode((1200, 800))
+screen = pg.display.set_mode((1200, 1000))
 screen.fill((100,100,100))
 
 clock = pg.time.Clock()        

@@ -27,6 +27,6 @@ class UserInterfaceMain():
         self.turn_button.update(event_list)
 
         # visuals
-        pg.draw.rect(screen, (0,0,100), pg.Rect(1000, 0, 200, 800))
+        pg.draw.rect(screen, (0,0,100), pg.Rect(1000, 0, 200, 1000))
         self.turn_button_visual.draw(screen)
         

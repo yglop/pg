@@ -5,12 +5,14 @@ from visuals.display_tile import TileDisplayer
 from visuals.display_ent import EntityVisual
 from visuals.ui_main import UserInterfaceMain
 
-from dataset import tile_sprites_64, player_sprite, enemy_sprite
+from map_gen import generate_map
+
+from dataset import tile_sprites_32, player_sprite, enemy_sprite
 
 class DoEvrything():
     def __init__(self):
         self.UI = UserInterfaceMain()
-        self.grid_size = 5
+        self.grid_size = 10
         self.group_tile = pg.sprite.RenderPlain()
         self.ent_visual_dict = dict()
         self.tile_map = dict() 
@@ -19,37 +21,44 @@ class DoEvrything():
         self.create_tiles()
 
     def create_tile_map(self):
-        tile_ids = list()
+        game_map = generate_map(
+            max_rooms=4,
+            room_min_size=3,
+            room_max_size=3,
+            map_width=self.grid_size, 
+            map_height=self.grid_size
+            )
+
+        tile_image_preset = {
+            0: tile_sprites_32[0],
+            1: tile_sprites_32[1],
+            2: tile_sprites_32[1],
+            9: tile_sprites_32[1],
+        }
+        tile_ent_preset = {
+            0: -1,
+            1: 2,
+            2: 100,
+            9: 0,
+        }
+
         for i in range(self.grid_size):
             for j in range(self.grid_size):
-                tile_ids.append((i,j))     
+                pos_x = 32 + 32 * i
+                pos_y = 32 + 32 * j
+                           
+                tile_image = tile_image_preset[game_map[i,j]]
+                tile_ent = tile_ent_preset[game_map[i,j]]
 
-        for i in tile_ids:
-            tile_image = random.choice(tile_sprites_64)
-
-            pos_x = 32 + 64 * i[0]
-            pos_y = 32 + 64 * i[1]
-            
-            self.tile_map[i] = {
-                'image': tile_image,
-                'rect': tile_image.get_rect(),
-                'rect.center': (pos_x, pos_y),
-                'entity': 0,
+                self.tile_map[(i,j)] = {
+                    'image': tile_image,
+                    'rect': tile_image.get_rect(),
+                    'rect.center': (pos_x, pos_y),
+                    'entity': tile_ent,
                 }
-    
+                
+    ##################################### THERE IS A BUG WITH VISUALS OF AN ENAMY
     def create_ent(self):
-        # player
-        center = self.grid_size // 2
-        self.tile_map[(center, center)]['entity'] = 2 
-        # enemy
-        enemy_count = 3
-        while enemy_count >= 0:
-            tile_ids = list(self.tile_map.keys())
-            choicen_tile = random.choice(tile_ids)
-            if self.tile_map[choicen_tile]['entity'] == 0:
-                self.tile_map[choicen_tile]['entity'] = 100 + enemy_count
-                enemy_count -= 1
-
         ## visuals
         for tile_id, tile_data in self.tile_map.items():
             if tile_data['entity'] == 2:
@@ -63,7 +72,7 @@ class DoEvrything():
         for tile_id, tile_data in self.tile_map.items():  
             tile = [tile_id, tile_data]  
             new_tile = TileDisplayer(tile)
-
+            print(tile) #debug
             self.group_tile.add(new_tile)
 
     def move_player(self, destination_tile, original_tile):
@@ -85,6 +94,8 @@ class DoEvrything():
     def try_move_player(self, tile=(0,0)):
         if self.tile_map[tile]['entity'] == 2:
             print('try_move_player:', tile ,"is player's tile")
+        elif self.tile_map[tile]['entity'] == -1:
+            print('try_move_player:', tile ,"is impossuble")
         elif (tile[0] + 1 < self.grid_size and 
                 self.tile_map[(tile[0] + 1, tile[1])]['entity'] == 2):
             self.move_player(tile, (tile[0] + 1, tile[1]))
