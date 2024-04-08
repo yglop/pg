@@ -80,6 +80,7 @@ class DoEvrything():
     def runner(self, event_list, screen):
         # UI
         self.UI.button_manager(event_list, screen, self)
+        self.UI.render_turn_count(screen, self)
 
         # tiles
         self.group_tile.update(event_list, self)
