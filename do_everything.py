@@ -2,16 +2,18 @@ import pygame as pg
 import random
 
 from visuals.display_tile import TileVisual
-from visuals.ui_main import UserInterfaceMain
+from visuals.ui.main import UserInterfaceMain
 
 from mapgen.map_gen import generate_map
 from systems.entity_handler import EntityHandler
+from systems.turn_system import TurnSystem
 
 from dataset import tile_sprites_32
 
 class DoEvrything():
     def __init__(self):
         self.UI = UserInterfaceMain()
+        self.TS = TurnSystem()
         self.grid_size = 30
         self.group_tile = pg.sprite.RenderPlain()
         self.tile_map = dict() 
@@ -19,7 +21,8 @@ class DoEvrything():
         self.create_tile_map()
         self.create_tiles()
 
-        self.ent_handler = EntityHandler(self.tile_map, self.grid_size)
+        self.ent_handler = EntityHandler(self.tile_map, self.grid_size, self.TS)
+        self.TS.get_max_player_actions(max_player_actions=2)
 
     def create_tile_map(self):
         game_map = generate_map(

@@ -11,10 +11,11 @@ class Button(pg.sprite.Sprite):
         self.rect.center = center
         self.clicked = False
 
-    def update(self, event_list):
+    def update(self, event_list, do_evrything):
         for event in event_list:
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos):
                 self.clicked = not self.clicked
+                do_evrything.TS.get_max_player_actions()
                 print('End Turn')
 
 
@@ -24,7 +25,7 @@ class UserInterfaceMain():
         self.turn_button_visual = pg.sprite.RenderPlain(self.turn_button)
 
     def button_manager(self, event_list, screen, do_evrything):
-        self.turn_button.update(event_list)
+        self.turn_button.update(event_list, do_evrything)
 
         # visuals
         pg.draw.rect(screen, (0,0,100), pg.Rect(1000, 0, 200, 1000))

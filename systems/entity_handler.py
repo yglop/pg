@@ -6,9 +6,10 @@ from dataset import player_sprite, enemy_sprite
 
 
 class EntityHandler():
-    def __init__(self, tile_map, grid_size):
+    def __init__(self, tile_map, grid_size, turn_system):
         self.tile_map = tile_map
         self.grid_size = grid_size
+        self.turn_system = turn_system
         self.ent_visual_dict = dict()
         self.create_ent_visual_dict()
     
@@ -32,13 +33,16 @@ class EntityHandler():
             ent_new_sprite = EntityVisual(player_sprite, destination['rect'], destination['rect.center'])
             self.ent_visual_dict[destination['entity']] = pg.sprite.RenderPlain(ent_new_sprite)
 
+            self.turn_system.player_did_something(1)
             print('move_player:', 'moved from', original_tile, 'to', destination_tile)
         else:
             print(destination_tile ,'is an enemy tile')
 
     # dont look at this PLEASE
     def try_move_player(self, tile):
-        if self.tile_map[tile]['entity'] == 2:
+        if self.turn_system.is_action_possable() == False:
+            print('try_move_player: no actons points left')
+        elif self.tile_map[tile]['entity'] == 2:
             print('try_move_player:', tile ,"is player's tile")
         elif self.tile_map[tile]['entity'] == -1:
             print('try_move_player:', tile ,"is impossible")
