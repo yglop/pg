@@ -2,11 +2,10 @@ import pygame as pg
 import random
 
 from visuals.display_tile import TileVisual
-from visuals.display_ent import EntityVisual
 from visuals.ui_main import UserInterfaceMain
 
 from mapgen.map_gen import generate_map
-from entity_handler import EntityHandler
+from systems.entity_handler import EntityHandler
 
 from dataset import tile_sprites_32
 
