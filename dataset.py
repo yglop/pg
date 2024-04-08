@@ -3,6 +3,7 @@ import pygame as pg
 
 # Tiles
 tile_sprites_64 = (
+        pg.image.load("./img/tiles/x32/tile-empty.png"), 
         pg.image.load("./img/tiles/x64/tile-blue.png"), 
         pg.image.load("./img/tiles/x64/tile-green.png"), 
         pg.image.load("./img/tiles/x64/tile-red.png"), 
@@ -10,6 +11,7 @@ tile_sprites_64 = (
     )
 
 tile_sprites_32 = (
+        pg.image.load("./img/tiles/x32/tile-empty.png"), 
         pg.image.load("./img/tiles/x32/tile-blue.png"), 
         pg.image.load("./img/tiles/x32/tile-green.png"), 
         pg.image.load("./img/tiles/x32/tile-red.png"), 

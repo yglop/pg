@@ -1,9 +1,9 @@
 import pygame as pg
 
 
-class TileDisplayer(pg.sprite.Sprite):
+class TileVisual(pg.sprite.Sprite):
     def __init__(self, tile):
-        super(TileDisplayer, self).__init__()
+        super(TileVisual, self).__init__()
         self.tile_id = tile[0]
         self.image = tile[1]['image']
         self.rect = tile[1]['rect']

@@ -1,13 +1,14 @@
 import pygame as pg
 import random
 
-from visuals.display_tile import TileDisplayer
+from visuals.display_tile import TileVisual
 from visuals.display_ent import EntityVisual
 from visuals.ui_main import UserInterfaceMain
 
-from map_gen import generate_map
+from mapgen.map_gen import generate_map
+from entity_handler import EntityHandler
 
-from dataset import tile_sprites_64, tile_sprites_32, player_sprite, enemy_sprite
+from dataset import tile_sprites_32, player_sprite, enemy_sprite
 
 class DoEvrything():
     def __init__(self):
@@ -30,16 +31,18 @@ class DoEvrything():
             )
 
         tile_image_preset = {
-            0: tile_sprites_32[0],
-            1: tile_sprites_32[1],
-            2: tile_sprites_32[1],
-            9: tile_sprites_32[1],
+            0: tile_sprites_32[1],
+            1: tile_sprites_32[2],
+            2: tile_sprites_32[2],
+            8: tile_sprites_32[3],
+            9: tile_sprites_32[2],
         }
 
         rile_ent_preset = {
             0: -1,
             1: 2,
             2: 100,
+            8: 0,
             9: 0,
         }
 
@@ -58,23 +61,26 @@ class DoEvrything():
                     'entity': tile_ent,
                 }
 
-    def create_ent_visual_dict(self):
         enemy_count = 1
+        for tile_id, tile_data in self.tile_map.items():
+            if tile_data['entity'] >= 100:
+                enemy_count += 1
+                self.tile_map[tile_id]['entity'] += enemy_count
+
+    def create_ent_visual_dict(self):
         ## visuals
         for tile_id, tile_data in self.tile_map.items():
             if tile_data['entity'] == 2:
                 new_ent = EntityVisual(player_sprite, tile_data['rect'], tile_data['rect.center'])
                 self.ent_visual_dict[tile_data['entity']] = pg.sprite.RenderPlain(new_ent)
             elif tile_data['entity'] not in (0, 2, -1):
-                enemy_count += 1
-                self.tile_map[tile_id]['entity'] += enemy_count
                 new_ent = EntityVisual(enemy_sprite, tile_data['rect'], tile_data['rect.center'])
                 self.ent_visual_dict[tile_data['entity']] = pg.sprite.RenderPlain(new_ent)
 
     def create_tiles(self):
         for tile_id, tile_data in self.tile_map.items():  
             tile = [tile_id, tile_data]  
-            new_tile = TileDisplayer(tile)
+            new_tile = TileVisual(tile)
 
             self.group_tile.add(new_tile)
 

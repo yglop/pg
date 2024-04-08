@@ -1,43 +1,8 @@
 import random
 import numpy as np
-import tcod
 
-class RectangularRoom():
-    def __init__(self, x: int, y: int, width: int, height: int):
-        self.x1 = x
-        self.y1 = y
-        self.x2 = x + width
-        self.y2 = y + height
-
-    def center(self):
-        center_x = int((self.x1 + self.x2) / 2)
-        center_y = int((self.y1 + self.y2) / 2)
-
-        return (center_x, center_y)
-
-    def inner(self):
-        """Return the inner area of this room as a 2D array index."""
-        return ((self.x1 + 1, self.x2), (self.y1 + 1, self.y2))
-
-
-
-def tunnel_between(
-    start, end):
-    """Return an L-shaped tunnel between these two points."""
-    x1, y1 = start
-    x2, y2 = end
-    if random.random() < 0.5:  # 50% chance.
-        # Move horizontally, then vertically.
-        corner_x, corner_y = x2, y1
-    else:
-        # Move vertically, then horizontally.
-        corner_x, corner_y = x1, y2
-
-    # Generate the coordinates for this tunnel.
-    for x, y in tcod.los.bresenham((x1, y1), (corner_x, corner_y)).tolist():
-        yield x, y
-    for x, y in tcod.los.bresenham((corner_x, corner_y), (x2, y2)).tolist():
-        yield x, y
+from mapgen.rectangular_room import RectangularRoom
+from mapgen.tunnel_between import tunnel_between
 
 
 def generate_map(
@@ -69,8 +34,8 @@ def generate_map(
         else:
             # draw tonnels
             for x, y in tunnel_between(rooms[-1].center(), new_room.center()):
-                if game_map[x, y] not in [1, 2]:
-                    game_map[x, y] = 9
+                if game_map[x, y] not in [1, 9]:
+                    game_map[x, y] = 8
         
         # check for player id(1) 
         is_player = False
