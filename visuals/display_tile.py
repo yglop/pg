@@ -15,4 +15,4 @@ class TileVisual(pg.sprite.Sprite):
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos):
                 self.clicked = not self.clicked
 
-                do_evrything.try_move_player(self.tile_id)
+                do_evrything.ent_handler.try_move_player(self.tile_id)

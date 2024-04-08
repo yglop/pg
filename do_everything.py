@@ -8,18 +8,19 @@ from visuals.ui_main import UserInterfaceMain
 from mapgen.map_gen import generate_map
 from entity_handler import EntityHandler
 
-from dataset import tile_sprites_32, player_sprite, enemy_sprite
+from dataset import tile_sprites_32
 
 class DoEvrything():
     def __init__(self):
         self.UI = UserInterfaceMain()
         self.grid_size = 30
         self.group_tile = pg.sprite.RenderPlain()
-        self.ent_visual_dict = dict()
         self.tile_map = dict() 
+
         self.create_tile_map()
-        self.create_ent_visual_dict()
         self.create_tiles()
+
+        self.ent_handler = EntityHandler(self.tile_map, self.grid_size)
 
     def create_tile_map(self):
         game_map = generate_map(
@@ -67,70 +68,12 @@ class DoEvrything():
                 enemy_count += 1
                 self.tile_map[tile_id]['entity'] += enemy_count
 
-    def create_ent_visual_dict(self):
-        ## visuals
-        for tile_id, tile_data in self.tile_map.items():
-            if tile_data['entity'] == 2:
-                new_ent = EntityVisual(player_sprite, tile_data['rect'], tile_data['rect.center'])
-                self.ent_visual_dict[tile_data['entity']] = pg.sprite.RenderPlain(new_ent)
-            elif tile_data['entity'] not in (0, 2, -1):
-                new_ent = EntityVisual(enemy_sprite, tile_data['rect'], tile_data['rect.center'])
-                self.ent_visual_dict[tile_data['entity']] = pg.sprite.RenderPlain(new_ent)
-
     def create_tiles(self):
         for tile_id, tile_data in self.tile_map.items():  
             tile = [tile_id, tile_data]  
             new_tile = TileVisual(tile)
 
             self.group_tile.add(new_tile)
-
-    def move_player(self, destination_tile, original_tile):
-        destination = self.tile_map[destination_tile]
-        origin = self.tile_map[original_tile]
-        
-        if destination['entity'] == 0:
-            origin['entity'] = 0
-            destination['entity'] = 2
-
-            ent_new_sprite = EntityVisual(player_sprite, destination['rect'], destination['rect.center'])
-            self.ent_visual_dict[destination['entity']] = pg.sprite.RenderPlain(ent_new_sprite)
-
-            print('move_player:', 'moved from', original_tile, 'to', destination_tile)
-        else:
-            print(destination_tile ,'is an enemy tile')
-
-    # dont look at this PLEASE
-    def try_move_player(self, tile=(0,0)):
-        if self.tile_map[tile]['entity'] == 2:
-            print('try_move_player:', tile ,"is player's tile")
-        elif self.tile_map[tile]['entity'] == -1:
-            print('try_move_player:', tile ,"is impossible")
-        elif (tile[0] + 1 < self.grid_size and 
-                self.tile_map[(tile[0] + 1, tile[1])]['entity'] == 2):
-            self.move_player(tile, (tile[0] + 1, tile[1]))
-        elif (tile[0] - 1 >= 0  and 
-                self.tile_map[(tile[0] - 1, tile[1])]['entity'] == 2):
-            self.move_player(tile, (tile[0] - 1, tile[1]))
-        elif (tile[1] + 1 < self.grid_size and 
-                self.tile_map[(tile[0], tile[1] + 1)]['entity'] == 2):
-            self.move_player(tile, (tile[0], tile[1] + 1))
-        elif (tile[1] - 1 >= 0 and 
-                self.tile_map[(tile[0], tile[1] - 1)]['entity'] == 2):
-            self.move_player(tile, (tile[0], tile[1] - 1))
-        elif (tile[0] + 1 < self.grid_size and tile[1] + 1 < self.grid_size and
-                self.tile_map[(tile[0] + 1, tile[1] + 1)]['entity'] == 2):
-            self.move_player(tile, (tile[0] + 1, tile[1] + 1))
-        elif (tile[0] + 1 < self.grid_size and tile[1] - 1 >= 0 and
-                self.tile_map[(tile[0] + 1, tile[1] - 1)]['entity'] == 2):
-            self.move_player(tile, (tile[0] + 1, tile[1] - 1))
-        elif (tile[0] - 1 >= 0 and tile[1] + 1 < self.grid_size and
-                self.tile_map[(tile[0] - 1, tile[1] + 1)]['entity'] == 2):
-            self.move_player(tile, (tile[0] - 1, tile[1] + 1))
-        elif (tile[0] - 1 >= 0 and tile[1] - 1 >= 0 and
-                self.tile_map[(tile[0] - 1, tile[1] - 1)]['entity'] == 2):
-            self.move_player(tile, (tile[0] - 1, tile[1] - 1))
-        else:
-            print('try_move_player: tile', tile, 'is unreachable')
 
     def runner(self, event_list, screen):
         # UI
@@ -141,8 +84,7 @@ class DoEvrything():
         self.group_tile.draw(screen)
 
         ## tile ent's
-        for ent_id, ent_visual in self.ent_visual_dict.items():
-            ent_visual.draw(screen)
+        self.ent_handler.render_ents(screen)
 
         
         
