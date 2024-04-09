@@ -13,5 +13,5 @@ class EndTurnButton(pg.sprite.Sprite):
         for event in event_list:
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos):
                 self.clicked = not self.clicked
-                do_evrything.TS.get_max_player_actions(max_player_actions=2)
-                print('End Turn')
+                do_evrything.TS.end_turn()
+                

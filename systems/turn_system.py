@@ -16,5 +16,11 @@ class TurnSystem():
     def is_action_possable(self, action_cost=1):
         return self.current_player_actions >= action_cost
 
+    def do_enemy_turn(self):
+        pass
+
     def end_turn(self):
+        self.do_enemy_turn()
         self.current_player_actions = self.max_player_actions
+        print('End Turn')
+        

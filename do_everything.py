@@ -5,7 +5,9 @@ from visuals.display_tile import TileVisual
 from visuals.ui.main import UserInterfaceMain
 
 from mapgen.map_gen import generate_map
+
 from systems.entity_handler import EntityHandler
+from systems.keyboard_handler import keyboard_handler
 from systems.turn_system import TurnSystem
 
 from dataset import tile_sprites_32
@@ -78,6 +80,9 @@ class DoEvrything():
             self.group_tile.add(new_tile)
 
     def runner(self, event_list, screen):
+        # keyboard
+        keyboard_handler(event_list, self)
+
         # UI
         self.UI.button_manager(event_list, screen, self)
         self.UI.render_turn_count(screen, self)
