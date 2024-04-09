@@ -7,7 +7,7 @@ from dataset import tile_sprites_32
 
 class MapSystem():
     def __init__(self):
-        self.grid_size = 10
+        self.grid_size = 30
         self.tile_map = dict() 
         self.group_tile = pg.sprite.RenderPlain()
 
@@ -16,9 +16,9 @@ class MapSystem():
 
     def create_tile_map(self):
         game_map = generate_map(
-            max_rooms=3,
+            max_rooms=10,
             room_min_size=3,
-            room_max_size=4,
+            room_max_size=8,
             map_width=self.grid_size, 
             map_height=self.grid_size
             )
