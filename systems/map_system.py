@@ -51,7 +51,7 @@ class MapSystem():
                     'rect': tile_image.get_rect(),
                     'rect.center': (pos_x, pos_y),
                     'entity': tile_ent,
-                    'neighbors': self.set_neighbors((i,j))
+                    'neighbors': self.get_neighbors((i,j))
                 }
 
         enemy_count = 1
@@ -67,8 +67,8 @@ class MapSystem():
 
             self.group_tile.add(new_tile)
 
-    def set_neighbors(self, tile_id):
-        neighbors = list()
+    def get_neighbors(self, tile_id):
+        neighbors = set()
         #   @@@@
         #   @//@
         #   @//@
@@ -77,7 +77,7 @@ class MapSystem():
                 (tile_id[0] > 0 and tile_id[0] < self.grid_size) and
                 (tile_id[1] > 0 and tile_id[1] < self.grid_size)
             ):
-            neighbors.append((
+            neighbors = (
                 (tile_id[0]+1, tile_id[1]+0), 
                 (tile_id[0]+0, tile_id[1]+1), 
                 (tile_id[0]-1, tile_id[1]+0), 
@@ -86,7 +86,7 @@ class MapSystem():
                 (tile_id[0]-1, tile_id[1]-1), 
                 (tile_id[0]+1, tile_id[1]-1), 
                 (tile_id[0]-1, tile_id[1]+1), 
-            ))
+            )
         #   @//@
         #   @@@@
         #   @@@@
@@ -95,13 +95,13 @@ class MapSystem():
                 (tile_id[0] == 0) and
                 (tile_id[1] > 0 and tile_id[1] < self.grid_size)
             ):
-            neighbors.append((
+            neighbors = (
                 (tile_id[0]+1, tile_id[1]+0), 
                 (tile_id[0]+0, tile_id[1]+1), 
                 (tile_id[0]+0, tile_id[1]-1),
                 (tile_id[0]+1, tile_id[1]+1),
                 (tile_id[0]+1, tile_id[1]-1),
-            ))
+            )
         #   @@@@
         #   @@@@
         #   @@@@
@@ -110,13 +110,13 @@ class MapSystem():
                 (tile_id[0] == self.grid_size) and
                 (tile_id[1] > 0 and tile_id[1] < self.grid_size)
             ):
-            neighbors.append((
+            neighbors = (
                 (tile_id[0]-1, tile_id[1]+0), 
                 (tile_id[0]+0, tile_id[1]+1), 
                 (tile_id[0]+0, tile_id[1]-1),
                 (tile_id[0]-1, tile_id[1]-1),
                 (tile_id[0]-1, tile_id[1]+1),
-            ))
+            )
         #   @@@@
         #   @@@/
         #   @@@/
@@ -125,13 +125,13 @@ class MapSystem():
                 (tile_id[0] > 0 and tile_id[0] < self.grid_size) and
                 (tile_id[1] == self.grid_size)
             ):
-            neighbors.append((
+            neighbors = (
                 (tile_id[0]+1, tile_id[1]+0), 
                 (tile_id[0]-1, tile_id[1]+0), 
                 (tile_id[0]+0, tile_id[1]-1),
                 (tile_id[0]+1, tile_id[1]-1),
                 (tile_id[0]-1, tile_id[1]-1),
-            ))
+            )
         #   @@@@
         #   /@@@
         #   /@@@
@@ -140,13 +140,13 @@ class MapSystem():
                 (tile_id[0] > 0 and tile_id[0] < self.grid_size) and
                 (tile_id[1] == 0)
             ):
-            neighbors.append((
+            neighbors = (
                 (tile_id[0]+1, tile_id[1]+0), 
                 (tile_id[0]-1, tile_id[1]+0), 
                 (tile_id[0]+0, tile_id[1]+1),
                 (tile_id[0]+1, tile_id[1]+1),
                 (tile_id[0]-1, tile_id[1]+1),
-            ))
+            )
         #   /@@@
         #   @@@@
         #   @@@@
@@ -155,11 +155,11 @@ class MapSystem():
                 (tile_id[0] == 0) and
                 (tile_id[1] == 0)
             ):
-            neighbors.append((
+            neighbors = (
                 (tile_id[0]+1, tile_id[1]+0), 
                 (tile_id[0]+0, tile_id[1]+1), 
                 (tile_id[0]+1, tile_id[1]+1),
-            ))
+            )
         #   @@@/
         #   @@@@
         #   @@@@
@@ -168,11 +168,11 @@ class MapSystem():
                 (tile_id[0] == 0) and
                 (tile_id[1] == self.grid_size)
             ):
-            neighbors.append((
+            neighbors = (
                 (tile_id[0]+1, tile_id[1]+0), 
                 (tile_id[0]+0, tile_id[1]-1), 
                 (tile_id[0]+1, tile_id[1]-1),
-            ))
+            )
         #   @@@@
         #   @@@@
         #   @@@@
@@ -181,11 +181,11 @@ class MapSystem():
                 (tile_id[0] == self.grid_size) and
                 (tile_id[1] == 0)
             ):
-            neighbors.append((
+            neighbors = (
                 (tile_id[0]-1, tile_id[1]+0), 
                 (tile_id[0]+0, tile_id[1]+1), 
                 (tile_id[0]-1, tile_id[1]+1),
-            ))
+            )
         #   @@@@
         #   @@@@
         #   @@@@
@@ -194,10 +194,10 @@ class MapSystem():
                 (tile_id[0] == self.grid_size) and
                 (tile_id[1] == self.grid_size)
             ):
-            neighbors.append((
+            neighbors = (
                 (tile_id[0]-1, tile_id[1]-0), 
                 (tile_id[0]-0, tile_id[1]-1), 
                 (tile_id[0]-1, tile_id[1]-1),
-            ))
+            )
             
         return neighbors

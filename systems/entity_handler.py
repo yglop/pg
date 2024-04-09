@@ -39,39 +39,30 @@ class EntityHandler():
             print(destination_tile ,'is an enemy tile')
 
     # dont look at this PLEASE
-    def try_move_player(self, tile):
+    def try_move_player(self, tile_id):
         if self.turn_system.is_action_possable() == False:
             print('try_move_player: no actons points left')
-        elif self.tile_map[tile]['entity'] == 2:
-            print('try_move_player:', tile ,"is player's tile")
-        elif self.tile_map[tile]['entity'] == -1:
-            print('try_move_player:', tile ,"is impossible")
-        elif (tile[0] + 1 < self.grid_size and 
-                self.tile_map[(tile[0] + 1, tile[1])]['entity'] == 2):
-            self.move_player(tile, (tile[0] + 1, tile[1]))
-        elif (tile[0] - 1 >= 0  and 
-                self.tile_map[(tile[0] - 1, tile[1])]['entity'] == 2):
-            self.move_player(tile, (tile[0] - 1, tile[1]))
-        elif (tile[1] + 1 < self.grid_size and 
-                self.tile_map[(tile[0], tile[1] + 1)]['entity'] == 2):
-            self.move_player(tile, (tile[0], tile[1] + 1))
-        elif (tile[1] - 1 >= 0 and 
-                self.tile_map[(tile[0], tile[1] - 1)]['entity'] == 2):
-            self.move_player(tile, (tile[0], tile[1] - 1))
-        elif (tile[0] + 1 < self.grid_size and tile[1] + 1 < self.grid_size and
-                self.tile_map[(tile[0] + 1, tile[1] + 1)]['entity'] == 2):
-            self.move_player(tile, (tile[0] + 1, tile[1] + 1))
-        elif (tile[0] + 1 < self.grid_size and tile[1] - 1 >= 0 and
-                self.tile_map[(tile[0] + 1, tile[1] - 1)]['entity'] == 2):
-            self.move_player(tile, (tile[0] + 1, tile[1] - 1))
-        elif (tile[0] - 1 >= 0 and tile[1] + 1 < self.grid_size and
-                self.tile_map[(tile[0] - 1, tile[1] + 1)]['entity'] == 2):
-            self.move_player(tile, (tile[0] - 1, tile[1] + 1))
-        elif (tile[0] - 1 >= 0 and tile[1] - 1 >= 0 and
-                self.tile_map[(tile[0] - 1, tile[1] - 1)]['entity'] == 2):
-            self.move_player(tile, (tile[0] - 1, tile[1] - 1))
-        else:
-            print('try_move_player: tile', tile, 'is unreachable')
+            return
+
+        if self.tile_map[tile_id]['entity'] == 2:
+            print('try_move_player:', tile_id ,"is player's tile")
+            return
+
+        if self.tile_map[tile_id]['entity'] == -1:
+            print('try_move_player:', tile_id ,"is impossible")
+            return
+
+        for i in self.tile_map[tile_id]['neighbors']:
+            if self.tile_map[i]['entity'] == 2:
+                self.move_player(tile_id, i)
+                return
+            
+        print('try_move_player: tile', tile_id, 'is unreachable')
+    
+
+        
+
+                
 
     def render_ents(self, screen):
         for ent_id, ent_visual in self.ent_visual_dict.items():
