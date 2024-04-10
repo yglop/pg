@@ -1,6 +1,8 @@
 import pygame as pg
 
 from mapgen.map_gen import generate_map
+from systems.SubModuls.get_neighbors import get_neighbors
+
 from visuals.display_tile import TileVisual
 from dataset import tile_sprites_32
 
@@ -51,7 +53,7 @@ class MapSystem():
                     'rect': tile_image.get_rect(),
                     'rect.center': (pos_x, pos_y),
                     'entity': tile_ent,
-                    'neighbors': self.get_neighbors((i,j))
+                    'neighbors': get_neighbors(self.grid_size, (i,j))
                 }
 
         enemy_count = 1
@@ -67,137 +69,3 @@ class MapSystem():
 
             self.group_tile.add(new_tile)
 
-    def get_neighbors(self, tile_id):
-        neighbors = set()
-        #   @@@@
-        #   @//@
-        #   @//@
-        #   @@@@
-        if (
-                (tile_id[0] > 0 and tile_id[0] < self.grid_size) and
-                (tile_id[1] > 0 and tile_id[1] < self.grid_size)
-            ):
-            neighbors = (
-                (tile_id[0]+1, tile_id[1]+0), 
-                (tile_id[0]+0, tile_id[1]+1), 
-                (tile_id[0]-1, tile_id[1]+0), 
-                (tile_id[0]+0, tile_id[1]-1), 
-                (tile_id[0]+1, tile_id[1]+1), 
-                (tile_id[0]-1, tile_id[1]-1), 
-                (tile_id[0]+1, tile_id[1]-1), 
-                (tile_id[0]-1, tile_id[1]+1), 
-            )
-        #   @//@
-        #   @@@@
-        #   @@@@
-        #   @@@@
-        elif (
-                (tile_id[0] == 0) and
-                (tile_id[1] > 0 and tile_id[1] < self.grid_size)
-            ):
-            neighbors = (
-                (tile_id[0]+1, tile_id[1]+0), 
-                (tile_id[0]+0, tile_id[1]+1), 
-                (tile_id[0]+0, tile_id[1]-1),
-                (tile_id[0]+1, tile_id[1]+1),
-                (tile_id[0]+1, tile_id[1]-1),
-            )
-        #   @@@@
-        #   @@@@
-        #   @@@@
-        #   @//@
-        elif (
-                (tile_id[0] == self.grid_size) and
-                (tile_id[1] > 0 and tile_id[1] < self.grid_size)
-            ):
-            neighbors = (
-                (tile_id[0]-1, tile_id[1]+0), 
-                (tile_id[0]+0, tile_id[1]+1), 
-                (tile_id[0]+0, tile_id[1]-1),
-                (tile_id[0]-1, tile_id[1]-1),
-                (tile_id[0]-1, tile_id[1]+1),
-            )
-        #   @@@@
-        #   @@@/
-        #   @@@/
-        #   @@@@
-        elif (
-                (tile_id[0] > 0 and tile_id[0] < self.grid_size) and
-                (tile_id[1] == self.grid_size)
-            ):
-            neighbors = (
-                (tile_id[0]+1, tile_id[1]+0), 
-                (tile_id[0]-1, tile_id[1]+0), 
-                (tile_id[0]+0, tile_id[1]-1),
-                (tile_id[0]+1, tile_id[1]-1),
-                (tile_id[0]-1, tile_id[1]-1),
-            )
-        #   @@@@
-        #   /@@@
-        #   /@@@
-        #   @@@@
-        elif (
-                (tile_id[0] > 0 and tile_id[0] < self.grid_size) and
-                (tile_id[1] == 0)
-            ):
-            neighbors = (
-                (tile_id[0]+1, tile_id[1]+0), 
-                (tile_id[0]-1, tile_id[1]+0), 
-                (tile_id[0]+0, tile_id[1]+1),
-                (tile_id[0]+1, tile_id[1]+1),
-                (tile_id[0]-1, tile_id[1]+1),
-            )
-        #   /@@@
-        #   @@@@
-        #   @@@@
-        #   @@@@
-        elif (
-                (tile_id[0] == 0) and
-                (tile_id[1] == 0)
-            ):
-            neighbors = (
-                (tile_id[0]+1, tile_id[1]+0), 
-                (tile_id[0]+0, tile_id[1]+1), 
-                (tile_id[0]+1, tile_id[1]+1),
-            )
-        #   @@@/
-        #   @@@@
-        #   @@@@
-        #   @@@@
-        elif (
-                (tile_id[0] == 0) and
-                (tile_id[1] == self.grid_size)
-            ):
-            neighbors = (
-                (tile_id[0]+1, tile_id[1]+0), 
-                (tile_id[0]+0, tile_id[1]-1), 
-                (tile_id[0]+1, tile_id[1]-1),
-            )
-        #   @@@@
-        #   @@@@
-        #   @@@@
-        #   /@@@
-        elif (
-                (tile_id[0] == self.grid_size) and
-                (tile_id[1] == 0)
-            ):
-            neighbors = (
-                (tile_id[0]-1, tile_id[1]+0), 
-                (tile_id[0]+0, tile_id[1]+1), 
-                (tile_id[0]-1, tile_id[1]+1),
-            )
-        #   @@@@
-        #   @@@@
-        #   @@@@
-        #   @@@/
-        elif (
-                (tile_id[0] == self.grid_size) and
-                (tile_id[1] == self.grid_size)
-            ):
-            neighbors = (
-                (tile_id[0]-1, tile_id[1]-0), 
-                (tile_id[0]-0, tile_id[1]-1), 
-                (tile_id[0]-1, tile_id[1]-1),
-            )
-            
-        return neighbors
