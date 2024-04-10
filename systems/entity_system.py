@@ -5,7 +5,7 @@ from visuals.display_ent import EntityVisual
 from dataset import player_sprite, enemy_sprite
 
 
-class EntityHandler():
+class EntitySystem():
     def __init__(self, tile_map, grid_size, turn_system):
         self.tile_map = tile_map
         self.grid_size = grid_size

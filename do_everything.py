@@ -3,7 +3,7 @@ import random
 
 from visuals.ui.main import UserInterfaceMain
 
-from systems.entity_handler import EntityHandler
+from systems.entity_system import EntitySystem
 from systems.keyboard_handler import keyboard_handler
 from systems.turn_system import TurnSystem
 from systems.map_system import MapSystem
@@ -14,8 +14,8 @@ class DoEvrything():
         self.TS = TurnSystem()
         self.MS = MapSystem()
 
-        self.EH = EntityHandler(self.MS.tile_map, self.MS.grid_size, self.TS)
-        self.TS.get_max_player_actions(self.EH.ent_stats_dict[2][0])
+        self.ES = EntitySystem(self.MS.tile_map, self.MS.grid_size, self.TS)
+        self.TS.get_max_player_actions(self.ES.ent_stats_dict[2][0])
 
 
     def runner(self, event_list, screen):
@@ -28,7 +28,7 @@ class DoEvrything():
         self.MS.group_tile.draw(screen)
 
         ## tile ent's
-        self.EH.render_ents(screen)
+        self.ES.render_ents(screen)
 
         # keyboard
         keyboard_handler(event_list, self)
