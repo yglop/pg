@@ -14,6 +14,7 @@ class MapSystem():
         self.group_tile = pg.sprite.RenderPlain()
 
         self.create_tile_map()
+        self.set_entd_ids()
         self.create_tiles()
 
     def create_tile_map(self):
@@ -56,6 +57,7 @@ class MapSystem():
                     'neighbors': get_neighbors(self.grid_size, (i,j))
                 }
 
+    def set_entd_ids(self):
         enemy_count = 1
         for tile_id, tile_data in self.tile_map.items():
             if tile_data['entity'] >= 100:
