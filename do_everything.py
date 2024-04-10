@@ -14,8 +14,8 @@ class DoEvrything():
         self.TS = TurnSystem()
         self.MS = MapSystem()
 
-        self.ent_handler = EntityHandler(self.MS.tile_map, self.MS.grid_size, self.TS)
-        self.TS.get_max_player_actions(max_player_actions=2)
+        self.EH = EntityHandler(self.MS.tile_map, self.MS.grid_size, self.TS)
+        self.TS.get_max_player_actions(self.EH.ent_stats_dict[2][0])
 
 
     def runner(self, event_list, screen):
@@ -28,7 +28,7 @@ class DoEvrything():
         self.MS.group_tile.draw(screen)
 
         ## tile ent's
-        self.ent_handler.render_ents(screen)
+        self.EH.render_ents(screen)
 
         # keyboard
         keyboard_handler(event_list, self)
