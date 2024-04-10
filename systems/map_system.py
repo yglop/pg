@@ -1,7 +1,7 @@
 import pygame as pg
 
 from mapgen.map_gen import generate_map
-from systems.SubModuls.get_neighbors import get_neighbors
+from systems.SubModules.get_neighbors import get_neighbors
 
 from visuals.display_tile import TileVisual
 from dataset import tile_sprites_32
