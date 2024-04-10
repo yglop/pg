@@ -4,6 +4,9 @@ from systems.EntitySystems.player_system import PlayerSystem
 from systems.EntitySystems.enemy_system import EnemySystem
 from systems.EntitySystems.items_system import ItemSystem
 
+from systems.EntitySystems.Entity.player import Player
+from systems.EntitySystems.Entity.enemy import Enemy
+
 from visuals.display_ent import EntityVisual
 from dataset import player_sprite, enemy_sprite
 
@@ -38,14 +41,9 @@ class EntityManager():
    
     def append_ent_stats_dict(self, ent_id):
         if ent_id == 2:
-            max_actions = self.PS.player_ent.max_actions
-            health = self.PS.player_ent.max_health
-            melee_damage = self.PS.player_ent.melee_damage
+            self.ent_stats_dict[ent_id] = Player()
         else:
-            max_actions = 2
-            health = 2
-            melee_damage = 1
-        self.ent_stats_dict[ent_id] = [max_actions, health, melee_damage]
+            self.ent_stats_dict[ent_id] = Enemy()
     
     def render_ents(self, screen):
         for ent_id, ent_visual in self.ent_visual_dict.items():

@@ -1,15 +1,11 @@
 import pygame as pg
 
-from systems.EntitySystems.Entity.player import Player
-
 from visuals.display_ent import EntityVisual
 from dataset import player_sprite
 
 
 class PlayerSystem():
     def __init__(self, EntityManager):
-        self.player_ent = Player()
-
         self.turn_system = EntityManager.turn_system
         self.tile_map = EntityManager.tile_map
 
@@ -20,15 +16,15 @@ class PlayerSystem():
         target_ent = self.tile_map[destination_tile]['entity']
         if self.turn_system.current_player_actions > 0:
             self.turn_system.player_did_something(1)
-            self.ent_stats_dict[target_ent][1] -= 1
+            self.ent_stats_dict[target_ent].health -= 1
             print('player_melee_attack: player attacks', target_ent)
-        if self.ent_stats_dict[target_ent][1] <= 0:
+        if self.ent_stats_dict[target_ent].health <= 0:
             del self.ent_stats_dict[target_ent]
             del self.ent_visual_dict[target_ent]
             self.tile_map[destination_tile]['entity'] = 0
             print('player_melee_attack:', target_ent, 'died')
         else:
-            print('player_melee_attack:', target_ent, 'hp=', self.ent_stats_dict[target_ent][1])
+            print('player_melee_attack:', target_ent, 'hp=', self.ent_stats_dict[target_ent].health)
 
     def move_player(self, destination_tile, original_tile):
         destination = self.tile_map[destination_tile]

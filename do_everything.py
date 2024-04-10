@@ -16,7 +16,7 @@ class DoEvrything():
         self.MS = MapSystem()
 
         self.EM = EntityManager(self.MS, self.TS)
-        self.TS.get_max_player_actions(self.EM.ent_stats_dict[2][0])
+        self.TS.get_max_player_actions(self.EM.ent_stats_dict[2].max_actions)
 
 
     def runner(self, event_list, screen):
