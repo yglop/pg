@@ -1,7 +1,7 @@
 import pygame as pg
 
 from visuals.display_ent import EntityVisual
-from dataset import player_sprite
+from Resources.Textures.dataset import player_sprite
 
 
 class PlayerSystem():

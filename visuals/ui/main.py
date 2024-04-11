@@ -1,7 +1,7 @@
 import pygame as pg
 
 from visuals.ui.end_turn_button import EndTurnButton
-from dataset import button_end_turn
+from Resources.Textures.dataset import button_end_turn
 
 
 class UserInterfaceMain():

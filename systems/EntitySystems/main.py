@@ -8,7 +8,7 @@ from systems.EntitySystems.Entity.player import Player
 from systems.EntitySystems.Entity.enemy import Enemy
 
 from visuals.display_ent import EntityVisual
-from dataset import player_sprite, enemy_sprite
+from Resources.Textures.dataset import player_sprite, enemy_sprite
 
 
 class EntityManager():
