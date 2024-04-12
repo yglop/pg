@@ -12,12 +12,11 @@ from systems.map_system import MapSystem
 class DoEvrything():
     def __init__(self):
         self.UI = UserInterfaceMain()
-        self.TS = TurnSystem()
         self.MS = MapSystem()
 
-        self.EM = EntityManager(self.MS, self.TS)
-        self.TS.get_max_player_actions(self.EM.ent_stats_dict[2].max_actions)
+        self.EM = EntityManager(self.MS)
 
+        self.TS = TurnSystem(self.EM)
 
     def runner(self, event_list, screen):
         # UI

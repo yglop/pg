@@ -2,25 +2,17 @@ import pygame as pg
 
 
 class TurnSystem():
-    def __init__(self):
-        self.max_player_actions = int()
-        self.current_player_actions = int()
-
-    def get_max_player_actions(self, max_player_actions=1):
-        self.max_player_actions = max_player_actions
-        self.current_player_actions = max_player_actions
-
-    def player_did_something(self, action_cost=1):
-        self.current_player_actions -= action_cost
-
-    def is_action_possable(self, action_cost=1):
-        return self.current_player_actions >= action_cost
+    def __init__(self, ES):
+        self.ES = ES
 
     def do_enemy_turn(self):
-        pass
+        for ent_id, ent in self.ES.ent_stats_dict.items():
+            if ent_id != 2:
+                self.ES.ES.try_move_enemy(ent_id)
+                ent.actions = ent.max_actions
 
     def end_turn(self):
         self.do_enemy_turn()
-        self.current_player_actions = self.max_player_actions
+        self.ES.ent_stats_dict[2].actions = self.ES.ent_stats_dict[2].max_actions
         print('End Turn')
         

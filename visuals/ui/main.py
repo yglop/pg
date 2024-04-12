@@ -11,8 +11,8 @@ class UserInterfaceMain():
         self.font = pg.font.Font(None, 24)
 
     def render_turn_count(self, screen, do_evrything):
-        c_a_p = do_evrything.TS.current_player_actions
-        m_a_p = do_evrything.TS.max_player_actions
+        c_a_p = do_evrything.EM.ent_stats_dict[2].actions
+        m_a_p = do_evrything.EM.ent_stats_dict[2].max_actions
         current_action_points = self.font.render(f'AP left:{c_a_p}/{m_a_p}', False, (0, 180, 0))
         screen.blit(current_action_points, (1060, 10))
 

@@ -6,7 +6,6 @@ from Resources.Textures.dataset import player_sprite
 
 class PlayerSystem():
     def __init__(self, EntityManager):
-        self.turn_system = EntityManager.turn_system
         self.tile_map = EntityManager.tile_map
 
         self.ent_visual_dict = EntityManager.ent_visual_dict
@@ -14,8 +13,8 @@ class PlayerSystem():
 
     def player_melee_attack(self, destination_tile):
         target_ent = self.tile_map[destination_tile]['entity']
-        if self.turn_system.current_player_actions > 0:
-            self.turn_system.player_did_something(1)
+        if self.ent_stats_dict[2].actions > 0:
+            self.ent_stats_dict[2].subtract_action(1)
             self.ent_stats_dict[target_ent].health -= 1
             print('player_melee_attack: player attacks', target_ent)
         if self.ent_stats_dict[target_ent].health <= 0:
@@ -34,17 +33,19 @@ class PlayerSystem():
             origin['entity'] = 0
             destination['entity'] = 2
 
+            self.ent_stats_dict[2].subtract_action(1)
+            self.ent_stats_dict[2].tile_id = destination_tile
+
             ent_new_sprite = EntityVisual(player_sprite, destination['rect'], destination['rect.center'])
             self.ent_visual_dict[destination['entity']] = pg.sprite.RenderPlain(ent_new_sprite)
 
-            self.turn_system.player_did_something(1)
             print('move_player:', 'moved from', original_tile, 'to', destination_tile)
         else:
             self.player_melee_attack(destination_tile)
             #print('move_player:', destination_tile ,'is an enemy tile')
 
     def try_move_player(self, tile_id):
-        if self.turn_system.is_action_possable() == False:
+        if self.ent_stats_dict[2].is_action_possable() == False:
             print('try_move_player: no actons points left')
             return
 
