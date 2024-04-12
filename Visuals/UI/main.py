@@ -1,7 +1,7 @@
 import pygame as pg
 
 from Visuals.Buttons.button_end_turn import EndTurnButton
-
+from Visuals.Buttons.button_interact import InteractButton
 
 class UserInterfaceMain():
     def __init__(self, do_evrything):
@@ -10,6 +10,10 @@ class UserInterfaceMain():
 
         self.turn_button = EndTurnButton((1100, 52))
         self.turn_button_visual = pg.sprite.RenderPlain(self.turn_button)
+
+        self.intecat_button = InteractButton((1170, 52))
+        self.intecat_button_visual = pg.sprite.RenderPlain(self.intecat_button)
+
         self.font = pg.font.Font(None, 24)
 
         self.ent_id = None
@@ -29,6 +33,10 @@ class UserInterfaceMain():
     def button_manager(self, event_list):
         self.turn_button.update(event_list, self.do_evrything)
         self.turn_button_visual.draw(self.screen)
+
+        if self.do_evrything.MS.tile_map[self.do_evrything.EM.ent_stats_dict[2].tile_id]['interactable'] != 0:
+            self.intecat_button.update(event_list, self.do_evrything)
+            self.intecat_button_visual.draw(self.screen)
         
     def render_player_info(self):
         player_hp = self.do_evrything.EM.ent_stats_dict[2].health

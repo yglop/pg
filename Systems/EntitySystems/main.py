@@ -18,6 +18,9 @@ class EntityManager():
         self.ent_visual_dict = dict()
         self.ent_stats_dict = dict()
 
+        self.interactable_count = 1
+        self.interactable_dict = dict()
+
         self.PS = PlayerSystem(self) 
         self.ES = EnemySystem(self)
         self.IS = ItemSystem()
