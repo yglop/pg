@@ -14,5 +14,7 @@ class TileVisual(pg.sprite.Sprite):
         for event in event_list:
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos):
                 self.clicked = not self.clicked
-
-                do_evrything.EM.PS.try_move_player(self.tile_id)
+                if  event.button == 1:                 
+                    do_evrything.EM.PS.try_move_player(self.tile_id)
+                elif  event.button == 3:
+                    do_evrything.UI.set_enemy_info(self.tile_id)

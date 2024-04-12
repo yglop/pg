@@ -8,7 +8,7 @@ screen.fill((100,100,100))
 
 clock = pg.time.Clock()        
 
-do_evrything = DoEvrything()
+do_evrything = DoEvrything(screen)
 
 # Main loop
 running = True
@@ -21,7 +21,7 @@ while running:
         if event.type == pg.QUIT:
             running = False
 
-    do_evrything.runner(event_list, screen)
+    do_evrything.runner(event_list)
 
     pg.display.flip()
 
