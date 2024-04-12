@@ -25,7 +25,7 @@ class DoEvrything():
         keyboard_handler(event_list, self)
         
         if self.escape_menu.is_menu_open == True:
-            self.escape_menu.draw_menu()
+            self.escape_menu.draw_menu(event_list)
             return
 
         self.screen.fill((100,100,100))

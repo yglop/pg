@@ -1,11 +1,14 @@
 import pygame as pg
 
+from Resources.Textures.dataset import button_end_turn
+
+
 
 class EndTurnButton(pg.sprite.Sprite):
-    def __init__(self, sprite, rect, center):
+    def __init__(self, center):
         super().__init__()
-        self.image = sprite 
-        self.rect = rect
+        self.image = button_end_turn 
+        self.rect = self.image.get_rect()
         self.rect.center = center
         self.clicked = False
 

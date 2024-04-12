@@ -27,5 +27,6 @@ enemy_sprite = pg.image.load("./Resources/Textures/ent/enemy.png")
 
 # UI
 button_end_turn = pg.image.load("./Resources/Textures/UI/button-EndTurn.png")
+button_close_game = pg.image.load("./Resources/Textures/UI/button-CloseGame.png")
 
 in_game_menu = pg.image.load("./Resources/Textures/UI/in_game_menu.png")

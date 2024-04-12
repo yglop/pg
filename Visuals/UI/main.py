@@ -1,7 +1,6 @@
 import pygame as pg
 
-from Visuals.UI.end_turn_button import EndTurnButton
-from Resources.Textures.dataset import button_end_turn
+from Visuals.Buttons.button_end_turn import EndTurnButton
 
 
 class UserInterfaceMain():
@@ -9,7 +8,7 @@ class UserInterfaceMain():
         self.do_evrything = do_evrything
         self.screen = self.do_evrything.screen
 
-        self.turn_button = EndTurnButton(button_end_turn, button_end_turn.get_rect(), (1100, 52))
+        self.turn_button = EndTurnButton((1100, 52))
         self.turn_button_visual = pg.sprite.RenderPlain(self.turn_button)
         self.font = pg.font.Font(None, 24)
 
