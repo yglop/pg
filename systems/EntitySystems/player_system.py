@@ -1,7 +1,8 @@
 import pygame as pg
 
-from visuals.display_ent import EntityVisual
 from Resources.Textures.dataset import player_sprite
+
+from systems.SubModules.move_mob import move_mob
 
 
 class PlayerSystem():
@@ -25,25 +26,6 @@ class PlayerSystem():
         else:
             print('player_melee_attack:', target_ent, 'hp=', self.ent_stats_dict[target_ent].health)
 
-    def move_player(self, destination_tile, original_tile):
-        destination = self.tile_map[destination_tile]
-        origin = self.tile_map[original_tile]
-        
-        if destination['entity'] == 0:
-            origin['entity'] = 0
-            destination['entity'] = 2
-
-            self.ent_stats_dict[2].subtract_action(1)
-            self.ent_stats_dict[2].tile_id = destination_tile
-
-            ent_new_sprite = EntityVisual(player_sprite, destination['rect'], destination['rect.center'])
-            self.ent_visual_dict[destination['entity']] = pg.sprite.RenderPlain(ent_new_sprite)
-
-            print('move_player:', 'moved from', original_tile, 'to', destination_tile)
-        else:
-            self.player_melee_attack(destination_tile)
-            #print('move_player:', destination_tile ,'is an enemy tile')
-
     def try_move_player(self, tile_id):
         if self.ent_stats_dict[2].is_action_possable() == False:
             print('try_move_player: no actons points left')
@@ -59,7 +41,20 @@ class PlayerSystem():
 
         for i in self.tile_map[tile_id]['neighbors']:
             if self.tile_map[i]['entity'] == 2:
-                self.move_player(tile_id, i)
+                if self.tile_map[tile_id]['entity'] == 0:
+                    move_mob(
+                        destination_tile=tile_id, 
+                        original_tile=i, 
+                        ent_id=2, 
+                        tile_map=self.tile_map,
+                        movement_cost=1,
+                        ent_stats_dict=self.ent_stats_dict,
+                        ent_visual_dict=self.ent_visual_dict,
+                        sprite=player_sprite
+                        )
+                    print('move_player:', 'moved from', i, 'to', tile_id)
+                    return
+                self.player_melee_attack(tile_id)
                 return
             
         print('try_move_player: tile', tile_id, 'is unreachable')
