@@ -33,7 +33,7 @@ class MapSystem():
             8: tile_sprites_32[3],
             9: tile_sprites_32[2],
         }
-        rile_ent_preset = {
+        tile_ent_preset = {
             0: -1,
             1: 2,
             2: 100,
@@ -47,7 +47,7 @@ class MapSystem():
                 pos_y = 32 + 32 * j
                            
                 tile_image = tile_image_preset[game_map[i,j]]
-                tile_ent = rile_ent_preset[game_map[i,j]]
+                tile_ent = tile_ent_preset[game_map[i,j]]
 
                 self.tile_map[(i,j)] = {
                     'image': tile_image,
