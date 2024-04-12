@@ -54,7 +54,7 @@ class MapSystem():
                     'rect': tile_image.get_rect(),
                     'rect.center': (pos_x, pos_y),
                     'entity': tile_ent,
-                    'neighbors': get_neighbors(self.grid_size, (i,j))
+                    'neighbors': get_neighbors(self.grid_size-1, (i,j))
                 }
 
     def set_entd_ids(self):
