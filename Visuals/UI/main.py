@@ -1,6 +1,6 @@
 import pygame as pg
 
-from visuals.ui.end_turn_button import EndTurnButton
+from Visuals.UI.end_turn_button import EndTurnButton
 from Resources.Textures.dataset import button_end_turn
 
 

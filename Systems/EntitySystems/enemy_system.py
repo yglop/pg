@@ -3,7 +3,7 @@ import random
 
 from Resources.Textures.dataset import enemy_sprite
 
-from systems.SubModules.move_mob import move_mob
+from Systems.SubModules.move_mob import move_mob
 
 
 class EnemySystem():

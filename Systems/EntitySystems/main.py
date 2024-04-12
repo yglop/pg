@@ -1,12 +1,12 @@
 import pygame as pg
 
-from systems.EntitySystems.player_system import PlayerSystem
-from systems.EntitySystems.enemy_system import EnemySystem
-from systems.EntitySystems.items_system import ItemSystem
+from Systems.EntitySystems.player_system import PlayerSystem
+from Systems.EntitySystems.enemy_system import EnemySystem
+from Systems.EntitySystems.items_system import ItemSystem
 
-from systems.EntitySystems.Entity.mob import Mob
+from Systems.EntitySystems.Entity.mob import Mob
 
-from visuals.display_ent import EntityVisual
+from Visuals.display_ent import EntityVisual
 from Resources.Textures.dataset import player_sprite, enemy_sprite
 
 

@@ -1,8 +1,8 @@
 import random
 import numpy as np
 
-from mapgen.rectangular_room import RectangularRoom
-from mapgen.tunnel_between import tunnel_between
+from Mapgen.rectangular_room import RectangularRoom
+from Mapgen.tunnel_between import tunnel_between
 
 
 def generate_map(

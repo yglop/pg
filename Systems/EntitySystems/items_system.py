@@ -1,6 +1,6 @@
 import pygame as pg
 
-from systems.EntitySystems.Entity.item import BaseItem
+from Systems.EntitySystems.Entity.item import BaseItem
 
 
 class ItemSystem():

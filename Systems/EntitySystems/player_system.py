@@ -2,7 +2,7 @@ import pygame as pg
 
 from Resources.Textures.dataset import player_sprite
 
-from systems.SubModules.move_mob import move_mob
+from Systems.SubModules.move_mob import move_mob
 
 
 class PlayerSystem():

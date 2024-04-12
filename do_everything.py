@@ -1,14 +1,14 @@
 import pygame as pg
 import random
 
-from visuals.ui.main import UserInterfaceMain
-from visuals.ui.escape_menu import EscapeMenu
+from Visuals.UI.main import UserInterfaceMain
+from Visuals.UI.escape_menu import EscapeMenu
 
-from systems.EntitySystems.main import EntityManager
+from Systems.EntitySystems.main import EntityManager
 
-from systems.keyboard_handler import keyboard_handler
-from systems.turn_system import TurnSystem
-from systems.map_system import MapSystem
+from Systems.keyboard_handler import keyboard_handler
+from Systems.turn_system import TurnSystem
+from Systems.map_system import MapSystem
 
 class DoEvrything():
     def __init__(self, screen):
@@ -27,7 +27,7 @@ class DoEvrything():
         if self.escape_menu.is_menu_open == True:
             self.escape_menu.draw_menu()
             return
-            
+
         self.screen.fill((100,100,100))
 
         # UI

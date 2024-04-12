@@ -1,5 +1,5 @@
 import pygame as pg
-from visuals.display_ent import EntityVisual
+from Visuals.display_ent import EntityVisual
 
 def move_mob(
         destination_tile, 

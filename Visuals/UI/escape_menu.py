@@ -1,7 +1,7 @@
 import pygame as pg
 
 from Resources.Textures.dataset import in_game_menu
-from visuals.canvas_sprite import CanvasSprite
+from Visuals.canvas_sprite import CanvasSprite
 
 class EscapeMenu():
     def __init__(self, screen):
