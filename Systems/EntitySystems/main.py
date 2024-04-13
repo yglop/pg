@@ -5,7 +5,9 @@ from Systems.EntitySystems.enemy_system import EnemySystem
 from Systems.EntitySystems.items_system import ItemSystem
 
 from Systems.EntitySystems.Entity.mob import Mob
-from Systems.EntitySystems.Entity.item import *
+from Systems.EntitySystems.Entity.Items.armour import *
+from Systems.EntitySystems.Entity.Items.limbs import *
+from Systems.EntitySystems.Entity.Items.organs import *
 
 from Visuals.display_ent import EntityVisual
 from Resources.Textures.dataset import player_sprite, enemy_sprite
@@ -46,6 +48,7 @@ class EntityManager():
                 'name':f'human{str(ent_id)}',
                 'armour':ArmourP1(),
                 'limbs':[LimbHandHuman(), LimbHandHuman(), LimbLegHuman(), LimbLegHuman(),],
+                'organs':[HeartHuman(), LungsHuman(), DigestiveSystemHuman(),],
                 'max_health':2,
             }
         }

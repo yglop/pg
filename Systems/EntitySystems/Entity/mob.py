@@ -10,6 +10,9 @@ class Mob():
         self.max_limb_points = 4
         self.limbs = data['limbs']
 
+        self.max_organ_points = 4
+        self.organs = data['organs']
+
         self.max_actions = 1
         self.max_health = 1
         self.melee_damage = 1

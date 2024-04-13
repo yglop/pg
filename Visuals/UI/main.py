@@ -51,6 +51,7 @@ class UserInterfaceMain():
         if self.ent_id in self.do_evrything.EM.ent_stats_dict:
             enemy_hp = self.do_evrything.EM.ent_stats_dict[self.ent_id].health
             enemy_limbs = self.do_evrything.EM.ent_stats_dict[self.ent_id].limbs
+            enemy_organs = self.do_evrything.EM.ent_stats_dict[self.ent_id].organs
             
             health_text = self.font.render(f'HP:{enemy_hp}', False, (100, 20, 0))
             self.screen.blit(health_text, (1000, 400))
@@ -59,6 +60,14 @@ class UserInterfaceMain():
             for i in enemy_limbs:
                 limb_stat_text = self.font.render(f'{i.name}: {i.health}', False, (100, 20, 0))
                 self.screen.blit(limb_stat_text, limb_stat_display)
+                limb_stat_display[1] += 20
+            
+            self.screen.blit(self.font.render(f'', False, (100, 20, 0)), limb_stat_display)
+            limb_stat_display[1] += 20
+
+            for i in enemy_organs:
+                organ_stat_text = self.font.render(f'{i.name}: {i.health}', False, (100, 20, 0))
+                self.screen.blit(organ_stat_text, limb_stat_display)
                 limb_stat_display[1] += 20
 
 
