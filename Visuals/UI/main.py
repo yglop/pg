@@ -44,8 +44,8 @@ class UserInterfaceMain():
         self.screen.blit(health_text, (1000, 100))
 
     def set_enemy_info(self, tile_id):
-        if self.do_evrything.MS.tile_map[tile_id]['entity'] >= 100:
-            self.ent_id = self.do_evrything.MS.tile_map[tile_id]['entity']
+        if self.do_evrything.MS.tile_map[tile_id]['mob'] >= 100:
+            self.ent_id = self.do_evrything.MS.tile_map[tile_id]['mob']
 
     def render_enemy_info(self):
         if self.ent_id in self.do_evrything.EM.mobs_stats:

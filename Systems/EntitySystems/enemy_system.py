@@ -19,7 +19,7 @@ class EnemySystem():
             original_tile = self.mobs_stats[ent_id].tile_id
             directions = list()
             for i in self.tile_map[original_tile]['neighbors']:
-                if self.tile_map[i]['entity'] == 0:
+                if self.tile_map[i]['mob'] == 0:
                     directions.append(i)
 
             if len(directions) == 0:

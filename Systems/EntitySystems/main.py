@@ -30,16 +30,16 @@ class EntityManager():
 
     def iterate_through_tile_map(self):
         for tile_id, tile_data in self.tile_map.items():
-            if tile_data['entity'] == 2:
+            if tile_data['mob'] == 2:
                 self.append_ent_visual_dict(tile_data, sprite=player_sprite)
-                self.append_ent_stats_dict(tile_id, ent_id=tile_data['entity'])
-            elif tile_data['entity'] >= 100:
+                self.append_ent_stats_dict(tile_id, ent_id=tile_data['mob'])
+            elif tile_data['mob'] >= 100:
                 self.append_ent_visual_dict(tile_data, sprite=enemy_sprite)
-                self.append_ent_stats_dict(tile_id, ent_id=tile_data['entity'])
+                self.append_ent_stats_dict(tile_id, ent_id=tile_data['mob'])
     
     def append_ent_visual_dict(self, tile_data, sprite):
         new_ent = EntityVisual(sprite, tile_data['rect'], tile_data['rect.center'])
-        self.mobs_visual[tile_data['entity']] = pg.sprite.RenderPlain(new_ent)
+        self.mobs_visual[tile_data['mob']] = pg.sprite.RenderPlain(new_ent)
    
     def append_ent_stats_dict(self, tile_id, ent_id):
         equipment_preset = {

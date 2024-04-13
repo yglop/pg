@@ -53,7 +53,7 @@ class MapSystem():
                     'image': tile_image,
                     'rect': tile_image.get_rect(),
                     'rect.center': (pos_x, pos_y),
-                    'entity': tile_ent,
+                    'mob': tile_ent,
                     'interactable': 0,
                     'neighbors': get_neighbors(self.grid_size-1, (i,j))
                 }
@@ -61,9 +61,9 @@ class MapSystem():
     def set_entd_ids(self):
         enemy_count = 1
         for tile_id, tile_data in self.tile_map.items():
-            if tile_data['entity'] >= 100:
+            if tile_data['mob'] >= 100:
                 enemy_count += 1
-                self.tile_map[tile_id]['entity'] += enemy_count
+                self.tile_map[tile_id]['mob'] += enemy_count
 
     def create_tiles(self):
         for tile_id, tile_data in self.tile_map.items():  

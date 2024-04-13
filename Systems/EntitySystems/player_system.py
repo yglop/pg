@@ -19,17 +19,17 @@ class PlayerSystem():
             print('try_move_player: no actons points left')
             return
 
-        if self.tile_map[tile_id]['entity'] == 2:
+        if self.tile_map[tile_id]['mob'] == 2:
             print('try_move_player:', tile_id ,"is player's tile")
             return
 
-        if self.tile_map[tile_id]['entity'] == -1:
+        if self.tile_map[tile_id]['mob'] == -1:
             print('try_move_player:', tile_id ,"is impossible")
             return
 
         for i in self.tile_map[tile_id]['neighbors']:
-            if self.tile_map[i]['entity'] == 2:
-                if self.tile_map[tile_id]['entity'] == 0:
+            if self.tile_map[i]['mob'] == 2:
+                if self.tile_map[tile_id]['mob'] == 0:
                     move_mob(
                         destination_tile=tile_id, 
                         original_tile=i, 
@@ -43,7 +43,7 @@ class PlayerSystem():
                     print('move_player:', 'moved from', i, 'to', tile_id)
                     return
                 # attack
-                target_mob_id = self.tile_map[tile_id]['entity']
+                target_mob_id = self.tile_map[tile_id]['mob']
                 self.mobs_stats[2].attack(self, target_mob_id, tile_id)
                 return
             

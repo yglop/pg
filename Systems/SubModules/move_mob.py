@@ -14,11 +14,11 @@ def move_mob(
     destination = tile_map[destination_tile]
     origin = tile_map[original_tile]
     
-    origin['entity'] = 0
-    destination['entity'] = ent_id
+    origin['mob'] = 0
+    destination['mob'] = ent_id
 
     mobs_stats[ent_id].subtract_action(movement_cost)
     mobs_stats[ent_id].tile_id = destination_tile
 
     ent_new_sprite = EntityVisual(sprite, destination['rect'], destination['rect.center'])
-    mobs_visual[destination['entity']] = pg.sprite.RenderPlain(ent_new_sprite)
+    mobs_visual[destination['mob']] = pg.sprite.RenderPlain(ent_new_sprite)

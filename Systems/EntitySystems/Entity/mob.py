@@ -54,7 +54,7 @@ class Mob():
             # delete ent
             del data.mobs_stats[target_mob_id]
             del data.mobs_visual[target_mob_id]
-            data.tile_map[destination_tile]['entity'] = 0
+            data.tile_map[destination_tile]['mob'] = 0
 
             print(f'attack: {target_mob.name} died')
         else:
