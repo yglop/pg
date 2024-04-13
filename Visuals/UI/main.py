@@ -41,7 +41,7 @@ class UserInterfaceMain():
     def render_player_info(self):
         player_hp = self.do_evrything.EM.ent_stats_dict[2].health
         health_text = self.font.render(f'HP:{player_hp}', False, (100, 20, 0))
-        self.screen.blit(health_text, (1060, 100))
+        self.screen.blit(health_text, (1000, 100))
 
     def set_enemy_info(self, tile_id):
         if self.do_evrything.MS.tile_map[tile_id]['entity'] >= 100:
@@ -50,8 +50,17 @@ class UserInterfaceMain():
     def render_enemy_info(self):
         if self.ent_id in self.do_evrything.EM.ent_stats_dict:
             enemy_hp = self.do_evrything.EM.ent_stats_dict[self.ent_id].health
+            enemy_limbs = self.do_evrything.EM.ent_stats_dict[self.ent_id].limbs
+            
             health_text = self.font.render(f'HP:{enemy_hp}', False, (100, 20, 0))
-            self.screen.blit(health_text, (1060, 400))
+            self.screen.blit(health_text, (1000, 400))
+
+            limb_stat_display = [1000, 420]
+            for i in enemy_limbs:
+                limb_stat_text = self.font.render(f'{i.name}: {i.health}', False, (100, 20, 0))
+                self.screen.blit(limb_stat_text, limb_stat_display)
+                limb_stat_display[1] += 20
+
 
     def render_logs(self):
         pass
