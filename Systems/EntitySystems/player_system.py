@@ -19,7 +19,10 @@ class PlayerSystem():
         target_ent = self.tile_map[destination_tile]['entity']
         if self.ent_stats_dict[2].actions > 0:
             self.ent_stats_dict[2].subtract_action(1)
-            self.ent_stats_dict[target_ent].health -= 1
+            if self.ent_stats_dict[2].melee_damage > self.ent_stats_dict[target_ent].armour.protection:
+                self.ent_stats_dict[target_ent].health -= self.ent_stats_dict[2].melee_damage - self.ent_stats_dict[target_ent].armour.protection
+            else:
+                self.ent_stats_dict[target_ent].health -= 1
 
             print('player_melee_attack: player attacks', target_ent)
         if self.ent_stats_dict[target_ent].health <= 0:

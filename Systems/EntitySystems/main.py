@@ -5,6 +5,7 @@ from Systems.EntitySystems.enemy_system import EnemySystem
 from Systems.EntitySystems.items_system import ItemSystem
 
 from Systems.EntitySystems.Entity.mob import Mob
+from Systems.EntitySystems.Entity.item import *
 
 from Visuals.display_ent import EntityVisual
 from Resources.Textures.dataset import player_sprite, enemy_sprite
@@ -41,10 +42,18 @@ class EntityManager():
         self.ent_visual_dict[tile_data['entity']] = pg.sprite.RenderPlain(new_ent)
    
     def append_ent_stats_dict(self, tile_id, ent_id):
+        equipment_preset = {
+            'human': {
+                'tile_id':tile_id,
+                'armour':ArmourP1(),
+                'limbs':[LimbHandHuman(), LimbHandHuman(), LimbLegHuman(), LimbLegHuman(),],
+                'max_health':2,
+            }
+        }
         if ent_id == 2:
-            self.ent_stats_dict[ent_id] = Mob({'max_actions':2,'max_health':10,'tile_id':tile_id})
+            self.ent_stats_dict[ent_id] = Mob(equipment_preset['human'])
         else:
-            self.ent_stats_dict[ent_id] = Mob({'max_actions':1,'max_health':2,'tile_id':tile_id})
+            self.ent_stats_dict[ent_id] = Mob(equipment_preset['human'])
     
     def render_ents(self, screen):
         for ent_id, ent_visual in self.ent_visual_dict.items():
