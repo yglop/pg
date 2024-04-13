@@ -3,6 +3,7 @@
 class Mob():
     def __init__(self, data):
         self.tile_id = data['tile_id']
+        self.name = data['name']
 
         self.armour = data['armour']
 
@@ -12,6 +13,7 @@ class Mob():
         self.max_actions = 1
         self.max_health = 1
         self.melee_damage = 1
+        self.weight = 1
 
         self.update_stats()
 
@@ -26,16 +28,48 @@ class Mob():
             return True
         return False
 
+    def attack(self, data, target_mob_id, destination_tile):
+        target_mob = data.ent_stats_dict[target_mob_id]
+        destination = data.tile_map[destination_tile]
+
+        if self.actions >= self.weight:
+            #attaker_mob.attack(target_mob)
+            self.subtract_action(self.weight)
+            if self.melee_damage > target_mob.armour.protection:
+                target_mob.health -= self.melee_damage - target_mob.armour.protection
+            else:
+                target_mob.health -= 1
+            print(f'attack: {self.name} attacks {target_mob.name}')
+        if target_mob.health <= 0:
+            ## spawn/add loot to {interactable} 
+            if destination['interactable'] == 0:
+                destination['interactable'] = target_mob_id
+                data.interactable_dict[target_mob_id] = [10_005, 10_006]
+            else:
+                data.interactable_dict[destination['interactable']] += [10_105, 10_106]
+
+            # delete ent
+            del data.ent_stats_dict[target_mob_id]
+            del data.ent_visual_dict[target_mob_id]
+            data.tile_map[destination_tile]['entity'] = 0
+
+            print(f'attack: {target_mob.name} died')
+        else:
+            print(f'attack: {target_mob.name} hp={target_mob.health}')
+
     def update_stats(self):
         max_health = 0
         max_actions = 0
         melee_damage = 0
+        weight = 1
 
         for limb in self.limbs:
             max_health += limb.health
             max_actions += limb.action_points
             melee_damage += limb.melee_damage
+            weight += limb.weight
 
         self.max_health = max_health
         self.max_actions = max_actions
         self.melee_damage = melee_damage
+        self.weight = weight

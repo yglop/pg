@@ -18,8 +18,6 @@ class EntityManager():
 
         self.ent_visual_dict = dict()
         self.ent_stats_dict = dict()
-
-        self.interactable_count = 1
         self.interactable_dict = dict()
 
         self.PS = PlayerSystem(self) 
@@ -45,15 +43,13 @@ class EntityManager():
         equipment_preset = {
             'human': {
                 'tile_id':tile_id,
+                'name':f'human{str(ent_id)}',
                 'armour':ArmourP1(),
                 'limbs':[LimbHandHuman(), LimbHandHuman(), LimbLegHuman(), LimbLegHuman(),],
                 'max_health':2,
             }
         }
-        if ent_id == 2:
-            self.ent_stats_dict[ent_id] = Mob(equipment_preset['human'])
-        else:
-            self.ent_stats_dict[ent_id] = Mob(equipment_preset['human'])
+        self.ent_stats_dict[ent_id] = Mob(equipment_preset['human'])
     
     def render_ents(self, screen):
         for ent_id, ent_visual in self.ent_visual_dict.items():

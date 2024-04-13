@@ -2,7 +2,7 @@
 
 class BaseItem():
     def __init__(self):
-        self.space = 1
+        self.weight = 0
 
 ## Armour
 class ArmourP1(BaseItem):
