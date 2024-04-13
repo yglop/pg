@@ -10,14 +10,13 @@ class Mob():
         self.limbs = data['limbs']
 
         self.max_actions = 1
-        self.actions = self.max_actions
-
         self.max_health = 1
-        self.health = self.max_health
-
         self.melee_damage = 1
 
         self.update_stats()
+
+        self.actions = self.max_actions
+        self.health = self.max_health
 
     def subtract_action(self, cost=1):
         self.actions -= cost
@@ -38,9 +37,5 @@ class Mob():
             melee_damage += limb.melee_damage
 
         self.max_health = max_health
-        self.health = self.max_health
-        
         self.max_actions = max_actions
-        self.actions = self.max_actions
-
         self.melee_damage = melee_damage
