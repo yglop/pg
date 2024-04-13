@@ -32,7 +32,7 @@ class Mob():
         return False
 
     def attack(self, data, target_mob_id, destination_tile):
-        target_mob = data.ent_stats_dict[target_mob_id]
+        target_mob = data.mobs_stats[target_mob_id]
         destination = data.tile_map[destination_tile]
 
         if self.actions >= self.weight:
@@ -52,8 +52,8 @@ class Mob():
                 data.interactable_dict[destination['interactable']] += [10_105, 10_106]
 
             # delete ent
-            del data.ent_stats_dict[target_mob_id]
-            del data.ent_visual_dict[target_mob_id]
+            del data.mobs_stats[target_mob_id]
+            del data.mobs_visual[target_mob_id]
             data.tile_map[destination_tile]['entity'] = 0
 
             print(f'attack: {target_mob.name} died')

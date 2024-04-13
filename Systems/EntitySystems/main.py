@@ -18,8 +18,8 @@ class EntityManager():
         self.tile_map = MS.tile_map
         self.grid_size = MS.grid_size
 
-        self.ent_visual_dict = dict()
-        self.ent_stats_dict = dict()
+        self.mobs_visual = dict()
+        self.mobs_stats = dict()
         self.interactable_dict = dict()
 
         self.PS = PlayerSystem(self) 
@@ -39,7 +39,7 @@ class EntityManager():
     
     def append_ent_visual_dict(self, tile_data, sprite):
         new_ent = EntityVisual(sprite, tile_data['rect'], tile_data['rect.center'])
-        self.ent_visual_dict[tile_data['entity']] = pg.sprite.RenderPlain(new_ent)
+        self.mobs_visual[tile_data['entity']] = pg.sprite.RenderPlain(new_ent)
    
     def append_ent_stats_dict(self, tile_id, ent_id):
         equipment_preset = {
@@ -52,8 +52,8 @@ class EntityManager():
                 'max_health':2,
             }
         }
-        self.ent_stats_dict[ent_id] = Mob(equipment_preset['human'])
+        self.mobs_stats[ent_id] = Mob(equipment_preset['human'])
     
     def render_ents(self, screen):
-        for ent_id, ent_visual in self.ent_visual_dict.items():
+        for ent_id, ent_visual in self.mobs_visual.items():
             ent_visual.draw(screen)

@@ -6,13 +6,13 @@ class TurnSystem():
         self.EM = EM
 
     def do_enemy_turn(self):
-        for ent_id, ent in self.EM.ent_stats_dict.items():
+        for ent_id, ent in self.EM.mobs_stats.items():
             if ent_id != 2:
                 self.EM.ES.try_move_enemy(ent_id)
                 ent.actions = ent.max_actions
 
     def end_turn(self):
         self.do_enemy_turn()
-        self.EM.ent_stats_dict[2].actions = self.EM.ent_stats_dict[2].max_actions
+        self.EM.mobs_stats[2].actions = self.EM.mobs_stats[2].max_actions
         print('End Turn')
         

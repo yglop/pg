@@ -11,11 +11,11 @@ class PlayerSystem():
 
         self.interactable_dict = EntityManager.interactable_dict
 
-        self.ent_visual_dict = EntityManager.ent_visual_dict
-        self.ent_stats_dict = EntityManager.ent_stats_dict
+        self.mobs_visual = EntityManager.mobs_visual
+        self.mobs_stats = EntityManager.mobs_stats
 
     def try_move_player(self, tile_id):
-        if self.ent_stats_dict[2].is_action_possable() == False:
+        if self.mobs_stats[2].is_action_possable() == False:
             print('try_move_player: no actons points left')
             return
 
@@ -36,15 +36,15 @@ class PlayerSystem():
                         ent_id=2, 
                         tile_map=self.tile_map,
                         movement_cost=1,
-                        ent_stats_dict=self.ent_stats_dict,
-                        ent_visual_dict=self.ent_visual_dict,
+                        mobs_stats=self.mobs_stats,
+                        mobs_visual=self.mobs_visual,
                         sprite=player_sprite
                         )
                     print('move_player:', 'moved from', i, 'to', tile_id)
                     return
                 # attack
                 target_mob_id = self.tile_map[tile_id]['entity']
-                self.ent_stats_dict[2].attack(self, target_mob_id, tile_id)
+                self.mobs_stats[2].attack(self, target_mob_id, tile_id)
                 return
             
         print('try_move_player: tile', tile_id, 'is unreachable')

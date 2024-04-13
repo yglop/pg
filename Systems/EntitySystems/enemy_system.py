@@ -10,13 +10,13 @@ class EnemySystem():
     def __init__(self, EntityManager):
         self.tile_map = EntityManager.tile_map
 
-        self.ent_visual_dict = EntityManager.ent_visual_dict
-        self.ent_stats_dict = EntityManager.ent_stats_dict
+        self.mobs_visual = EntityManager.mobs_visual
+        self.mobs_stats = EntityManager.mobs_stats
 
     def try_move_enemy(self, ent_id):
         movement_cost = 1
-        while self.ent_stats_dict[ent_id].actions >= movement_cost:
-            original_tile = self.ent_stats_dict[ent_id].tile_id
+        while self.mobs_stats[ent_id].actions >= movement_cost:
+            original_tile = self.mobs_stats[ent_id].tile_id
             directions = list()
             for i in self.tile_map[original_tile]['neighbors']:
                 if self.tile_map[i]['entity'] == 0:
@@ -28,12 +28,12 @@ class EnemySystem():
 
             move_mob(
                     destination_tile=random.choice(directions), 
-                    original_tile=self.ent_stats_dict[ent_id].tile_id, 
+                    original_tile=self.mobs_stats[ent_id].tile_id, 
                     ent_id=ent_id, 
                     tile_map=self.tile_map,
                     movement_cost=movement_cost,
-                    ent_stats_dict=self.ent_stats_dict,
-                    ent_visual_dict=self.ent_visual_dict,
+                    mobs_stats=self.mobs_stats,
+                    mobs_visual=self.mobs_visual,
                     sprite=enemy_sprite
                     )
 

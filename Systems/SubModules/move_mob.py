@@ -7,8 +7,8 @@ def move_mob(
         ent_id, 
         tile_map,
         movement_cost,
-        ent_stats_dict,
-        ent_visual_dict,
+        mobs_stats,
+        mobs_visual,
         sprite
     ):
     destination = tile_map[destination_tile]
@@ -17,8 +17,8 @@ def move_mob(
     origin['entity'] = 0
     destination['entity'] = ent_id
 
-    ent_stats_dict[ent_id].subtract_action(movement_cost)
-    ent_stats_dict[ent_id].tile_id = destination_tile
+    mobs_stats[ent_id].subtract_action(movement_cost)
+    mobs_stats[ent_id].tile_id = destination_tile
 
     ent_new_sprite = EntityVisual(sprite, destination['rect'], destination['rect.center'])
-    ent_visual_dict[destination['entity']] = pg.sprite.RenderPlain(ent_new_sprite)
+    mobs_visual[destination['entity']] = pg.sprite.RenderPlain(ent_new_sprite)
