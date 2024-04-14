@@ -9,7 +9,7 @@ class InventoryMenu():
     def __init__(self, screen):
         self.screen = screen
 
-        self.inventory_menu_canvas = CanvasInventory(sprite=inventory_menu, center=(550,450))
+        self.inventory_menu_canvas = CanvasInventory(sprite=inventory_menu, center=(600,500))
         self.inventory_menu_canvas_visual = pg.sprite.RenderPlain(self.inventory_menu_canvas)
         
         self.is_menu_open = False
