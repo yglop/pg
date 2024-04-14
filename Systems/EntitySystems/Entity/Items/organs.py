@@ -1,27 +1,36 @@
 from Systems.EntitySystems.Entity.item import BaseItem
 
 
-class HeartHuman(BaseItem):
+class BaseOrgan(BaseItem):
     def __init__(self):
         super().__init__()
-        self.name = 'human heart' 
+        self.critical = False
+
+
+## critical systems
+class CriticalSystemsHuman(BaseOrgan):
+    def __init__(self):
+        super().__init__()
+        self.name = 'human critical sys' 
         self.health = 4
         
-        self.blood_flow = 10
+        self.critical = True
 
 
-class LungsHuman(BaseItem):
+class CriticalSystemsChangeling(BaseOrgan):
     def __init__(self):
         super().__init__()
-        self.name = 'human lungs' 
+        self.name = 'ling critical sys' 
         self.health = 6
         
-        self.oxidation = 10
+        self.critical = True
 
 
-class DigestiveSystemHuman(BaseItem):
+## digestive systems
+class DigestiveSystemHuman(BaseOrgan):
     def __init__(self):
         super().__init__()
-        self.name = 'human digestive system' 
-        self.health = 8
+        self.name = 'human digestive sys' 
+        self.health = 6
+
 

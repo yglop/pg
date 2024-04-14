@@ -16,7 +16,6 @@ class Mob():
         self.max_actions = 1
         self.max_health = 1
         self.melee_damage = 1
-        self.weight = 1
 
         self.update_stats()
 
@@ -35,9 +34,8 @@ class Mob():
         target_mob = data.mobs_stats[target_mob_id]
         destination = data.tile_map[destination_tile]
 
-        if self.actions >= self.weight:
-            #attaker_mob.attack(target_mob)
-            self.subtract_action(self.weight)
+        if self.actions >= 1:
+            self.subtract_action(1)
             if self.melee_damage > target_mob.armour.protection:
                 target_mob.health -= self.melee_damage - target_mob.armour.protection
             else:
@@ -64,15 +62,12 @@ class Mob():
         max_health = 0
         max_actions = 0
         melee_damage = 0
-        weight = 1
 
         for limb in self.limbs:
             max_health += limb.health
             max_actions += limb.action_points
             melee_damage += limb.melee_damage
-            weight += limb.weight
 
         self.max_health = max_health
         self.max_actions = max_actions
         self.melee_damage = melee_damage
-        self.weight = weight

@@ -47,12 +47,23 @@ class EntityManager():
                 'tile_id':tile_id,
                 'name':f'human{str(ent_id)}',
                 'armour':ArmourP1(),
-                'limbs':[LimbHandHuman(), LimbHandHuman(), LimbLegHuman(), LimbLegHuman(),],
-                'organs':[HeartHuman(), LungsHuman(), DigestiveSystemHuman(),],
+                'limbs':[LimbArmHuman(), LimbArmHuman(), LimbLegHuman(), LimbLegHuman(),],
+                'organs':[CriticalSystemsHuman(), DigestiveSystemHuman(),],
                 'max_health':2,
-            }
+            },
+            'ling': {
+                'tile_id':tile_id,
+                'name':f'player',
+                'armour':ArmourP1(),
+                'limbs':[LimbArmHuman(), LimbArmBlade(), LimbLegHuman(), LimbLegHuman(),],
+                'organs':[CriticalSystemsChangeling(), DigestiveSystemHuman(),],
+                'max_health':2,
+            },
         }
-        self.mobs_stats[ent_id] = Mob(equipment_preset['human'])
+        if ent_id == 2:
+            self.mobs_stats[ent_id] = Mob(equipment_preset['ling'])
+        else:
+            self.mobs_stats[ent_id] = Mob(equipment_preset['human'])
     
     def render_ents(self, screen):
         for ent_id, ent_visual in self.mobs_visual.items():
