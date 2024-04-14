@@ -3,6 +3,7 @@ import random
 
 from Visuals.UI.main import UserInterfaceMain
 from Visuals.UI.escape_menu import EscapeMenu
+from Visuals.UI.inventory_menu import InventoryMenu
 
 from Systems.EntitySystems.main import EntityManager
 
@@ -17,8 +18,10 @@ class DoEvrything():
         self.MS = MapSystem()
         self.EM = EntityManager(self.MS)
         self.TS = TurnSystem(self.EM)
+
         self.UI = UserInterfaceMain(self)
         self.escape_menu = EscapeMenu(self.screen)
+        self.inventory_menu = InventoryMenu(self.screen)
 
     def runner(self, event_list):
         # keyboard
@@ -26,6 +29,10 @@ class DoEvrything():
         
         if self.escape_menu.is_menu_open == True:
             self.escape_menu.draw_menu(event_list)
+            return
+
+        if self.inventory_menu.is_menu_open == True:
+            self.inventory_menu.draw_menu(event_list)
             return
 
         self.screen.fill((100,100,100))

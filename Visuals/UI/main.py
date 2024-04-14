@@ -1,7 +1,9 @@
 import pygame as pg
 
 from Visuals.Buttons.button_end_turn import EndTurnButton
-from Visuals.Buttons.button_interact import InteractButton
+from Visuals.Buttons.button_inventory import InventoryButton
+
+
 
 class UserInterfaceMain():
     def __init__(self, do_evrything):
@@ -11,8 +13,8 @@ class UserInterfaceMain():
         self.turn_button = EndTurnButton((1100, 52))
         self.turn_button_visual = pg.sprite.RenderPlain(self.turn_button)
 
-        self.intecat_button = InteractButton((1170, 52))
-        self.intecat_button_visual = pg.sprite.RenderPlain(self.intecat_button)
+        self.inventory_button = InventoryButton((1170, 52))
+        self.inventory_button_visual = pg.sprite.RenderPlain(self.inventory_button)
 
         self.font = pg.font.Font('./Resources/Fonts/arial_bold.ttf', 16)
         self.text_colour = (30, 30, 30)
@@ -36,8 +38,11 @@ class UserInterfaceMain():
         self.turn_button_visual.draw(self.screen)
 
         if self.do_evrything.MS.tile_map[self.do_evrything.EM.mobs_stats[2].tile_id]['interactable'] != 0:
-            self.intecat_button.update(event_list, self.do_evrything)
-            self.intecat_button_visual.draw(self.screen)
+            self.inventory_button.change_image(True)
+        else:
+            self.inventory_button.change_image(False)
+        self.inventory_button.update(event_list, self.do_evrything)
+        self.inventory_button_visual.draw(self.screen)
         
     def render_player_info(self):
         self.render_mob_info(2, [1000,100])

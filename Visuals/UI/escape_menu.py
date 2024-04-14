@@ -10,7 +10,7 @@ class EscapeMenu():
     def __init__(self, screen):
         self.screen = screen
 
-        self.game_menu_visual = pg.sprite.RenderPlain(CanvasSprite(sprite=in_game_menu, center=(500,400)))
+        self.game_menu_canvas = pg.sprite.RenderPlain(CanvasSprite(sprite=in_game_menu, center=(500,400)))
 
         self.close_game_button = CloseGameButton((500,570))
         self.close_game_button_visual = pg.sprite.RenderPlain(self.close_game_button)
@@ -24,6 +24,6 @@ class EscapeMenu():
         self.is_menu_open = False
 
     def draw_menu(self, event_list):
-        self.game_menu_visual.draw(self.screen)
+        self.game_menu_canvas.draw(self.screen)
         self.close_game_button.update(event_list)
         self.close_game_button_visual.draw(self.screen)
