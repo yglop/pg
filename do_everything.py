@@ -31,11 +31,7 @@ class DoEvrything():
         self.screen.fill((100,100,100))
 
         # UI
-        self.UI.draw_rectangles()
-        self.UI.button_manager(event_list)
-        self.UI.render_turn_count()
-        self.UI.render_player_info()
-        self.UI.render_enemy_info()
+        self.UI.render_all(event_list)
 
         # tiles
         self.MS.group_tile.update(event_list, self)

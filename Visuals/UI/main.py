@@ -80,3 +80,9 @@ class UserInterfaceMain():
     def render_logs(self):
         pass
 
+    def render_all(self, event_list):
+        self.draw_rectangles()
+        self.button_manager(event_list)
+        self.render_turn_count()
+        self.render_player_info()
+        self.render_enemy_info()
