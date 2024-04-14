@@ -5,6 +5,7 @@ class BaseOrgan(BaseItem):
     def __init__(self):
         super().__init__()
         self.critical = False
+        self.organ_points = 2
 
 
 ## critical systems

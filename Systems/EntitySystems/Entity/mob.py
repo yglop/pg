@@ -1,3 +1,5 @@
+import random
+
 
 
 class Mob():
@@ -14,13 +16,11 @@ class Mob():
         self.organs = data['organs']
 
         self.max_actions = 1
-        self.max_health = 1
         self.melee_damage = 1
 
         self.update_stats()
 
         self.actions = self.max_actions
-        self.health = self.max_health
 
     def subtract_action(self, cost=1):
         self.actions -= cost
@@ -36,18 +36,38 @@ class Mob():
 
         if self.actions >= 1:
             self.subtract_action(1)
-            if self.melee_damage > target_mob.armour.protection:
-                target_mob.health -= self.melee_damage - target_mob.armour.protection
+
+            targets_list = target_mob.limbs + ['body']
+            target_part = random.choice(targets_list)
+            if target_part == 'body':
+                target_part = random.choice(target_mob.organs)
+                if self.melee_damage > target_mob.armour.protection:
+                    target_part.health -= self.melee_damage - target_mob.armour.protection
+                else:
+                    target_mob.armour.health -= self.melee_damage
+                    target_part.health -= 1
             else:
-                target_mob.health -= 1
+                target_part.health -= self.melee_damage
             print(f'attack: {self.name} attacks {target_mob.name}')
-        if target_mob.health <= 0:
+        
+        target_critical_organs = list()
+        for organ in target_mob.organs:
+            if organ.critical == True and organ.health > 0:
+                target_critical_organs.append(organ)
+            else:
+                target_mob.organs.remove(organ)
+
+        for limb in target_mob.limbs:
+            if limb.health <= 0:
+                target_mob.limbs.remove(limb)
+
+        if len(target_critical_organs) == 0:
             ## spawn/add loot to {interactable} 
             if destination['interactable'] == 0:
                 destination['interactable'] = target_mob_id
-                data.interactable_dict[target_mob_id] = [10_005, 10_006]
+                data.interactable_dict[target_mob_id] = target_mob.limbs + target_mob.organs
             else:
-                data.interactable_dict[destination['interactable']] += [10_105, 10_106]
+                data.interactable_dict[destination['interactable']] += target_mob.limbs + target_mob.organs
 
             # delete ent
             del data.mobs_stats[target_mob_id]
@@ -56,18 +76,15 @@ class Mob():
 
             print(f'attack: {target_mob.name} died')
         else:
-            print(f'attack: {target_mob.name} hp={target_mob.health}')
+            print(f'attack: {target_mob.name}')
 
     def update_stats(self):
-        max_health = 0
         max_actions = 0
         melee_damage = 0
 
         for limb in self.limbs:
-            max_health += limb.health
             max_actions += limb.action_points
             melee_damage += limb.melee_damage
 
-        self.max_health = max_health
         self.max_actions = max_actions
         self.melee_damage = melee_damage

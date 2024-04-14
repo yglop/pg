@@ -39,9 +39,10 @@ class UserInterfaceMain():
             self.intecat_button_visual.draw(self.screen)
         
     def render_player_info(self):
-        player_hp = self.do_evrything.EM.mobs_stats[2].health
-        health_text = self.font.render(f'HP:{player_hp}', False, (100, 20, 0))
-        self.screen.blit(health_text, (1000, 100))
+        pass
+        #player_hp = self.do_evrything.EM.mobs_stats[2].health
+        #health_text = self.font.render(f'HP:{player_hp}', False, (100, 20, 0))
+        #self.screen.blit(health_text, (1000, 100))
 
     def set_enemy_info(self, tile_id):
         if self.do_evrything.MS.tile_map[tile_id]['mob'] >= 100:
@@ -49,11 +50,11 @@ class UserInterfaceMain():
 
     def render_enemy_info(self):
         if self.ent_id in self.do_evrything.EM.mobs_stats:
-            enemy_hp = self.do_evrything.EM.mobs_stats[self.ent_id].health
+            enemy_name = self.do_evrything.EM.mobs_stats[self.ent_id].name
             enemy_limbs = self.do_evrything.EM.mobs_stats[self.ent_id].limbs
             enemy_organs = self.do_evrything.EM.mobs_stats[self.ent_id].organs
             
-            health_text = self.font.render(f'HP:{enemy_hp}', False, (100, 20, 0))
+            health_text = self.font.render(f'{enemy_name}', False, (100, 20, 0))
             self.screen.blit(health_text, (1000, 400))
 
             limb_stat_display = [1000, 420]

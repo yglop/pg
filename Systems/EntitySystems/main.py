@@ -49,7 +49,6 @@ class EntityManager():
                 'armour':ArmourP1(),
                 'limbs':[LimbArmHuman(), LimbArmHuman(), LimbLegHuman(), LimbLegHuman(),],
                 'organs':[CriticalSystemsHuman(), DigestiveSystemHuman(),],
-                'max_health':2,
             },
             'ling': {
                 'tile_id':tile_id,
@@ -57,7 +56,6 @@ class EntityManager():
                 'armour':ArmourP1(),
                 'limbs':[LimbArmHuman(), LimbArmBlade(), LimbLegHuman(), LimbLegHuman(),],
                 'organs':[CriticalSystemsChangeling(), DigestiveSystemHuman(),],
-                'max_health':2,
             },
         }
         if ent_id == 2:
