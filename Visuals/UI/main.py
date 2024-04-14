@@ -14,9 +14,10 @@ class UserInterfaceMain():
         self.intecat_button = InteractButton((1170, 52))
         self.intecat_button_visual = pg.sprite.RenderPlain(self.intecat_button)
 
-        self.font = pg.font.Font(None, 24)
+        self.font = pg.font.Font('./Resources/Fonts/arial_bold.ttf', 16)
+        self.text_colour = (30, 30, 30)
 
-        self.ent_id = None
+        self.mob_id = None
 
     def draw_rectangles(self):
         pg.draw.rect(self.screen, (0,0,100), pg.Rect(1000, 0, 200, 1000))
@@ -39,38 +40,42 @@ class UserInterfaceMain():
             self.intecat_button_visual.draw(self.screen)
         
     def render_player_info(self):
-        pass
-        #player_hp = self.do_evrything.EM.mobs_stats[2].health
-        #health_text = self.font.render(f'HP:{player_hp}', False, (100, 20, 0))
-        #self.screen.blit(health_text, (1000, 100))
+        self.render_mob_info(2, [1000,100])
+
+    def render_enemy_info(self):
+        if self.mob_id in self.do_evrything.EM.mobs_stats:
+            self.render_mob_info(self.mob_id, [1000,400])
 
     def set_enemy_info(self, tile_id):
         if self.do_evrything.MS.tile_map[tile_id]['mob'] >= 100:
-            self.ent_id = self.do_evrything.MS.tile_map[tile_id]['mob']
+            self.mob_id = self.do_evrything.MS.tile_map[tile_id]['mob']
 
-    def render_enemy_info(self):
-        if self.ent_id in self.do_evrything.EM.mobs_stats:
-            enemy_name = self.do_evrything.EM.mobs_stats[self.ent_id].name
-            enemy_limbs = self.do_evrything.EM.mobs_stats[self.ent_id].limbs
-            enemy_organs = self.do_evrything.EM.mobs_stats[self.ent_id].organs
-            
-            health_text = self.font.render(f'{enemy_name}', False, (100, 20, 0))
-            self.screen.blit(health_text, (1000, 400))
+    def render_mob_info(self, mob_id, pos):
+        mob_name = self.do_evrything.EM.mobs_stats[mob_id].name
+        mob_limbs = self.do_evrything.EM.mobs_stats[mob_id].limbs
+        mob_organs = self.do_evrything.EM.mobs_stats[mob_id].organs
 
-            limb_stat_display = [1000, 420]
-            for i in enemy_limbs:
-                limb_stat_text = self.font.render(f'{i.name}: {i.health}', False, (100, 20, 0))
-                self.screen.blit(limb_stat_text, limb_stat_display)
-                limb_stat_display[1] += 20
-            
-            self.screen.blit(self.font.render(f'', False, (100, 20, 0)), limb_stat_display)
-            limb_stat_display[1] += 20
+        text_hight = 18
+        
+        name_text = self.font.render(f'{mob_name}', False, (self.text_colour))
+        self.screen.blit(name_text, pos)
+        pos[1] += text_hight
 
-            for i in enemy_organs:
-                organ_stat_text = self.font.render(f'{i.name}: {i.health}', False, (100, 20, 0))
-                self.screen.blit(organ_stat_text, limb_stat_display)
-                limb_stat_display[1] += 20
+        self.screen.blit(self.font.render(f'  LIMBS:', False, (self.text_colour)), pos)       
+        pos[1] += text_hight
 
+        for i in mob_limbs:
+            limb_stat_text = self.font.render(f'{i.name}: {i.health}', False, (self.text_colour))
+            self.screen.blit(limb_stat_text, pos)
+            pos[1] += text_hight
+        
+        self.screen.blit(self.font.render(f'  ORGANS:', False, (self.text_colour)), pos)
+        pos[1] += text_hight
+
+        for i in mob_organs:
+            organ_stat_text = self.font.render(f'{i.name}: {i.health}', False, (self.text_colour))
+            self.screen.blit(organ_stat_text, pos)
+            pos[1] += text_hight
 
     def render_logs(self):
         pass
