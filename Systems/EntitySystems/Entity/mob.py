@@ -10,9 +10,11 @@ class Mob():
         self.armour = data['armour']
 
         self.max_limb_points = 4
+        self.used_limb_points = 0
         self.limbs = data['limbs']
 
         self.max_organ_points = 4
+        self.used_organ_points = 0
         self.organs = data['organs']
 
         self.max_actions = 1
@@ -81,10 +83,18 @@ class Mob():
     def update_stats(self):
         max_actions = 0
         melee_damage = 0
+        used_limb_points = 0
+        used_organ_points = 0
 
         for limb in self.limbs:
             max_actions += limb.action_points
             melee_damage += limb.melee_damage
+            used_limb_points += limb.limb_points
+
+        for organ in self.organs:
+            used_organ_points += organ.organ_points
 
         self.max_actions = max_actions
         self.melee_damage = melee_damage
+        self.used_limb_points = used_limb_points
+        self.used_organ_points = used_organ_points

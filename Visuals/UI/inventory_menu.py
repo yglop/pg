@@ -71,8 +71,9 @@ class InventoryMenu():
 
     def button_manager(self, event_list):
         center = [204,204]
+        player = self.do_evrything.EM.mobs_stats[2]
         ## player limbs
-        text = self.font.render(f'Player limbs:', False, (self.text_colour))
+        text = self.font.render(f'limb points: {player.used_limb_points}/{player.max_limb_points}', False, (self.text_colour))
         self.do_evrything.screen.blit(text, center)
 
         for i in self.player_items_limbs_buttons:
@@ -88,7 +89,7 @@ class InventoryMenu():
             text = self.font.render(f'{i.data.name}', False, (self.text_colour))
             self.do_evrything.screen.blit(text, i.rect)
         ## player organs
-        text = self.font.render(f'Player organs:', False, (self.text_colour))
+        text = self.font.render(f'organ points: {player.used_organ_points}/{player.max_organ_points}', False, (self.text_colour))
         self.do_evrything.screen.blit(text, (center[0]-150, center[1]+14))
 
         for i in self.player_items_organs_buttons:        
