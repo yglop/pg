@@ -69,7 +69,7 @@ class InventoryMenu():
             if i != item and i.selected:
                 i.change_image()
 
-    def check_for_selecred_item(self):
+    def check_for_selected_item(self):
         for i in (
             self.player_items_limbs_buttons + 
             self.player_items_organs_buttons + 
@@ -173,7 +173,7 @@ class InventoryMenu():
         self.do_evrything.screen.blit(text, (800,504))
 
 
-        self.check_for_selecred_item()
+        self.check_for_selected_item()
 
     def draw_menu(self, event_list):
         self.inventory_menu_canvas.update(event_list, self)
