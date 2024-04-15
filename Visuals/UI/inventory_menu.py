@@ -21,6 +21,7 @@ class InventoryMenu():
         self.player_items_limbs_buttons = list()
         self.player_items_organs_buttons = list()
         self.loot_items_buttons = list()
+        self.selecred_item = None
 
     def open_menu(self):
         self.is_menu_open = True
@@ -32,7 +33,7 @@ class InventoryMenu():
             center = [664,234]
 
             for i in loot_objects:
-                loot = InventoryItemButton(center=center, text=i.name)            
+                loot = InventoryItemButton(center=center, data=i)            
                 self.loot_items_buttons.append(loot)
                 center[1] += 20
 
@@ -41,22 +42,32 @@ class InventoryMenu():
         self.player_items_limbs_buttons.clear()
         self.player_items_organs_buttons.clear()
         self.loot_items_buttons.clear()
+        self.selecred_item = None
 
     def create_player_items_buttons(self):
         center = [354,234]
         player = self.do_evrything.EM.mobs_stats[2]
 
         for limb in player.limbs:
-            player_item = InventoryItemButton(center=center, text=limb.name)            
+            player_item = InventoryItemButton(center=center, data=limb)            
             self.player_items_limbs_buttons.append(player_item)
             center[1] += 20
 
         center[1] += 20
 
         for organ in player.organs:
-            player_item = InventoryItemButton(center=center, text=organ.name)            
+            player_item = InventoryItemButton(center=center, data=organ)            
             self.player_items_organs_buttons.append(player_item)
             center[1] += 20
+
+    def unselect_items(self, item):
+        for i in (
+            self.player_items_limbs_buttons + 
+            self.player_items_organs_buttons + 
+            self.loot_items_buttons
+            ):
+            if i != item and i.selected:
+                i.change_image()
 
     def button_manager(self, event_list):
         center = [204,204]
@@ -68,9 +79,13 @@ class InventoryMenu():
             i.update(event_list)
             pg.sprite.RenderPlain(i).draw(self.screen)
 
+            if i.selected:
+                self.selecred_item = i
+                self.unselect_items(i)
+
             center = i.rect.center
 
-            text = self.font.render(f'{i.text}', False, (self.text_colour))
+            text = self.font.render(f'{i.data.name}', False, (self.text_colour))
             self.do_evrything.screen.blit(text, i.rect)
         ## player organs
         text = self.font.render(f'Player organs:', False, (self.text_colour))
@@ -80,9 +95,13 @@ class InventoryMenu():
             i.update(event_list)
             pg.sprite.RenderPlain(i).draw(self.screen)
 
+            if i.selected:
+                self.selecred_item = i
+                self.unselect_items(i)
+
             center = i.rect.center
 
-            text = self.font.render(f'{i.text}', False, (self.text_colour))
+            text = self.font.render(f'{i.data.name}', False, (self.text_colour))
             self.do_evrything.screen.blit(text, i.rect)
         ## loot
         text = self.font.render(f'Loot:', False, (self.text_colour))
@@ -93,12 +112,50 @@ class InventoryMenu():
                 i.update(event_list)
                 pg.sprite.RenderPlain(i).draw(self.screen)
 
-                text = self.font.render(f'{i.text}', False, (self.text_colour))
+                if i.selected:
+                    self.selecred_item = i
+                    self.unselect_items(i)
+
+                text = self.font.render(f'{i.data.name}', False, (self.text_colour))
                 self.do_evrything.screen.blit(text, i.rect)
         ## selected item info
-        selecred_item = 'Select an item' if True else 'ToDo:Item.name'
-        text = self.font.render(f'{selecred_item}:', False, (self.text_colour))
+        selecred_item = self.selecred_item.data.name if self.selecred_item else 'Select an item'
+        text = self.font.render(f'{selecred_item}', False, (self.text_colour))
         self.do_evrything.screen.blit(text, (800,204))
+
+        if self.selecred_item:
+            center = [800,224]
+            ### YES, IT SHOUL LOOCK LIKE THAT. NO ITS NOT POSSUBLE TO JUST ALLOCATE ALL THIS SHIT TO ANOTHER FUNCTION. I TRIED AND I FAILED.
+            text = self.font.render(f'weight: {self.selecred_item.data.weight}', False, (self.text_colour))
+            self.do_evrything.screen.blit(text, center)
+            center[1] += 20
+            text = self.font.render(f'health: {self.selecred_item.data.health}', False, (self.text_colour))
+            self.do_evrything.screen.blit(text, center)
+            center[1] += 20
+            if hasattr(self.selecred_item.data, 'limb_points'):
+                text = self.font.render(f'limb points: {self.selecred_item.data.limb_points}', False, (self.text_colour))
+                self.do_evrything.screen.blit(text, center)
+                center[1] += 20
+            if hasattr(self.selecred_item.data, 'action_points'):
+                text = self.font.render(f'action points: {self.selecred_item.data.action_points}', False, (self.text_colour))
+                self.do_evrything.screen.blit(text, center)
+                center[1] += 20
+            if hasattr(self.selecred_item.data, 'melee_damage'):
+                text = self.font.render(f'melee damage: {self.selecred_item.data.melee_damage}', False, (self.text_colour))
+                self.do_evrything.screen.blit(text, center)
+                center[1] += 20
+            if hasattr(self.selecred_item.data, 'critical'):
+                text = self.font.render(f'critical: {self.selecred_item.data.critical}', False, (self.text_colour))
+                self.do_evrything.screen.blit(text, center)
+                center[1] += 20
+            if hasattr(self.selecred_item.data, 'organ_points'):
+                text = self.font.render(f'organ points: {self.selecred_item.data.organ_points}', False, (self.text_colour))
+                self.do_evrything.screen.blit(text, center)
+                center[1] += 20 
+            if hasattr(self.selecred_item.data, 'protection'):
+                text = self.font.render(f'protection: {self.selecred_item.data.protection}', False, (self.text_colour))
+                self.do_evrything.screen.blit(text, center)
+                center[1] += 20
 
         ## inventory
         text = self.font.render(f'Inventory:', False, (self.text_colour))

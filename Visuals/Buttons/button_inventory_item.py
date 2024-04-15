@@ -4,20 +4,23 @@ from Resources.Textures.dataset import button_inventory_item, button_inventory_i
 
 
 class InventoryItemButton(pg.sprite.Sprite):
-    def __init__(self, center, text):
+    def __init__(self, center, data):
         super().__init__()
         self.image = button_inventory_item 
         self.rect = self.image.get_rect()
         self.rect.center = center.copy()
         self.clicked = False
 
-        self.text = text
+        self.data = data
+        self.selected = False
 
     def change_image(self):
         if self.image == button_inventory_item:
             self.image = button_inventory_item_active
+            self.selected = True
         else:
             self.image = button_inventory_item
+            self.selected = False
 
     def update(self, event_list):
         for event in event_list:
