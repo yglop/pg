@@ -22,4 +22,4 @@ class InventoryButton(pg.sprite.Sprite):
         for event in event_list:
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos):
                 self.clicked = not self.clicked
-                do_evrything.inventory_menu.is_menu_open = True
+                do_evrything.inventory_menu.open_menu()
