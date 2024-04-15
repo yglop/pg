@@ -69,6 +69,16 @@ class InventoryMenu():
             if i != item and i.selected:
                 i.change_image()
 
+    def check_for_selecred_item(self):
+        for i in (
+            self.player_items_limbs_buttons + 
+            self.player_items_organs_buttons + 
+            self.loot_items_buttons
+            ):
+            if i.selected:
+                return
+        self.selecred_item = None
+
     def button_manager(self, event_list):
         center = [204,204]
         player = self.do_evrything.EM.mobs_stats[2]
@@ -162,6 +172,8 @@ class InventoryMenu():
         text = self.font.render(f'Inventory:', False, (self.text_colour))
         self.do_evrything.screen.blit(text, (800,504))
 
+
+        self.check_for_selecred_item()
 
     def draw_menu(self, event_list):
         self.inventory_menu_canvas.update(event_list, self)
