@@ -30,6 +30,8 @@ button_end_turn = pg.image.load("./Resources/Textures/UI/button-EndTurn.png")
 button_close_game = pg.image.load("./Resources/Textures/UI/button-CloseGame.png")
 button_inventory = pg.image.load("./Resources/Textures/UI/button-Inventory.png")
 button_inventory_active = pg.image.load("./Resources/Textures/UI/button-InventoryActive.png")
+button_inventory_item = pg.image.load("./Resources/Textures/UI/button-InventoryItem.png")
+button_inventory_item_active = pg.image.load("./Resources/Textures/UI/button-InventoryItemActive.png")
 
 in_game_menu = pg.image.load("./Resources/Textures/UI/in_game_menu.png")
 inventory_menu = pg.image.load("./Resources/Textures/UI/inventory_menu.png")

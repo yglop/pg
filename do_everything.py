@@ -21,7 +21,7 @@ class DoEvrything():
 
         self.UI = UserInterfaceMain(self)
         self.escape_menu = EscapeMenu(self.screen)
-        self.inventory_menu = InventoryMenu(self.screen)
+        self.inventory_menu = InventoryMenu(self)
 
     def runner(self, event_list):
         # keyboard
@@ -33,6 +33,7 @@ class DoEvrything():
 
         if self.inventory_menu.is_menu_open == True:
             self.inventory_menu.draw_menu(event_list)
+            self.inventory_menu.button_manager(event_list)
             return
 
         self.screen.fill((100,100,100))
