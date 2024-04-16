@@ -10,7 +10,6 @@ class InventoryButton(pg.sprite.Sprite):
         self.image = button_inventory 
         self.rect = self.image.get_rect()
         self.rect.center = center
-        self.clicked = False
 
     def change_image(self, active):
         if active:
@@ -21,5 +20,4 @@ class InventoryButton(pg.sprite.Sprite):
     def update(self, event_list, do_evrything):
         for event in event_list:
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos):
-                self.clicked = not self.clicked
                 do_evrything.inventory_menu.open_menu()
