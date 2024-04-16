@@ -13,6 +13,6 @@ class EndTurnButton(pg.sprite.Sprite):
 
     def update(self, event_list, do_evrything):
         for event in event_list:
-            if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos):
+            if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
                 do_evrything.TS.end_turn()
                 

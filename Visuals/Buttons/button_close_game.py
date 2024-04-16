@@ -12,5 +12,5 @@ class CloseGameButton(pg.sprite.Sprite):
 
     def update(self, event_list):
         for event in event_list:
-            if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos):
+            if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
                 pg.quit()
