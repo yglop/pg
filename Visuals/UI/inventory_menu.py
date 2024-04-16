@@ -30,12 +30,12 @@ class InventoryMenu():
         interactable = self.do_evrything.MS.tile_map[self.do_evrything.EM.mobs_stats[2].tile_id]['interactable']
         if interactable != 0:
             loot_objects = self.do_evrything.EM.interactable_dict[interactable]
-            center = [664,234]
+            center = [664,230]
 
             for i in loot_objects:
                 loot = InventoryItemButton(center=center, data=i)            
                 self.loot_items_buttons.append(loot)
-                center[1] += 20
+                center[1] += 16
 
     def close_menu(self):
         self.is_menu_open = False
@@ -45,20 +45,20 @@ class InventoryMenu():
         self.selecred_item = None
 
     def create_player_items_buttons(self):
-        center = [354,234]
+        center = [354,230]
         player = self.do_evrything.EM.mobs_stats[2]
 
         for limb in player.limbs:
             player_item = InventoryItemButton(center=center, data=limb)            
             self.player_items_limbs_buttons.append(player_item)
-            center[1] += 20
+            center[1] += 16
 
-        center[1] += 20
+        center[1] += 16
 
         for organ in player.organs:
             player_item = InventoryItemButton(center=center, data=organ)            
             self.player_items_organs_buttons.append(player_item)
-            center[1] += 20
+            center[1] += 16
 
     def unselect_items(self, item):
         for i in (
@@ -100,7 +100,7 @@ class InventoryMenu():
             self.do_evrything.screen.blit(text, i.rect)
         ## player organs
         text = self.font.render(f'organ points: {player.used_organ_points}/{player.max_organ_points}', False, (self.text_colour))
-        self.do_evrything.screen.blit(text, (center[0]-150, center[1]+14))
+        self.do_evrything.screen.blit(text, (center[0]-150, center[1]+8))
 
         for i in self.player_items_organs_buttons:        
             i.update(event_list)
@@ -139,34 +139,34 @@ class InventoryMenu():
             ### YES, IT SHOUL LOOCK LIKE THAT. NO ITS NOT POSSUBLE TO JUST ALLOCATE ALL THIS SHIT TO ANOTHER FUNCTION. I TRIED AND I FAILED.
             text = self.font.render(f'weight: {self.selecred_item.data.weight}', False, (self.text_colour))
             self.do_evrything.screen.blit(text, center)
-            center[1] += 20
+            center[1] += 16
             text = self.font.render(f'health: {self.selecred_item.data.health}', False, (self.text_colour))
             self.do_evrything.screen.blit(text, center)
-            center[1] += 20
+            center[1] += 16
             if hasattr(self.selecred_item.data, 'limb_points'):
                 text = self.font.render(f'limb points: {self.selecred_item.data.limb_points}', False, (self.text_colour))
                 self.do_evrything.screen.blit(text, center)
-                center[1] += 20
+                center[1] += 16
             if hasattr(self.selecred_item.data, 'action_points'):
                 text = self.font.render(f'action points: {self.selecred_item.data.action_points}', False, (self.text_colour))
                 self.do_evrything.screen.blit(text, center)
-                center[1] += 20
+                center[1] += 16
             if hasattr(self.selecred_item.data, 'melee_damage'):
                 text = self.font.render(f'melee damage: {self.selecred_item.data.melee_damage}', False, (self.text_colour))
                 self.do_evrything.screen.blit(text, center)
-                center[1] += 20
+                center[1] += 16
             if hasattr(self.selecred_item.data, 'critical'):
                 text = self.font.render(f'critical: {self.selecred_item.data.critical}', False, (self.text_colour))
                 self.do_evrything.screen.blit(text, center)
-                center[1] += 20
+                center[1] += 16
             if hasattr(self.selecred_item.data, 'organ_points'):
                 text = self.font.render(f'organ points: {self.selecred_item.data.organ_points}', False, (self.text_colour))
                 self.do_evrything.screen.blit(text, center)
-                center[1] += 20 
+                center[1] += 16 
             if hasattr(self.selecred_item.data, 'protection'):
                 text = self.font.render(f'protection: {self.selecred_item.data.protection}', False, (self.text_colour))
                 self.do_evrything.screen.blit(text, center)
-                center[1] += 20
+                center[1] += 16
 
         ## inventory
         text = self.font.render(f'Inventory:', False, (self.text_colour))
