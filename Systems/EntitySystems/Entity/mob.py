@@ -19,6 +19,7 @@ class Mob():
 
         self.max_actions = 1
         self.melee_damage = 1
+        self.storage = list()
 
         self.update_stats()
 
@@ -67,9 +68,9 @@ class Mob():
             ## spawn/add loot to {interactable} 
             if destination['interactable'] == 0:
                 destination['interactable'] = target_mob_id
-                data.interactable_dict[target_mob_id] = target_mob.limbs + target_mob.organs
+                data.interactable_dict[target_mob_id] = target_mob.limbs + target_mob.organs + target_mob.storage
             else:
-                data.interactable_dict[destination['interactable']] += target_mob.limbs + target_mob.organs
+                data.interactable_dict[destination['interactable']] += target_mob.limbs + target_mob.organs + target_mob.storage
 
             # delete ent
             del data.mobs_stats[target_mob_id]

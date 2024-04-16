@@ -19,6 +19,6 @@ class CanvasInventory(pg.sprite.Sprite):
 
     def update(self, event_list, InventoryMenu):
         for event in event_list:
-            if event.type == pg.MOUSEBUTTONDOWN and not self.rect.collidepoint(event.pos):
+            if event.type == pg.MOUSEBUTTONDOWN and not self.rect.collidepoint(event.pos) and event.button == 1:
                 self.clicked = not self.clicked
                 InventoryMenu.close_menu()

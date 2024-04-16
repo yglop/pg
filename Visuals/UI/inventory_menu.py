@@ -30,7 +30,7 @@ class InventoryMenu():
         interactable = self.do_evrything.MS.tile_map[self.do_evrything.EM.mobs_stats[2].tile_id]['interactable']
         if interactable != 0:
             loot_objects = self.do_evrything.EM.interactable_dict[interactable]
-            center = [664,230]
+            center = [514,226]
 
             for i in loot_objects:
                 loot = InventoryItemButton(center=center, data=i)            
@@ -45,7 +45,7 @@ class InventoryMenu():
         self.selecred_item = None
 
     def create_player_items_buttons(self):
-        center = [354,230]
+        center = [304,226]
         player = self.do_evrything.EM.mobs_stats[2]
 
         for limb in player.limbs:
@@ -100,7 +100,7 @@ class InventoryMenu():
             self.do_evrything.screen.blit(text, i.rect)
         ## player organs
         text = self.font.render(f'organ points: {player.used_organ_points}/{player.max_organ_points}', False, (self.text_colour))
-        self.do_evrything.screen.blit(text, (center[0]-150, center[1]+8))
+        self.do_evrything.screen.blit(text, (center[0]-100, center[1]+10))
 
         for i in self.player_items_organs_buttons:        
             i.update(event_list)
@@ -116,7 +116,7 @@ class InventoryMenu():
             self.do_evrything.screen.blit(text, i.rect)
         ## loot
         text = self.font.render(f'Loot:', False, (self.text_colour))
-        self.do_evrything.screen.blit(text, (514,204))
+        self.do_evrything.screen.blit(text, (414,204))
 
         if len(self.loot_items_buttons) > 0:
             for i in self.loot_items_buttons:
@@ -171,6 +171,10 @@ class InventoryMenu():
         ## inventory
         text = self.font.render(f'Inventory:', False, (self.text_colour))
         self.do_evrything.screen.blit(text, (800,504))
+        
+        if False:
+            self.close_menu()
+            self.open_menu()
 
 
         self.check_for_selected_item()
