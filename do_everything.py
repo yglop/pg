@@ -32,8 +32,7 @@ class DoEvrything():
             return
 
         if self.inventory_menu.is_menu_open == True:
-            self.inventory_menu.draw_menu(event_list)
-            self.inventory_menu.button_manager(event_list)
+            self.inventory_menu.render_all(event_list)
             return
 
         self.screen.fill((100,100,100))
