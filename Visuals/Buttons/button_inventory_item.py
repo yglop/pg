@@ -34,10 +34,10 @@ class InventoryTakeItemButton(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = center.copy()
 
-    def update(self, event_list):
+    def update(self, event_list, do_evrything):
         for event in event_list:
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
-                pass
+                do_evrything.inventory_menu.take_item()
 
 
 class InventoryDropItemButton(pg.sprite.Sprite):
@@ -47,10 +47,10 @@ class InventoryDropItemButton(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = center.copy()
 
-    def update(self, event_list):
+    def update(self, event_list, do_evrything):
         for event in event_list:
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
-                pass
+                do_evrything.inventory_menu.drop_item()
 
 class InventoryEquipItemButton(pg.sprite.Sprite):
     def __init__(self, center):
@@ -59,10 +59,10 @@ class InventoryEquipItemButton(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = center.copy()
 
-    def update(self, event_list):
+    def update(self, event_list, do_evrything):
         for event in event_list:
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
-                pass
+                do_evrything.inventory_menu.equip_item()
         
 
         

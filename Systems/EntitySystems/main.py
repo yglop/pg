@@ -21,6 +21,7 @@ class EntityManager():
         self.mobs_visual = dict()
         self.mobs_stats = dict()
         self.interactable_dict = dict()
+        self.interactable_id_count = 1000
 
         self.PS = PlayerSystem(self) 
         self.ES = EnemySystem(self)

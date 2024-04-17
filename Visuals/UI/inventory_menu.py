@@ -52,6 +52,7 @@ class InventoryMenu():
         self.loot_items_buttons.clear()
         self.interaction_buttons.clear()
         self.selecred_item = None
+        self.loot_objects = None
 
     def create_player_items_buttons(self):
         center = [304,226]
@@ -68,7 +69,7 @@ class InventoryMenu():
             self.player_items_organs_buttons.append(player_item)
             center[1] += 16
 
-        center = [800,520]
+        center = [896,526]
         for i in self.player.storage:
             player_item = InventoryItemButton(center=center, data=i)
             self.player_items_storage_buttons.append(player_item)
@@ -76,7 +77,7 @@ class InventoryMenu():
 
     def create_interaction_buttons(self):
         if self.selecred_item:
-            center = [820,228]
+            center = [816,228]
             if self.selecred_item.data in (self.player.limbs + self.player.organs):
                 self.interaction_buttons.clear()
 
@@ -85,18 +86,8 @@ class InventoryMenu():
                 center[0] += 40
 
                 btn_drop = InventoryDropItemButton(center=center)  
-                self.interaction_buttons.append(btn_drop)  
-            elif self.selecred_item.data in (self.loot_objects):
-                self.interaction_buttons.clear()
-                
-                btn_take = InventoryTakeItemButton(center=center)   
-                self.interaction_buttons.append(btn_take)  
-                center[0] += 40
-
-                btn_equip = InventoryEquipItemButton(center=center)   
-                self.interaction_buttons.append(btn_equip)  
-                center[0] += 40       
-            elif self.selecred_item in self.player.storage:
+                self.interaction_buttons.append(btn_drop)      
+            elif self.selecred_item.data in self.player.storage:
                 self.interaction_buttons.clear()
 
                 btn_drop = InventoryDropItemButton(center=center)   
@@ -105,15 +96,23 @@ class InventoryMenu():
 
                 btn_equip = InventoryEquipItemButton(center=center)   
                 self.interaction_buttons.append(btn_equip)  
-                center[0] += 40  
-            if False:
-                self.close_menu()
-                self.open_menu()
+                center[0] += 40
+            elif self.loot_objects and (self.selecred_item.data in (self.loot_objects)):
+                self.interaction_buttons.clear()
+                
+                btn_take = InventoryTakeItemButton(center=center)   
+                self.interaction_buttons.append(btn_take)  
+                center[0] += 40
+
+                btn_equip = InventoryEquipItemButton(center=center)   
+                self.interaction_buttons.append(btn_equip)  
+                center[0] += 40           
 
     def unselect_items(self, item):
         for i in (
             self.player_items_limbs_buttons + 
             self.player_items_organs_buttons + 
+            self.player_items_storage_buttons +
             self.loot_items_buttons
             ):
             if i != item and i.selected:
@@ -186,10 +185,10 @@ class InventoryMenu():
     def render_setected_item_info(self):
         selecred_item = self.selecred_item.data.name if self.selecred_item else 'Select an item'
         text = self.font.render(f'{selecred_item}', False, (self.text_colour))
-        self.do_evrything.screen.blit(text, (800,204))
+        self.do_evrything.screen.blit(text, (796,204))
         
         if self.selecred_item:
-            center = [800,240]
+            center = [796,240]
             ### YES, IT SHOUL LOOCK LIKE THAT. NO ITS NOT POSSUBLE TO JUST ALLOCATE ALL THIS SHIT TO ANOTHER FUNCTION. I TRIED AND I FAILED.
             text = self.font.render(f'weight: {self.selecred_item.data.weight}', False, (self.text_colour))
             self.do_evrything.screen.blit(text, center)
@@ -222,9 +221,9 @@ class InventoryMenu():
                 self.do_evrything.screen.blit(text, center)
                 center[1] += 16
 
-    def render_inventory_buttons(self, event_list):
+    def render_storage_buttons(self, event_list):
         text = self.font.render(f'Inventory:', False, (self.text_colour))
-        self.do_evrything.screen.blit(text, (800,504))
+        self.do_evrything.screen.blit(text, (796,504))
 
         for i in self.player_items_storage_buttons:        
             i.update(event_list)
@@ -239,22 +238,74 @@ class InventoryMenu():
 
     def render_interaction_buttons(self, event_list):
         for i in self.interaction_buttons:
-            i.update(event_list)
+            i.update(event_list, self.do_evrything)
             pg.sprite.RenderPlain(i).draw(self.screen)
 
     def draw_menu(self, event_list):
         self.inventory_menu_canvas.update(event_list, self)
         self.inventory_menu_canvas_visual.draw(self.screen)
         
+    def take_item(self):
+        if self.selecred_item.data in self.player.limbs:
+            self.player.storage.append(self.selecred_item.data)
+            self.player.limbs.remove(self.selecred_item.data)
+        elif self.selecred_item.data in self.player.organs:
+            self.player.storage.append(self.selecred_item.data)
+            self.player.organs.remove(self.selecred_item.data)
+        elif self.selecred_item.data in self.loot_objects:
+            self.player.storage.append(self.selecred_item.data)
+            self.loot_objects.remove(self.selecred_item.data)
+        self.player.update_stats()
+        self.close_menu()
+        self.open_menu()
+
+    def drop_item(self):
+        if self.loot_objects:
+            self.loot_objects += [self.selecred_item.data,]
+        else:
+            entity_manager = self.do_evrything.EM
+            self.do_evrything.MS.tile_map[self.player.tile_id]['interactable'] = self.do_evrything.EM.interactable_id_count
+            entity_manager.interactable_dict[entity_manager.interactable_id_count] = [self.selecred_item.data,]
+            entity_manager.interactable_id_count += 1
+        if self.selecred_item.data in self.player.limbs:
+            self.player.limbs.remove(self.selecred_item.data)
+        elif self.selecred_item.data in self.player.organs:
+            self.player.organs.remove(self.selecred_item.data)
+        elif self.selecred_item.data in self.player.storage:
+            self.player.storage.remove(self.selecred_item.data)
+        self.player.update_stats()
+        self.close_menu()
+        self.open_menu()
+
+    def equip_item(self):
+        if self.selecred_item.data in self.player.storage:
+            if hasattr(self.selecred_item.data, 'limb_points'):
+                self.player.limbs.append(self.selecred_item.data)
+                self.player.storage.remove(self.selecred_item.data)
+            elif hasattr(self.selecred_item.data, 'organ_points'):
+                self.player.organs.append(self.selecred_item.data)
+                self.player.storage.remove(self.selecred_item.data)
+        elif self.loot_objects and (self.selecred_item.data in self.loot_objects):
+            if hasattr(self.selecred_item.data, 'limb_points'):
+                self.player.limbs.append(self.selecred_item.data)
+                self.loot_objects.remove(self.selecred_item.data)
+            elif hasattr(self.selecred_item.data, 'organ_points'):
+                self.player.organs.append(self.selecred_item.data)
+                self.loot_objects.remove(self.selecred_item.data)
+        self.player.update_stats()
+        self.close_menu()
+        self.open_menu()
+
     def render_all(self, event_list):
         self.draw_menu(event_list)
 
         self.render_player_items_buttons(event_list)
         self.render_loot_buttons(event_list)
-        self.render_inventory_buttons(event_list)
+        self.render_storage_buttons(event_list)
         self.render_interaction_buttons(event_list)
 
         self.render_setected_item_info()
 
         self.check_for_selected_item()
-        self.create_interaction_buttons()
+        if self.selecred_item:
+            self.create_interaction_buttons()
