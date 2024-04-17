@@ -1,6 +1,10 @@
 import pygame as pg
 
-from Resources.Textures.dataset import button_inventory_item, button_inventory_item_active, button_inventory_take, button_inventory_drop, button_inventory_equip
+from Resources.Textures.dataset import (
+    button_inventory_item, button_inventory_item_active, 
+    button_inventory_take, button_inventory_drop, 
+    button_inventory_equip, button_inventory_eat
+    )
 
 
 class InventoryItemButton(pg.sprite.Sprite):
@@ -68,4 +72,16 @@ class InventoryEquipItemButton(pg.sprite.Sprite):
                 do_evrything.inventory_menu.reopen_menu(event_list)
         
 
-        
+
+class InventoryEatItemButton(pg.sprite.Sprite):
+    def __init__(self, center):
+        super().__init__()
+        self.image = button_inventory_eat 
+        self.rect = self.image.get_rect()
+        self.rect.center = center.copy()
+
+    def update(self, event_list, do_evrything):
+        for event in event_list:
+            if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
+                do_evrything.inventory_menu.eat_item()
+                do_evrything.inventory_menu.reopen_menu(event_list)

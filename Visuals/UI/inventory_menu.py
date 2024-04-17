@@ -3,7 +3,10 @@ import pygame as pg
 from Resources.Textures.dataset import inventory_menu
 
 from Visuals.canvas_sprite import CanvasInventory
-from Visuals.Buttons.button_inventory_item import InventoryItemButton, InventoryTakeItemButton, InventoryDropItemButton, InventoryEquipItemButton
+from Visuals.Buttons.button_inventory_item import (
+    InventoryItemButton, InventoryTakeItemButton, 
+    InventoryDropItemButton, InventoryEquipItemButton, InventoryEatItemButton
+    )
 
 
 class InventoryMenu():
@@ -87,32 +90,39 @@ class InventoryMenu():
             if self.selecred_item.data in (self.player.limbs + self.player.organs):
                 self.interaction_buttons.clear()
 
-                btn_take = InventoryTakeItemButton(center=center)   
-                self.interaction_buttons.append(btn_take)  
+                btn = InventoryTakeItemButton(center=center)   
+                self.interaction_buttons.append(btn)  
                 center[0] += 40
 
-                btn_drop = InventoryDropItemButton(center=center)  
-                self.interaction_buttons.append(btn_drop)      
+                btn = InventoryDropItemButton(center=center)  
+                self.interaction_buttons.append(btn)      
+                center[0] += 40
             elif self.selecred_item.data in self.player.storage:
                 self.interaction_buttons.clear()
 
-                btn_drop = InventoryDropItemButton(center=center)   
-                self.interaction_buttons.append(btn_drop)  
+                btn = InventoryDropItemButton(center=center)   
+                self.interaction_buttons.append(btn)  
                 center[0] += 40
 
-                btn_equip = InventoryEquipItemButton(center=center)   
-                self.interaction_buttons.append(btn_equip)  
+                btn = InventoryEquipItemButton(center=center)   
+                self.interaction_buttons.append(btn)  
                 center[0] += 40
+                if hasattr(self.selecred_item.data, 'nutrition'):
+                    btn = InventoryEatItemButton(center=center)   
+                    self.interaction_buttons.append(btn)   
             elif self.loot_objects and (self.selecred_item.data in (self.loot_objects)):
                 self.interaction_buttons.clear()
                 
-                btn_take = InventoryTakeItemButton(center=center)   
-                self.interaction_buttons.append(btn_take)  
+                btn = InventoryTakeItemButton(center=center)   
+                self.interaction_buttons.append(btn)  
                 center[0] += 40
 
-                btn_equip = InventoryEquipItemButton(center=center)   
-                self.interaction_buttons.append(btn_equip)  
-                center[0] += 40           
+                btn = InventoryEquipItemButton(center=center)   
+                self.interaction_buttons.append(btn)  
+                center[0] += 40     
+                if hasattr(self.selecred_item.data, 'nutrition'):
+                    btn = InventoryEatItemButton(center=center)   
+                    self.interaction_buttons.append(btn)        
 
     def unselect_items(self, item):
         for i in (
@@ -313,6 +323,13 @@ class InventoryMenu():
                 self.player.organs.append(self.selecred_item.data)
                 self.loot_objects.remove(self.selecred_item.data)
         self.player.nutrition -= self.selecred_item.data.nutrition + 50
+
+    def eat_item(self):
+        self.player.nutrition += self.selecred_item.data.nutrition
+        if self.selecred_item.data in self.player.storage:
+            self.player.storage.remove(self.selecred_item.data)
+        elif self.loot_objects and (self.selecred_item.data in self.loot_objects):
+            self.loot_objects.remove(self.selecred_item.data)
 
     def render_all(self, event_list):
         self.draw_menu(event_list)

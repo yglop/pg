@@ -63,7 +63,7 @@ class Mob():
         for organ in target_mob.organs:
             if organ.critical == True and organ.health > 0:
                 target_critical_organs.append(organ)
-            else:
+            elif organ.health <= 0:
                 target_mob.organs.remove(organ)
 
         for limb in target_mob.limbs:
