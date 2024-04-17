@@ -151,7 +151,7 @@ class InventoryMenu():
             self.do_evrything.screen.blit(text, (i.rect[0]+2, i.rect[1]+1))
         ## player organs
         text = self.font.render(f'organ points: {self.player.used_organ_points}/{self.player.max_organ_points}', False, (self.text_colour))
-        self.do_evrything.screen.blit(text, (center[0]-100, center[1]+10))
+        self.do_evrything.screen.blit(text, (204, center[1]+10))
 
         for i in self.player_items_organs_buttons:        
             i.update(event_list)
@@ -193,9 +193,13 @@ class InventoryMenu():
             text = self.font.render(f'weight: {self.selecred_item.data.weight}', False, (self.text_colour))
             self.do_evrything.screen.blit(text, center)
             center[1] += 16
-            text = self.font.render(f'health: {self.selecred_item.data.health}', False, (self.text_colour))
+            text = self.font.render(f'health: {self.selecred_item.data.health}/{self.selecred_item.data.max_health}', False, (self.text_colour))
             self.do_evrything.screen.blit(text, center)
             center[1] += 16
+            if hasattr(self.selecred_item.data, 'nutrition'):
+                text = self.font.render(f'nutrition: {self.selecred_item.data.nutrition}', False, (self.text_colour))
+                self.do_evrything.screen.blit(text, center)
+                center[1] += 16
             if hasattr(self.selecred_item.data, 'limb_points'):
                 text = self.font.render(f'limb points: {self.selecred_item.data.limb_points}', False, (self.text_colour))
                 self.do_evrything.screen.blit(text, center)
@@ -208,21 +212,21 @@ class InventoryMenu():
                 text = self.font.render(f'melee damage: {self.selecred_item.data.melee_damage}', False, (self.text_colour))
                 self.do_evrything.screen.blit(text, center)
                 center[1] += 16
-            if hasattr(self.selecred_item.data, 'critical'):
-                text = self.font.render(f'critical: {self.selecred_item.data.critical}', False, (self.text_colour))
-                self.do_evrything.screen.blit(text, center)
-                center[1] += 16
             if hasattr(self.selecred_item.data, 'organ_points'):
                 text = self.font.render(f'organ points: {self.selecred_item.data.organ_points}', False, (self.text_colour))
                 self.do_evrything.screen.blit(text, center)
                 center[1] += 16 
+            if hasattr(self.selecred_item.data, 'critical'):
+                text = self.font.render(f'critical: {self.selecred_item.data.critical}', False, (self.text_colour))
+                self.do_evrything.screen.blit(text, center)
+                center[1] += 16
             if hasattr(self.selecred_item.data, 'protection'):
                 text = self.font.render(f'protection: {self.selecred_item.data.protection}', False, (self.text_colour))
                 self.do_evrything.screen.blit(text, center)
                 center[1] += 16
 
     def render_storage_buttons(self, event_list):
-        text = self.font.render(f'Inventory:', False, (self.text_colour))
+        text = self.font.render(f'Storage capacity: {self.player.storage_capacity}/{self.player.max_storage_capacity}', False, (self.text_colour))
         self.do_evrything.screen.blit(text, (796,504))
 
         for i in self.player_items_storage_buttons:        
@@ -246,13 +250,19 @@ class InventoryMenu():
         self.inventory_menu_canvas_visual.draw(self.screen)
         
     def take_item(self):
-        if self.selecred_item.data in self.player.limbs:
+        if self.selecred_item.data.weight + self.player.storage_capacity > self.player.max_storage_capacity:
+            print('take_item: storage has no space') # ToDo: popup
+            return
+
+        if self.selecred_item.data in self.player.limbs and (self.selecred_item.data.nutrition + 100 < self.player.nutrition):
             self.player.storage.append(self.selecred_item.data)
             self.player.limbs.remove(self.selecred_item.data)
-        elif self.selecred_item.data in self.player.organs:
+            self.player.nutrition -= self.selecred_item.data.nutrition + 100
+        elif self.selecred_item.data in self.player.organs and (self.selecred_item.data.nutrition + 100 < self.player.nutrition):
             self.player.storage.append(self.selecred_item.data)
             self.player.organs.remove(self.selecred_item.data)
-        elif self.selecred_item.data in self.loot_objects:
+            self.player.nutrition -= self.selecred_item.data.nutrition + 100
+        elif self.loot_objects and (self.selecred_item.data in self.loot_objects):
             self.player.storage.append(self.selecred_item.data)
             self.loot_objects.remove(self.selecred_item.data)
         self.player.update_stats()
@@ -260,6 +270,10 @@ class InventoryMenu():
         self.open_menu()
 
     def drop_item(self):
+        if (self.selecred_item.data.nutrition + 100 > self.player.nutrition) and not (self.selecred_item.data in self.player.storage):
+            print('drop_item: nutrition is too low') # ToDo: popup
+            return
+
         if self.loot_objects:
             self.loot_objects += [self.selecred_item.data,]
         else:
@@ -269,8 +283,10 @@ class InventoryMenu():
             entity_manager.interactable_id_count += 1
         if self.selecred_item.data in self.player.limbs:
             self.player.limbs.remove(self.selecred_item.data)
+            self.player.nutrition -= self.selecred_item.data.nutrition + 100
         elif self.selecred_item.data in self.player.organs:
             self.player.organs.remove(self.selecred_item.data)
+            self.player.nutrition -= self.selecred_item.data.nutrition + 100
         elif self.selecred_item.data in self.player.storage:
             self.player.storage.remove(self.selecred_item.data)
         self.player.update_stats()
@@ -278,6 +294,10 @@ class InventoryMenu():
         self.open_menu()
 
     def equip_item(self):
+        if self.selecred_item.data.nutrition + 50 > self.player.nutrition:
+            print('equip_item: nutrition is too low') # ToDo: popup
+            return
+
         if self.selecred_item.data in self.player.storage:
             if hasattr(self.selecred_item.data, 'limb_points'):
                 self.player.limbs.append(self.selecred_item.data)
@@ -292,6 +312,7 @@ class InventoryMenu():
             elif hasattr(self.selecred_item.data, 'organ_points'):
                 self.player.organs.append(self.selecred_item.data)
                 self.loot_objects.remove(self.selecred_item.data)
+        self.player.nutrition -= self.selecred_item.data.nutrition + 50
         self.player.update_stats()
         self.close_menu()
         self.open_menu()

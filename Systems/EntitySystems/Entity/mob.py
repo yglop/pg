@@ -17,8 +17,14 @@ class Mob():
         self.used_organ_points = 0
         self.organs = data['organs']
 
+        self.max_nutrition = 1000
+        self.nutrition = 1000
+
         self.max_actions = 1
         self.melee_damage = 1
+
+        self.max_storage_capacity = 5
+        self.storage_capacity = 0
         self.storage = list()
 
         self.update_stats()
@@ -86,6 +92,7 @@ class Mob():
         melee_damage = 0
         used_limb_points = 0
         used_organ_points = 0
+        storage_capacity = 0
 
         for limb in self.limbs:
             max_actions += limb.action_points
@@ -95,7 +102,11 @@ class Mob():
         for organ in self.organs:
             used_organ_points += organ.organ_points
 
+        for i in self.storage:
+            storage_capacity += i.weight
+
         self.max_actions = max_actions
         self.melee_damage = melee_damage
         self.used_limb_points = used_limb_points
         self.used_organ_points = used_organ_points
+        self.storage_capacity = storage_capacity

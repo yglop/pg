@@ -4,6 +4,7 @@ from Systems.EntitySystems.Entity.item import BaseItem
 class BaseLimb(BaseItem):
     def __init__(self):
         super().__init__()
+        self.nutrition = 100
         self.limb_points = 1
         self.action_points = 0
         self.melee_damage = 0
@@ -15,6 +16,7 @@ class LimbArmHuman(BaseLimb):
         super().__init__()
         self.name = 'human arm'
         self.limb_type = 'hand'
+        self.max_health = 2
         self.health = 2
 
         self.melee_damage = 1
@@ -25,6 +27,7 @@ class LimbArmBlade(BaseLimb):
         super().__init__()
         self.name = 'armblade'
         self.limb_type = 'hand'
+        self.max_health = 2
         self.health = 2
 
         self.melee_damage = 6
@@ -36,6 +39,7 @@ class LimbLegHuman(BaseLimb):
         super().__init__()
         self.name = 'human leg'
         self.limb_type = 'leg'
+        self.max_health = 3
         self.health = 3
         
         self.action_points = 1

@@ -3,7 +3,8 @@
 class BaseItem():
     def __init__(self):
         self.name = 'BaseItem' 
-        self.weight = 0
+        self.weight = 1
+        self.max_health = 1
         self.health = 1
 
 

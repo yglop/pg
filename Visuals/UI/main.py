@@ -45,7 +45,9 @@ class UserInterfaceMain():
         self.inventory_button_visual.draw(self.screen)
         
     def render_player_info(self):
-        self.render_mob_info(2, [1000,100])
+        player = self.do_evrything.EM.mobs_stats[2]
+        text = self.font.render(f'nutrition: {player.nutrition}/{player.max_nutrition}', False, (self.text_colour))
+        self.screen.blit(text, (1000,100))
 
     def render_enemy_info(self):
         if self.mob_id in self.do_evrything.EM.mobs_stats:
