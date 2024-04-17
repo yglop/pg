@@ -37,7 +37,8 @@ class UserInterfaceMain():
         self.turn_button.update(event_list, self.do_evrything)
         self.turn_button_visual.draw(self.screen)
 
-        if self.do_evrything.MS.tile_map[self.do_evrything.EM.mobs_stats[2].tile_id]['interactable'] != 0:
+        interactable = self.do_evrything.MS.tile_map[self.do_evrything.EM.mobs_stats[2].tile_id]['interactable']
+        if (interactable != 0) and (len(self.do_evrything.EM.interactable_dict[interactable]) > 0):
             self.inventory_button.change_image(True)
         else:
             self.inventory_button.change_image(False)

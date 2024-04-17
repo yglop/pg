@@ -54,6 +54,12 @@ class InventoryMenu():
         self.selecred_item = None
         self.loot_objects = None
 
+    def reopen_menu(self, event_list):
+        self.player.update_stats()
+        self.close_menu()
+        self.do_evrything.UI.render_all(event_list)
+        self.open_menu()
+
     def create_player_items_buttons(self):
         center = [304,226]
 
@@ -265,9 +271,6 @@ class InventoryMenu():
         elif self.loot_objects and (self.selecred_item.data in self.loot_objects):
             self.player.storage.append(self.selecred_item.data)
             self.loot_objects.remove(self.selecred_item.data)
-        self.player.update_stats()
-        self.close_menu()
-        self.open_menu()
 
     def drop_item(self):
         if (self.selecred_item.data.nutrition + 100 > self.player.nutrition) and not (self.selecred_item.data in self.player.storage):
@@ -289,9 +292,6 @@ class InventoryMenu():
             self.player.nutrition -= self.selecred_item.data.nutrition + 100
         elif self.selecred_item.data in self.player.storage:
             self.player.storage.remove(self.selecred_item.data)
-        self.player.update_stats()
-        self.close_menu()
-        self.open_menu()
 
     def equip_item(self):
         if self.selecred_item.data.nutrition + 50 > self.player.nutrition:
@@ -313,9 +313,6 @@ class InventoryMenu():
                 self.player.organs.append(self.selecred_item.data)
                 self.loot_objects.remove(self.selecred_item.data)
         self.player.nutrition -= self.selecred_item.data.nutrition + 50
-        self.player.update_stats()
-        self.close_menu()
-        self.open_menu()
 
     def render_all(self, event_list):
         self.draw_menu(event_list)

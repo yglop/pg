@@ -38,6 +38,7 @@ class InventoryTakeItemButton(pg.sprite.Sprite):
         for event in event_list:
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
                 do_evrything.inventory_menu.take_item()
+                do_evrything.inventory_menu.reopen_menu(event_list)
 
 
 class InventoryDropItemButton(pg.sprite.Sprite):
@@ -51,6 +52,7 @@ class InventoryDropItemButton(pg.sprite.Sprite):
         for event in event_list:
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
                 do_evrything.inventory_menu.drop_item()
+                do_evrything.inventory_menu.reopen_menu(event_list)
 
 class InventoryEquipItemButton(pg.sprite.Sprite):
     def __init__(self, center):
@@ -63,6 +65,7 @@ class InventoryEquipItemButton(pg.sprite.Sprite):
         for event in event_list:
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
                 do_evrything.inventory_menu.equip_item()
+                do_evrything.inventory_menu.reopen_menu(event_list)
         
 
         
