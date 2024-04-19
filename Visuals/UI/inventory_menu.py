@@ -40,7 +40,7 @@ class InventoryMenu():
         tile_interactable = self.do_evrything.MS.tile_map[self.player.tile_id]['loot']
         if tile_interactable != 0:
             self.loot_objects = self.do_evrything.EM.interactable_dict[tile_interactable]
-            center = [514,226]
+            center = [896,526]
 
             for i in self.loot_objects:
                 loot = InventoryItemButton(center=center, data=i)            
@@ -78,7 +78,7 @@ class InventoryMenu():
             self.player_items_organs_buttons.append(player_item)
             center[1] += 16
 
-        center = [896,526]
+        center = [514,226]
         for i in self.player.storage:
             player_item = InventoryItemButton(center=center, data=i)
             self.player_items_storage_buttons.append(player_item)
@@ -184,7 +184,7 @@ class InventoryMenu():
 
     def render_loot_buttons(self, event_list):
         text = self.font.render(f'Loot:', False, (self.text_colour))
-        self.do_evrything.screen.blit(text, (414,204))
+        self.do_evrything.screen.blit(text, (796,504))
 
         if len(self.loot_items_buttons) > 0:
             for i in self.loot_items_buttons:
@@ -243,7 +243,7 @@ class InventoryMenu():
 
     def render_storage_buttons(self, event_list):
         text = self.font.render(f'Storage capacity: {self.player.storage_capacity}/{self.player.max_storage_capacity}', False, (self.text_colour))
-        self.do_evrything.screen.blit(text, (796,504))
+        self.do_evrything.screen.blit(text, (414,204))
 
         for i in self.player_items_storage_buttons:        
             i.update(event_list)
