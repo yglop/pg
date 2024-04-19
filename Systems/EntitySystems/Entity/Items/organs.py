@@ -1,5 +1,7 @@
 from Systems.EntitySystems.Entity.item import BaseItem
 
+from Resources.Locale.locale import locale
+
 
 class BaseOrgan(BaseItem):
     def __init__(self):
@@ -13,7 +15,7 @@ class BaseOrgan(BaseItem):
 class CriticalSystemsHuman(BaseOrgan):
     def __init__(self):
         super().__init__()
-        self.name = 'human critical sys'
+        self.name = locale['critical_systems_human_name']
         self.max_health = 4 
         self.health = 4
         
@@ -23,7 +25,7 @@ class CriticalSystemsHuman(BaseOrgan):
 class CriticalSystemsChangeling(BaseOrgan):
     def __init__(self):
         super().__init__()
-        self.name = 'ling critical sys' 
+        self.name = locale['critical_systems_changeling_name']
         self.max_health = 6
         self.health = 6
         
@@ -34,7 +36,7 @@ class CriticalSystemsChangeling(BaseOrgan):
 class DigestiveSystemHuman(BaseOrgan):
     def __init__(self):
         super().__init__()
-        self.name = 'human digestive sys' 
+        self.name = locale['digestive_system_human_name']
         self.max_health = 6
         self.health = 6
 

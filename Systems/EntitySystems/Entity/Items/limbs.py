@@ -1,5 +1,7 @@
 from Systems.EntitySystems.Entity.item import BaseItem
 
+from Resources.Locale.locale import locale
+
 
 class BaseLimb(BaseItem):
     def __init__(self):
@@ -14,7 +16,7 @@ class BaseLimb(BaseItem):
 class LimbArmHuman(BaseLimb):
     def __init__(self):
         super().__init__()
-        self.name = 'human arm'
+        self.name = locale['arm_human_name']
         self.limb_type = 'hand'
         self.max_health = 2
         self.health = 2
@@ -25,7 +27,7 @@ class LimbArmHuman(BaseLimb):
 class LimbArmBlade(BaseLimb):
     def __init__(self):
         super().__init__()
-        self.name = 'armblade'
+        self.name = locale['arm_blade_name']
         self.limb_type = 'hand'
         self.max_health = 2
         self.health = 2
@@ -37,7 +39,7 @@ class LimbArmBlade(BaseLimb):
 class LimbLegHuman(BaseLimb):
     def __init__(self):
         super().__init__()
-        self.name = 'human leg'
+        self.name = locale['leg_human_name']
         self.limb_type = 'leg'
         self.max_health = 3
         self.health = 3
