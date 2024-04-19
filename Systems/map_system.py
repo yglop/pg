@@ -3,7 +3,7 @@ import pygame as pg
 from Mapgen.map_gen import generate_map
 from Systems.SubModules.get_neighbors import get_neighbors
 
-from Visuals.display_tile import TileVisual
+from Visuals.tile_visual import TileVisual
 from Resources.Textures.dataset import tile_sprites_32
 
 
@@ -54,7 +54,7 @@ class MapSystem():
                     'rect': tile_image.get_rect(),
                     'rect.center': (pos_x, pos_y),
                     'mob': tile_ent,
-                    'interactable': 0,
+                    'loot': 0,
                     'neighbors': get_neighbors(self.grid_size-1, (i,j))
                 }
 

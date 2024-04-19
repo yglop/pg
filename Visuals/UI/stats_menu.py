@@ -5,7 +5,7 @@ from Visuals.Buttons.button_inventory import InventoryButton
 
 
 
-class UserInterfaceMain():
+class StatsMenu():
     def __init__(self, do_evrything):
         self.do_evrything = do_evrything
         self.screen = self.do_evrything.screen
@@ -27,7 +27,7 @@ class UserInterfaceMain():
         pg.draw.rect(self.screen, (0,150,100), pg.Rect(1000, 400, 200, 1000))
         pg.draw.rect(self.screen, (0,200,100), pg.Rect(1000, 700, 200, 1000))
 
-    def render_turn_count(self):
+    def render_actions_count(self):
         c_a_p = self.do_evrything.EM.mobs_stats[2].actions
         m_a_p = self.do_evrything.EM.mobs_stats[2].max_actions
         current_action_points = self.font.render(f'AP left:{c_a_p}/{m_a_p}', False, (0, 180, 0))
@@ -37,8 +37,8 @@ class UserInterfaceMain():
         self.turn_button.update(event_list, self.do_evrything)
         self.turn_button_visual.draw(self.screen)
 
-        interactable = self.do_evrything.MS.tile_map[self.do_evrything.EM.mobs_stats[2].tile_id]['interactable']
-        if (interactable != 0) and (len(self.do_evrything.EM.interactable_dict[interactable]) > 0):
+        loot = self.do_evrything.MS.tile_map[self.do_evrything.EM.mobs_stats[2].tile_id]['loot']
+        if (loot != 0) and (len(self.do_evrything.EM.interactable_dict[loot]) > 0):
             self.inventory_button.change_image(True)
         else:
             self.inventory_button.change_image(False)
@@ -91,6 +91,6 @@ class UserInterfaceMain():
     def render_all(self, event_list):
         self.draw_rectangles()
         self.button_manager(event_list)
-        self.render_turn_count()
+        self.render_actions_count()
         self.render_player_info()
         self.render_enemy_info()

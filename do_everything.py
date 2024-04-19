@@ -1,11 +1,11 @@
 import pygame as pg
 import random
 
-from Visuals.UI.main import UserInterfaceMain
+from Visuals.UI.stats_menu import StatsMenu
 from Visuals.UI.escape_menu import EscapeMenu
 from Visuals.UI.inventory_menu import InventoryMenu
 
-from Systems.EntitySystems.main import EntityManager
+from Systems.EntitySystems.entity_manager import EntityManager
 
 from Systems.keyboard_handler import keyboard_handler
 from Systems.turn_system import TurnSystem
@@ -19,7 +19,7 @@ class DoEvrything():
         self.EM = EntityManager(self.MS)
         self.TS = TurnSystem(self.EM)
 
-        self.UI = UserInterfaceMain(self)
+        self.stats_menu = StatsMenu(self)
         self.escape_menu = EscapeMenu(self.screen)
         self.inventory_menu = InventoryMenu(self)
 
@@ -38,7 +38,7 @@ class DoEvrything():
         self.screen.fill((100,100,100))
 
         # UI
-        self.UI.render_all(event_list)
+        self.stats_menu.render_all(event_list)
 
         # tiles
         self.MS.group_tile.update(event_list, self)

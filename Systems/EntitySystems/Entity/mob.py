@@ -71,12 +71,12 @@ class Mob():
                 target_mob.limbs.remove(limb)
 
         if len(target_critical_organs) == 0:
-            ## spawn/add loot to {interactable} 
-            if destination['interactable'] == 0:
-                destination['interactable'] = target_mob_id
+            ## spawn/add loot
+            if destination['loot'] == 0:
+                destination['loot'] = target_mob_id
                 data.interactable_dict[target_mob_id] = target_mob.limbs + target_mob.organs + target_mob.storage
             else:
-                data.interactable_dict[destination['interactable']] += target_mob.limbs + target_mob.organs + target_mob.storage
+                data.interactable_dict[destination['loot']] += target_mob.limbs + target_mob.organs + target_mob.storage
 
             # delete ent
             del data.mobs_stats[target_mob_id]

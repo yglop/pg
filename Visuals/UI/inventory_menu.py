@@ -37,7 +37,7 @@ class InventoryMenu():
         self.is_menu_open = True
         self.create_player_items_buttons()
 
-        tile_interactable = self.do_evrything.MS.tile_map[self.player.tile_id]['interactable']
+        tile_interactable = self.do_evrything.MS.tile_map[self.player.tile_id]['loot']
         if tile_interactable != 0:
             self.loot_objects = self.do_evrything.EM.interactable_dict[tile_interactable]
             center = [514,226]
@@ -60,7 +60,7 @@ class InventoryMenu():
     def reopen_menu(self, event_list):
         self.player.update_stats()
         self.close_menu()
-        self.do_evrything.UI.render_all(event_list)
+        self.do_evrything.stats_menu.render_all(event_list)
         self.open_menu()
 
     def create_player_items_buttons(self):
@@ -291,7 +291,7 @@ class InventoryMenu():
             self.loot_objects += [self.selecred_item.data,]
         else:
             entity_manager = self.do_evrything.EM
-            self.do_evrything.MS.tile_map[self.player.tile_id]['interactable'] = self.do_evrything.EM.interactable_id_count
+            self.do_evrything.MS.tile_map[self.player.tile_id]['loot'] = self.do_evrything.EM.interactable_id_count
             entity_manager.interactable_dict[entity_manager.interactable_id_count] = [self.selecred_item.data,]
             entity_manager.interactable_id_count += 1
         if self.selecred_item.data in self.player.limbs:

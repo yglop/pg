@@ -9,7 +9,7 @@ from Systems.EntitySystems.Entity.Items.armour import *
 from Systems.EntitySystems.Entity.Items.limbs import *
 from Systems.EntitySystems.Entity.Items.organs import *
 
-from Visuals.display_ent import EntityVisual
+from Visuals.mob_visual import MobVisual
 from Resources.Textures.dataset import player_sprite, enemy_sprite
 
 
@@ -39,7 +39,7 @@ class EntityManager():
                 self.append_ent_stats_dict(tile_id, ent_id=tile_data['mob'])
     
     def append_ent_visual_dict(self, tile_data, sprite):
-        new_ent = EntityVisual(sprite, tile_data['rect'], tile_data['rect.center'])
+        new_ent = MobVisual(sprite, tile_data['rect'], tile_data['rect.center'])
         self.mobs_visual[tile_data['mob']] = pg.sprite.RenderPlain(new_ent)
    
     def append_ent_stats_dict(self, tile_id, ent_id):

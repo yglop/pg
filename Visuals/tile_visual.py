@@ -15,4 +15,4 @@ class TileVisual(pg.sprite.Sprite):
                 if  event.button == 1:                 
                     do_evrything.EM.PS.try_move_player(self.tile_id)
                 elif  event.button == 3:
-                    do_evrything.UI.set_enemy_info(self.tile_id)
+                    do_evrything.stats_menu.set_enemy_info(self.tile_id)

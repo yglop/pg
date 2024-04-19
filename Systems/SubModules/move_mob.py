@@ -1,5 +1,5 @@
 import pygame as pg
-from Visuals.display_ent import EntityVisual
+from Visuals.mob_visual import MobVisual
 
 def move_mob(
         destination_tile, 
@@ -20,5 +20,5 @@ def move_mob(
     mobs_stats[ent_id].subtract_action(movement_cost)
     mobs_stats[ent_id].tile_id = destination_tile
 
-    ent_new_sprite = EntityVisual(sprite, destination['rect'], destination['rect.center'])
+    ent_new_sprite = MobVisual(sprite, destination['rect'], destination['rect.center'])
     mobs_visual[destination['mob']] = pg.sprite.RenderPlain(ent_new_sprite)
