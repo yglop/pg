@@ -267,7 +267,8 @@ class InventoryMenu():
         
     def take_item(self):
         if self.selecred_item.data.weight + self.player.storage_capacity > self.player.max_storage_capacity:
-            print('take_item: storage has no space') # ToDo: popup
+            print('take_item: storage has no space')
+            self.do_evrything.popup_window.open_popup('storage has no space')
             return
 
         if self.selecred_item.data in self.player.limbs and (self.selecred_item.data.nutrition + 100 < self.player.nutrition):
@@ -284,7 +285,8 @@ class InventoryMenu():
 
     def drop_item(self):
         if (self.selecred_item.data.nutrition + 100 > self.player.nutrition) and not (self.selecred_item.data in self.player.storage):
-            print('drop_item: nutrition is too low') # ToDo: popup
+            print('drop_item: nutrition is too low')
+            self.do_evrything.popup_window.open_popup('nutrition is too low')
             return
 
         if self.loot_objects:
@@ -305,7 +307,8 @@ class InventoryMenu():
 
     def equip_item(self):
         if self.selecred_item.data.nutrition + 50 > self.player.nutrition:
-            print('equip_item: nutrition is too low') # ToDo: popup
+            print('equip_item: nutrition is too low') 
+            self.do_evrything.popup_window.open_popup('nutrition is too low')
             return
 
         if self.selecred_item.data in self.player.storage:
