@@ -3,7 +3,7 @@ import pygame as pg
 from Resources.Textures.dataset import player_sprite
 
 from Systems.SubModules.move_mob import move_mob
-
+from Systems.SubModules.attack_mob import attack
 
 class PlayerSystem():
     def __init__(self, EntityManager):
@@ -44,7 +44,7 @@ class PlayerSystem():
                     return
                 # attack
                 target_mob_id = self.tile_map[tile_id]['mob']
-                self.mobs_stats[2].attack(self, target_mob_id, tile_id)
+                attack(self, 2, target_mob_id, tile_id)
                 return
             
         print('try_move_player: tile', tile_id, 'is unreachable')
