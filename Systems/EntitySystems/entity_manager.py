@@ -32,17 +32,17 @@ class EntityManager():
     def iterate_through_tile_map(self):
         for tile_id, tile_data in self.tile_map.items():
             if tile_data['mob'] == 2:
-                self.append_ent_visual_dict(tile_data, sprite=player_sprite)
-                self.append_ent_stats_dict(tile_id, ent_id=tile_data['mob'])
+                self.append_mobs_visual(tile_data, sprite=player_sprite)
+                self.append_mobs_stats(tile_id, ent_id=tile_data['mob'])
             elif tile_data['mob'] >= 100:
-                self.append_ent_visual_dict(tile_data, sprite=enemy_sprite)
-                self.append_ent_stats_dict(tile_id, ent_id=tile_data['mob'])
+                self.append_mobs_visual(tile_data, sprite=enemy_sprite)
+                self.append_mobs_stats(tile_id, ent_id=tile_data['mob'])
     
-    def append_ent_visual_dict(self, tile_data, sprite):
+    def append_mobs_visual(self, tile_data, sprite):
         new_ent = MobVisual(sprite, tile_data['rect'], tile_data['rect.center'])
         self.mobs_visual[tile_data['mob']] = pg.sprite.RenderPlain(new_ent)
    
-    def append_ent_stats_dict(self, tile_id, ent_id):
+    def append_mobs_stats(self, tile_id, ent_id):
         equipment_preset = {
             'human': {
                 'tile_id':tile_id,
@@ -65,5 +65,5 @@ class EntityManager():
             self.mobs_stats[ent_id] = Mob(equipment_preset['human'])
     
     def render_ents(self, screen):
-        for ent_id, ent_visual in self.mobs_visual.items():
-            ent_visual.draw(screen)
+        for mob_id, mob_visual in self.mobs_visual.items():
+            mob_visual.draw(screen)
