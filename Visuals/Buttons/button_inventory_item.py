@@ -58,6 +58,7 @@ class InventoryDropItemButton(pg.sprite.Sprite):
                 do_evrything.inventory_menu.drop_item()
                 do_evrything.inventory_menu.reopen_menu(event_list)
 
+
 class InventoryEquipItemButton(pg.sprite.Sprite):
     def __init__(self, center):
         super().__init__()
@@ -70,7 +71,6 @@ class InventoryEquipItemButton(pg.sprite.Sprite):
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
                 do_evrything.inventory_menu.equip_item()
                 do_evrything.inventory_menu.reopen_menu(event_list)
-        
 
 
 class InventoryEatItemButton(pg.sprite.Sprite):

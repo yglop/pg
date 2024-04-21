@@ -29,6 +29,7 @@ class InventoryMenu():
         self.player_items_limbs_buttons = list()
         self.player_items_organs_buttons = list()
         self.player_items_storage_buttons = list()
+        self.player_items_armour_button = list()
         self.loot_items_buttons = list()
 
         self.interaction_buttons = list()
@@ -52,6 +53,7 @@ class InventoryMenu():
         self.player_items_limbs_buttons.clear()
         self.player_items_organs_buttons.clear()
         self.player_items_storage_buttons.clear()
+        self.player_items_armour_button.clear()
         self.loot_items_buttons.clear()
         self.interaction_buttons.clear()
         self.selecred_item = None
@@ -64,7 +66,7 @@ class InventoryMenu():
         self.open_menu()
 
     def create_player_items_buttons(self):
-        center = [304,226]
+        center = [304,228]
 
         for i in self.player.limbs:
             player_item = InventoryItemButton(center=center, data=i)            
@@ -78,58 +80,63 @@ class InventoryMenu():
             self.player_items_organs_buttons.append(player_item)
             center[1] += 16
 
-        center = [514,226]
+        center = [514,212]
+        if self.player.armour:
+            player_item = InventoryItemButton(center=center, data=self.player.armour)
+            self.player_items_armour_button.append(player_item)
+            center[1] += 16
+        center[1] += 16
         for i in self.player.storage:
             player_item = InventoryItemButton(center=center, data=i)
             self.player_items_storage_buttons.append(player_item)
             center[1] += 16
 
     def create_interaction_buttons(self):
-        if self.selecred_item:
-            center = [816,228]
-            if self.selecred_item.data in (self.player.limbs + self.player.organs):
-                self.interaction_buttons.clear()
+        center = [816,228]
+        if (self.selecred_item.data in (self.player.limbs + self.player.organs)) or (self.selecred_item.data is self.player.armour):
+            self.interaction_buttons.clear()
 
-                btn = InventoryTakeItemButton(center=center)   
-                self.interaction_buttons.append(btn)  
-                center[0] += 40
+            btn = InventoryTakeItemButton(center=center)   
+            self.interaction_buttons.append(btn)  
+            center[0] += 40
 
-                btn = InventoryDropItemButton(center=center)  
-                self.interaction_buttons.append(btn)      
-                center[0] += 40
-            elif self.selecred_item.data in self.player.storage:
-                self.interaction_buttons.clear()
+            btn = InventoryDropItemButton(center=center)  
+            self.interaction_buttons.append(btn)      
+            center[0] += 40
+        elif self.selecred_item.data in self.player.storage:
+            self.interaction_buttons.clear()
 
-                btn = InventoryDropItemButton(center=center)   
-                self.interaction_buttons.append(btn)  
-                center[0] += 40
+            btn = InventoryDropItemButton(center=center)   
+            self.interaction_buttons.append(btn)  
+            center[0] += 40
 
-                btn = InventoryEquipItemButton(center=center)   
-                self.interaction_buttons.append(btn)  
-                center[0] += 40
-                if hasattr(self.selecred_item.data, 'nutrition'):
-                    btn = InventoryEatItemButton(center=center)   
-                    self.interaction_buttons.append(btn)   
-            elif self.loot_objects and (self.selecred_item.data in (self.loot_objects)):
-                self.interaction_buttons.clear()
-                
-                btn = InventoryTakeItemButton(center=center)   
-                self.interaction_buttons.append(btn)  
-                center[0] += 40
+            btn = InventoryEquipItemButton(center=center)   
+            self.interaction_buttons.append(btn)  
+            center[0] += 40
+            if hasattr(self.selecred_item.data, 'nutrition'):
+                btn = InventoryEatItemButton(center=center)   
+                self.interaction_buttons.append(btn)   
+        elif self.loot_objects and (self.selecred_item.data in (self.loot_objects)):
+            self.interaction_buttons.clear()
+            
+            btn = InventoryTakeItemButton(center=center)   
+            self.interaction_buttons.append(btn)  
+            center[0] += 40
 
-                btn = InventoryEquipItemButton(center=center)   
-                self.interaction_buttons.append(btn)  
-                center[0] += 40     
-                if hasattr(self.selecred_item.data, 'nutrition'):
-                    btn = InventoryEatItemButton(center=center)   
-                    self.interaction_buttons.append(btn)        
+            btn = InventoryEquipItemButton(center=center)   
+            self.interaction_buttons.append(btn)  
+            center[0] += 40     
+            if hasattr(self.selecred_item.data, 'nutrition'):
+                btn = InventoryEatItemButton(center=center)   
+                self.interaction_buttons.append(btn)        
 
     def unselect_items(self, item):
         for i in (
             self.player_items_limbs_buttons + 
             self.player_items_organs_buttons + 
             self.player_items_storage_buttons +
-            self.loot_items_buttons
+            self.player_items_armour_button +
+            self.loot_items_buttons 
             ):
             if i != item and i.selected:
                 i.change_image()
@@ -139,6 +146,7 @@ class InventoryMenu():
             self.player_items_limbs_buttons + 
             self.player_items_organs_buttons + 
             self.player_items_storage_buttons +
+            self.player_items_armour_button +
             self.loot_items_buttons
             ):
             if i.selected:
@@ -242,9 +250,23 @@ class InventoryMenu():
                 center[1] += 16
 
     def render_storage_buttons(self, event_list):
-        text = self.font.render(f'Storage capacity: {self.player.storage_capacity}/{self.player.max_storage_capacity}', False, (self.text_colour))
-        self.do_evrything.screen.blit(text, (414,204))
+        for i in self.player_items_armour_button:
+            i.update(event_list)
+            pg.sprite.RenderPlain(i).draw(self.screen)
 
+            if i.selected:
+                self.selecred_item = i
+                self.unselect_items(i)
+
+            text = self.font.render(f'{i.data.name}', False, (self.text_colour))
+            self.do_evrything.screen.blit(text, (i.rect[0]+2, i.rect[1]+1))
+
+        text = self.font.render(f'Storage capacity: {self.player.storage_capacity}/{self.player.max_storage_capacity}', False, (self.text_colour))
+        if self.player_items_armour_button:
+            self.do_evrything.screen.blit(text, (414,220))
+        else:
+            self.do_evrything.screen.blit(text, (414,204))
+        
         for i in self.player_items_storage_buttons:        
             i.update(event_list)
             pg.sprite.RenderPlain(i).draw(self.screen)
@@ -279,12 +301,16 @@ class InventoryMenu():
             self.player.storage.append(self.selecred_item.data)
             self.player.organs.remove(self.selecred_item.data)
             self.player.nutrition -= self.selecred_item.data.nutrition + 100
+        elif self.selecred_item.data is self.player.armour:
+            self.player.storage.append(self.selecred_item.data)
+            self.player.armour = None
         elif self.loot_objects and (self.selecred_item.data in self.loot_objects):
             self.player.storage.append(self.selecred_item.data)
             self.loot_objects.remove(self.selecred_item.data)
 
     def drop_item(self):
-        if (self.selecred_item.data.nutrition + 100 > self.player.nutrition) and not (self.selecred_item.data in self.player.storage):
+        if hasattr(self.selecred_item.data, 'nutrition') and ((self.selecred_item.data.nutrition + 100 > self.player.nutrition) 
+        and not (self.selecred_item.data in self.player.storage)):
             print('drop_item: nutrition is too low')
             self.do_evrything.popup_window.open_popup('nutrition is too low')
             return
@@ -296,6 +322,7 @@ class InventoryMenu():
             self.do_evrything.MS.tile_map[self.player.tile_id]['loot'] = self.do_evrything.EM.interactable_id_count
             entity_manager.interactable_dict[entity_manager.interactable_id_count] = [self.selecred_item.data,]
             entity_manager.interactable_id_count += 1
+
         if self.selecred_item.data in self.player.limbs:
             self.player.limbs.remove(self.selecred_item.data)
             self.player.nutrition -= self.selecred_item.data.nutrition + 100
@@ -304,9 +331,11 @@ class InventoryMenu():
             self.player.nutrition -= self.selecred_item.data.nutrition + 100
         elif self.selecred_item.data in self.player.storage:
             self.player.storage.remove(self.selecred_item.data)
+        elif self.selecred_item.data is self.player.armour:
+            self.player.armour = None
 
     def equip_item(self):
-        if self.selecred_item.data.nutrition + 50 > self.player.nutrition:
+        if hasattr(self.selecred_item.data, 'nutrition') and (self.selecred_item.data.nutrition + 50 > self.player.nutrition):
             print('equip_item: nutrition is too low') 
             self.do_evrything.popup_window.open_popup('nutrition is too low')
             return
@@ -318,6 +347,9 @@ class InventoryMenu():
             elif hasattr(self.selecred_item.data, 'organ_points'):
                 self.player.organs.append(self.selecred_item.data)
                 self.player.storage.remove(self.selecred_item.data)
+            elif hasattr(self.selecred_item.data, 'protection'):
+                self.player.armour = self.selecred_item.data
+                self.player.storage.remove(self.selecred_item.data)
         elif self.loot_objects and (self.selecred_item.data in self.loot_objects):
             if hasattr(self.selecred_item.data, 'limb_points'):
                 self.player.limbs.append(self.selecred_item.data)
@@ -325,7 +357,12 @@ class InventoryMenu():
             elif hasattr(self.selecred_item.data, 'organ_points'):
                 self.player.organs.append(self.selecred_item.data)
                 self.loot_objects.remove(self.selecred_item.data)
-        self.player.nutrition -= self.selecred_item.data.nutrition + 50
+            elif hasattr(self.selecred_item.data, 'protection'):
+                self.player.armour = self.selecred_item.data
+                self.loot_objects.remove(self.selecred_item.data)
+
+        if hasattr(self.selecred_item.data, 'nutrition'):
+            self.player.nutrition -= self.selecred_item.data.nutrition + 50
 
     def eat_item(self):
         self.player.nutrition += self.selecred_item.data.nutrition
