@@ -29,7 +29,7 @@ class InventoryItemButton(pg.sprite.Sprite):
         self.selected = False
 
     def change_image(self, IM):
-        if self.image == button_inventory_item:
+        if self.selected == False:
             self.select()
             IM.selecred_item = self
             IM.unselect_items()
@@ -37,7 +37,7 @@ class InventoryItemButton(pg.sprite.Sprite):
             self.unselect()
 
     def update(self, IM, event_list):
-        IM.render_button_text(self.data.name, self.rect.center)
+        IM.render_items.render_button_text(self.data.name, self.rect.center)
         for event in event_list:
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
                 self.change_image(IM)

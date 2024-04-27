@@ -278,6 +278,9 @@ class InventoryMenu():
             text = self.font.render(f'{i.data.name}', False, (self.text_colour))
             self.do_evrything.screen.blit(text, (i.rect[0]+2, i.rect[1]+1))
 
+
+################ ALL WHATS LEFT
+
     def render_interaction_buttons(self, event_list):
         for i in self.interaction_buttons:
             i.update(event_list, self.do_evrything)

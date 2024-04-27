@@ -4,7 +4,8 @@ from Visuals.Buttons.button_inventory_item import InventoryItemButton
 
 
 class CreateButtons():
-    def __init__(self, player):
+    def __init__(self, do_evrything, player):
+        self.do_evrything = do_evrything
         self.player = player
 
         self.player_limbs_buttons = pg.sprite.RenderPlain()
@@ -20,6 +21,7 @@ class CreateButtons():
 
         self.create_first_column_buttons()
         self.create_second_column_buttons()
+        self.create_loot_buttons()
 
     def create_first_column_buttons(self):
         center = [304,228]
@@ -49,6 +51,13 @@ class CreateButtons():
             center[1] += 16
 
     def create_loot_buttons(self):
-        if self.loot_objects:
-            pass
+        tile_loot = self.do_evrything.MS.tile_map[self.player.tile_id]['loot']
+        if tile_loot != 0:
+            self.loot_objects = self.do_evrything.EM.interactable_dict[tile_loot]
+            center = [896,526]
+
+            for i in self.loot_objects:
+                loot = InventoryItemButton(center=center, data=i)            
+                self.loot_buttons.add(loot)
+                center[1] += 16
 
