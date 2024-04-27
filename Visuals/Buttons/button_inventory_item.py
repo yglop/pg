@@ -1,10 +1,6 @@
 import pygame as pg
 
-from Resources.Textures.dataset import (
-    button_inventory_item, button_inventory_item_active, 
-    button_inventory_take, button_inventory_drop, 
-    button_inventory_equip, button_inventory_eat
-    )
+from Resources.Textures.dataset import button_inventory_item, button_inventory_item_active, button_inventory_interaction
 
 
 class InventoryItemButton(pg.sprite.Sprite):
@@ -37,64 +33,24 @@ class InventoryItemButton(pg.sprite.Sprite):
             self.unselect()
 
     def update(self, IM, event_list):
-        IM.render_items.render_button_text(self.data.name, self.rect.center)
+        IM.render_items.render_button_text(self.data.name, (self.rect.center[0]-100, self.rect.center[1]-7))
         for event in event_list:
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
                 self.change_image(IM)
 
-'''
-class InventoryTakeItemButton(pg.sprite.Sprite):
-    def __init__(self, center):
+
+class InteractionButton(pg.sprite.Sprite):
+    def __init__(self, center, state):
         super().__init__()
-        self.image = button_inventory_take 
+        self.image = button_inventory_interaction
         self.rect = self.image.get_rect()
         self.rect.center = center.copy()
 
-    def update(self, event_list, do_evrything):
+        self.state = state
+
+    def update(self, IM, event_list):
+        IM.render_items.render_button_text(self.state, (self.rect.center[0]-16, self.rect.center[1]-7))
         for event in event_list:
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
-                do_evrything.inventory_menu.take_item()
-                do_evrything.inventory_menu.reopen_menu(event_list)
-
-
-class InventoryDropItemButton(pg.sprite.Sprite):
-    def __init__(self, center):
-        super().__init__()
-        self.image = button_inventory_drop 
-        self.rect = self.image.get_rect()
-        self.rect.center = center.copy()
-
-    def update(self, event_list, do_evrything):
-        for event in event_list:
-            if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
-                do_evrything.inventory_menu.drop_item()
-                do_evrything.inventory_menu.reopen_menu(event_list)
-
-
-class InventoryEquipItemButton(pg.sprite.Sprite):
-    def __init__(self, center):
-        super().__init__()
-        self.image = button_inventory_equip 
-        self.rect = self.image.get_rect()
-        self.rect.center = center.copy()
-
-    def update(self, event_list, do_evrything):
-        for event in event_list:
-            if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
-                do_evrything.inventory_menu.equip_item()
-                do_evrything.inventory_menu.reopen_menu(event_list)
-
-
-class InventoryEatItemButton(pg.sprite.Sprite):
-    def __init__(self, center):
-        super().__init__()
-        self.image = button_inventory_eat 
-        self.rect = self.image.get_rect()
-        self.rect.center = center.copy()
-
-    def update(self, event_list, do_evrything):
-        for event in event_list:
-            if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
-                do_evrything.inventory_menu.eat_item()
-                do_evrything.inventory_menu.reopen_menu(event_list)
-'''
+                IM.interaction_buttons.interact_with_item(self.state)
+                IM.reopen_menu(event_list)

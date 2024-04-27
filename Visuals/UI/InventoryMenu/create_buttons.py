@@ -17,8 +17,6 @@ class CreateButtons():
         self.loot_objects = None
         self.loot_buttons = pg.sprite.RenderPlain()
 
-        self.interaction_buttons = pg.sprite.RenderPlain()
-
         self.create_first_column_buttons()
         self.create_second_column_buttons()
         self.create_loot_buttons()
