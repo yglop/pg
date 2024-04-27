@@ -3,7 +3,7 @@ import random
 
 from Visuals.UI.stats_menu import StatsMenu
 from Visuals.UI.escape_menu import EscapeMenu
-from Visuals.UI.inventory_menu import InventoryMenu
+from Visuals.UI.InventoryMenu.inventory_menu import InventoryMenu
 from Visuals.UI.popup_window import PopupWindow
 
 from Systems.EntitySystems.entity_manager import EntityManager

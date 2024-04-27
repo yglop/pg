@@ -14,23 +14,35 @@ class InventoryItemButton(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = center.copy()
 
+        self.font = pg.font.Font('./Resources/Fonts/consolas.ttf', 13)
+        self.text_colour = (160, 160, 255)
+
         self.data = data
         self.selected = False
 
-    def change_image(self):
-        if self.image == button_inventory_item:
-            self.image = button_inventory_item_active
-            self.selected = True
-        else:
-            self.image = button_inventory_item
-            self.selected = False
+    def select(self):
+        self.image = button_inventory_item_active
+        self.selected = True
 
-    def update(self, event_list):
+    def unselect(self):
+        self.image = button_inventory_item
+        self.selected = False
+
+    def change_image(self, IM):
+        if self.image == button_inventory_item:
+            self.select()
+            IM.selecred_item = self
+            IM.unselect_items()
+        else:
+            self.unselect()
+
+    def update(self, IM, event_list):
+        IM.render_button_text(self.data.name, self.rect.center)
         for event in event_list:
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
-                self.change_image()
+                self.change_image(IM)
 
-
+'''
 class InventoryTakeItemButton(pg.sprite.Sprite):
     def __init__(self, center):
         super().__init__()
@@ -85,3 +97,4 @@ class InventoryEatItemButton(pg.sprite.Sprite):
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
                 do_evrything.inventory_menu.eat_item()
                 do_evrything.inventory_menu.reopen_menu(event_list)
+'''

@@ -8,7 +8,7 @@ from Visuals.Buttons.button_inventory_item import (
     InventoryDropItemButton, InventoryEquipItemButton, InventoryEatItemButton
     )
 
-
+###########################################    LEGASY. DELETE AFTER REFACTOR
 class InventoryMenu():
     def __init__(self, do_evrything):
         self.do_evrything = do_evrything
