@@ -49,7 +49,7 @@ class InteractionButton(pg.sprite.Sprite):
         self.state = state
 
     def update(self, IM, event_list):
-        IM.render_items.render_button_text(self.state, (self.rect.center[0]-16, self.rect.center[1]-7))
+        IM.render_items.render_button_text(self.state[0], (self.rect.center[0]-16, self.rect.center[1]-7))
         for event in event_list:
             if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos) and event.button == 1:
                 IM.interaction_buttons.interact_with_item(self.state)

@@ -16,7 +16,7 @@ class CanvasInventory(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = center
 
-    def update(self, event_list, InventoryMenu):
+    def update(self, event_list, RI):
         for event in event_list:
-            if event.type == pg.MOUSEBUTTONDOWN and not self.rect.collidepoint(event.pos) and event.button == 1:
-                InventoryMenu.close_menu()
+            if event.type == pg.MOUSEBUTTONDOWN and event.button == 1 and not self.rect.collidepoint(event.pos):
+                RI.IM.is_menu_open = False

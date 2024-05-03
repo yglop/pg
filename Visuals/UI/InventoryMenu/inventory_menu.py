@@ -68,8 +68,14 @@ class InventoryMenu():
         self.selecred_item = None
         self.interaction_buttons.interaction_buttons.empty()
 
+    def check_if_open(self):
+        if self.is_menu_open:
+            return
+        self.close_menu()
+
     def render_all(self, event_list):
         self.render_items.render(event_list)
 
         self.check_for_selected_item()
+        self.check_if_open()
         
