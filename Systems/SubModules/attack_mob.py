@@ -12,11 +12,14 @@ def attack(data, atatcker_mob_id, target_mob_id, destination_tile):
         target_part = random.choice(targets_list)
         if target_part == 'body':
             target_part = random.choice(target_mob.organs)
-            if atatcking_mob.melee_damage > target_mob.armour.protection:
-                target_part.health -= atatcking_mob.melee_damage - target_mob.armour.protection
+            if target_mob.armour:
+                if atatcking_mob.melee_damage > target_mob.armour.protection:
+                    target_part.health -= atatcking_mob.melee_damage - target_mob.armour.protection
+                else:
+                    target_mob.armour.health -= atatcking_mob.melee_damage
+                    target_part.health -= 1
             else:
-                target_mob.armour.health -= atatcking_mob.melee_damage
-                target_part.health -= 1
+                target_part.health -= atatcking_mob.melee_damage
         else:
             target_part.health -= atatcking_mob.melee_damage
         print(f'attack: {atatcking_mob.name} attacks {target_mob.name}')
@@ -34,11 +37,15 @@ def attack(data, atatcker_mob_id, target_mob_id, destination_tile):
 
     if len(target_critical_organs) == 0:
         ## spawn/add loot
+        loot = target_mob.limbs + target_mob.organs + target_mob.storage
+        if target_mob.armour:
+            loot.append(target_mob.armour)
+
         if destination['loot'] == 0:
             destination['loot'] = target_mob_id
-            data.interactable_dict[target_mob_id] = target_mob.limbs + target_mob.organs + target_mob.storage
+            data.interactable_dict[target_mob_id] = loot
         else:
-            data.interactable_dict[destination['loot']] += target_mob.limbs + target_mob.organs + target_mob.storage
+            data.interactable_dict[destination['loot']] += loot
 
         # delete ent
         del data.mobs_stats[target_mob_id]

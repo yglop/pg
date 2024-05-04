@@ -15,10 +15,6 @@ class PlayerSystem():
         self.mobs_stats = EntityManager.mobs_stats
 
     def try_move_player(self, tile_id):
-        if self.mobs_stats[2].is_movement_possable() == False:
-            print('try_move_player: no movement points left')
-            return
-
         if self.tile_map[tile_id]['mob'] == 2:
             print('try_move_player:', tile_id ,"is player's tile")
             return
@@ -29,7 +25,11 @@ class PlayerSystem():
 
         for i in self.tile_map[tile_id]['neighbors']:
             if self.tile_map[i]['mob'] == 2:
+                # move
                 if self.tile_map[tile_id]['mob'] == 0:
+                    if self.mobs_stats[2].is_movement_possable() == False:
+                        print('try_move_player: no movement points left')
+                        return
                     move_mob(
                         destination_tile=tile_id, 
                         original_tile=i, 

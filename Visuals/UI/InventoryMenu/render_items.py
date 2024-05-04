@@ -38,10 +38,8 @@ class RenderItems():
     def render_setected_item_info(self):
         text = self.IM.selecred_item.data.name if self.IM.selecred_item else 'Select an item'
         self.render_text(f'{text}', (796,204))
-        
         if self.IM.selecred_item:
             pos = [796,240]
-            ### i know this is bs, but this bs works
             if hasattr(self.IM.selecred_item.data, 'weight'):
                 self.render_selected_item_text(f'weight: {self.IM.selecred_item.data.weight}', pos)
             if hasattr(self.IM.selecred_item.data, 'health'):

@@ -24,4 +24,4 @@ class PopupWindow():
         pg.draw.rect(self.screen, (35,45,45), window)
 
         text = self.font.render(f'{self.text}', False, (self.text_colour))
-        self.screen.blit(text, window.center)
+        self.screen.blit(text, (320, 150))

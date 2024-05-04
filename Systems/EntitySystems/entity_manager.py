@@ -1,4 +1,5 @@
 import pygame as pg
+import random
 
 from Systems.EntitySystems.player_system import PlayerSystem
 from Systems.EntitySystems.enemy_system import EnemySystem
@@ -44,10 +45,17 @@ class EntityManager():
    
     def append_mobs_stats(self, tile_id, ent_id):
         equipment_preset = {
-            'human': {
+            'humanA': {
                 'tile_id':tile_id,
-                'name':f'human{str(ent_id)}',
+                'name':f'humanA{str(ent_id)}',
                 'armour':ArmourP1(),
+                'limbs':[LimbArmHuman(), LimbArmHuman(), LimbLegHuman(), LimbLegHuman(),],
+                'organs':[CriticalSystemsHuman(), DigestiveSystemHuman(),],
+            },
+            'humanB': {
+                'tile_id':tile_id,
+                'name':f'humanB{str(ent_id)}',
+                'armour':None,
                 'limbs':[LimbArmHuman(), LimbArmHuman(), LimbLegHuman(), LimbLegHuman(),],
                 'organs':[CriticalSystemsHuman(), DigestiveSystemHuman(),],
             },
@@ -62,7 +70,7 @@ class EntityManager():
         if ent_id == 2:
             self.mobs_stats[ent_id] = Mob(equipment_preset['ling'])
         else:
-            self.mobs_stats[ent_id] = Mob(equipment_preset['human'])
+            self.mobs_stats[ent_id] = Mob(equipment_preset[random.choice(['humanA', 'humanB'])])
     
     def render_ents(self, screen):
         for mob_id, mob_visual in self.mobs_visual.items():
