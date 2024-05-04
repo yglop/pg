@@ -31,43 +31,37 @@ class RenderItems():
         text = self.font.render(f'{name}', False, (self.text_colour))
         self.screen.blit(text, pos)
 
+    def render_selected_item_text(self, txt, pos):
+        self.render_text(txt, pos)
+        pos[1] += 16
+
     def render_setected_item_info(self):
         text = self.IM.selecred_item.data.name if self.IM.selecred_item else 'Select an item'
         self.render_text(f'{text}', (796,204))
         
         if self.IM.selecred_item:
-            center = [796,240]
+            pos = [796,240]
             ### i know this is bs, but this bs works
             if hasattr(self.IM.selecred_item.data, 'weight'):
-                self.render_text(f'weight: {self.IM.selecred_item.data.weight}', center)
-                center[1] += 16
+                self.render_selected_item_text(f'weight: {self.IM.selecred_item.data.weight}', pos)
             if hasattr(self.IM.selecred_item.data, 'health'):
-                self.render_text(f'health: {self.IM.selecred_item.data.health}/{self.IM.selecred_item.data.max_health}', center)
-                center[1] += 16
+                self.render_selected_item_text(f'health: {self.IM.selecred_item.data.health}/{self.IM.selecred_item.data.max_health}', pos)
             if hasattr(self.IM.selecred_item.data, 'nutrition'):
-                self.render_text(f'nutrition: {self.IM.selecred_item.data.nutrition}', center)
-                center[1] += 16
+                self.render_selected_item_text(f'nutrition: {self.IM.selecred_item.data.nutrition}', pos)
             if hasattr(self.IM.selecred_item.data, 'limb_points'):
-                self.render_text(f'limb points: {self.IM.selecred_item.data.limb_points}', center)
-                center[1] += 16
+                self.render_selected_item_text(f'limb points: {self.IM.selecred_item.data.limb_points}', pos)
             if hasattr(self.IM.selecred_item.data, 'action_points'):
-                self.render_text(f'action points: {self.IM.selecred_item.data.action_points}', center)
-                center[1] += 16
+                self.render_selected_item_text(f'action points: {self.IM.selecred_item.data.action_points}', pos)
             if hasattr(self.IM.selecred_item.data, 'movement_points'):
-                self.render_text(f'movement points: {self.IM.selecred_item.data.movement_points}', center)
-                center[1] += 16
+                self.render_selected_item_text(f'movement points: {self.IM.selecred_item.data.movement_points}', pos)
             if hasattr(self.IM.selecred_item.data, 'melee_damage'):
-                self.render_text(f'melee damage: {self.IM.selecred_item.data.melee_damage}', center)
-                center[1] += 16
+                self.render_selected_item_text(f'melee damage: {self.IM.selecred_item.data.melee_damage}', pos)
             if hasattr(self.IM.selecred_item.data, 'organ_points'):
-                self.render_text(f'organ points: {self.IM.selecred_item.data.organ_points}', center)
-                center[1] += 16 
+                self.render_selected_item_text(f'organ points: {self.IM.selecred_item.data.organ_points}', pos)
             if hasattr(self.IM.selecred_item.data, 'critical'):
-                self.render_text(f'critical: {self.IM.selecred_item.data.critical}', center)
-                center[1] += 16
+                self.render_selected_item_text(f'critical: {self.IM.selecred_item.data.critical}', pos)
             if hasattr(self.IM.selecred_item.data, 'protection'):
-                self.render_text(f'protection: {self.IM.selecred_item.data.protection}', center)
-                center[1] += 16
+                self.render_selected_item_text(f'protection: {self.IM.selecred_item.data.protection}', pos)
 
     ## BUTTONS
     def render_buttons(self, _buttons, event_list):
