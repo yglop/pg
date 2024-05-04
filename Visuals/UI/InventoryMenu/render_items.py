@@ -53,6 +53,9 @@ class RenderItems():
             if hasattr(self.IM.selecred_item.data, 'action_points'):
                 self.render_text(f'action points: {self.IM.selecred_item.data.action_points}', center)
                 center[1] += 16
+            if hasattr(self.IM.selecred_item.data, 'movement_points'):
+                self.render_text(f'movement points: {self.IM.selecred_item.data.movement_points}', center)
+                center[1] += 16
             if hasattr(self.IM.selecred_item.data, 'melee_damage'):
                 self.render_text(f'melee damage: {self.IM.selecred_item.data.melee_damage}', center)
                 center[1] += 16
