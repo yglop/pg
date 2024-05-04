@@ -8,6 +8,7 @@ class BaseLimb(BaseItem):
         super().__init__()
         self.nutrition = 100
         self.limb_points = 1
+        self.movement_points = 0
         self.action_points = 0
         self.melee_damage = 0
 
@@ -21,6 +22,7 @@ class LimbArmHuman(BaseLimb):
         self.max_health = 2
         self.health = 2
 
+        self.action_points = 1
         self.melee_damage = 1
 
 
@@ -32,6 +34,7 @@ class LimbArmBlade(BaseLimb):
         self.max_health = 2
         self.health = 2
 
+        self.action_points = 1
         self.melee_damage = 6
 
 
@@ -44,4 +47,4 @@ class LimbLegHuman(BaseLimb):
         self.max_health = 3
         self.health = 3
         
-        self.action_points = 1
+        self.movement_points = 1

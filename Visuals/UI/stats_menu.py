@@ -27,11 +27,14 @@ class StatsMenu():
         pg.draw.rect(self.screen, (0,150,100), pg.Rect(1000, 400, 200, 1000))
         pg.draw.rect(self.screen, (0,200,100), pg.Rect(1000, 700, 200, 1000))
 
-    def render_actions_count(self):
+    def render_AP_MP_count(self):
         c_a_p = self.do_evrything.EM.mobs_stats[2].actions
         m_a_p = self.do_evrything.EM.mobs_stats[2].max_actions
-        current_action_points = self.font.render(f'AP left:{c_a_p}/{m_a_p}', False, (0, 180, 0))
-        self.screen.blit(current_action_points, (1060, 10))
+        c_m_p = self.do_evrything.EM.mobs_stats[2].movements
+        m_m_p = self.do_evrything.EM.mobs_stats[2].max_movements
+        
+        current_action_points = self.font.render(f'AP:{c_a_p}/{m_a_p} MP:{c_m_p}/{m_m_p}', False, (0, 180, 0))
+        self.screen.blit(current_action_points, (1050, 10))
 
     def button_manager(self, event_list):
         self.turn_button.update(event_list, self.do_evrything)
@@ -91,6 +94,6 @@ class StatsMenu():
     def render_all(self, event_list):
         self.draw_rectangles()
         self.button_manager(event_list)
-        self.render_actions_count()
+        self.render_AP_MP_count()
         self.render_player_info()
         self.render_enemy_info()

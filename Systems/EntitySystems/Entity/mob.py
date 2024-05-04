@@ -20,6 +20,7 @@ class Mob():
         self.nutrition = 1000
 
         self.max_actions = 1
+        self.max_movements = 1
         self.melee_damage = 1
 
         self.max_storage_capacity = 5
@@ -29,6 +30,7 @@ class Mob():
         self.update_stats()
 
         self.actions = self.max_actions
+        self.movements = self.max_movements
 
     def subtract_action(self, cost=1):
         self.actions -= cost
@@ -38,8 +40,17 @@ class Mob():
             return True
         return False
 
+    def subtract_movement(self, cost=1):
+        self.movements -= cost
+
+    def is_movement_possable(self, cost=1):
+        if self.movements >= cost:
+            return True
+        return False
+
     def update_stats(self):
         max_actions = 0
+        max_movements = 0
         melee_damage = 0
         used_limb_points = 0
         used_organ_points = 0
@@ -47,6 +58,7 @@ class Mob():
 
         for limb in self.limbs:
             max_actions += limb.action_points
+            max_movements += limb.movement_points
             melee_damage += limb.melee_damage
             used_limb_points += limb.limb_points
 
@@ -57,6 +69,7 @@ class Mob():
             storage_capacity += i.weight
 
         self.max_actions = max_actions
+        self.max_movements = max_movements
         self.melee_damage = melee_damage
         self.used_limb_points = used_limb_points
         self.used_organ_points = used_organ_points

@@ -15,8 +15,9 @@ class EnemySystem():
 
     def try_move_enemy(self, ent_id):
         movement_cost = 1
-        while self.mobs_stats[ent_id].actions >= movement_cost:
-            original_tile = self.mobs_stats[ent_id].tile_id
+        mob = self.mobs_stats[ent_id]
+        while mob.movements >= movement_cost:
+            original_tile = mob.tile_id
             directions = list()
             for i in self.tile_map[original_tile]['neighbors']:
                 if self.tile_map[i]['mob'] == 0:
@@ -28,7 +29,7 @@ class EnemySystem():
 
             move_mob(
                     destination_tile=random.choice(directions), 
-                    original_tile=self.mobs_stats[ent_id].tile_id, 
+                    original_tile=mob.tile_id, 
                     ent_id=ent_id, 
                     tile_map=self.tile_map,
                     movement_cost=movement_cost,

@@ -15,8 +15,8 @@ class PlayerSystem():
         self.mobs_stats = EntityManager.mobs_stats
 
     def try_move_player(self, tile_id):
-        if self.mobs_stats[2].is_action_possable() == False:
-            print('try_move_player: no actons points left')
+        if self.mobs_stats[2].is_movement_possable() == False:
+            print('try_move_player: no movement points left')
             return
 
         if self.tile_map[tile_id]['mob'] == 2:
@@ -43,6 +43,9 @@ class PlayerSystem():
                     print('move_player:', 'moved from', i, 'to', tile_id)
                     return
                 # attack
+                if self.mobs_stats[2].is_action_possable() == False:
+                    print('try_move_player: no action points left')
+                    return
                 target_mob_id = self.tile_map[tile_id]['mob']
                 attack(self, 2, target_mob_id, tile_id)
                 return

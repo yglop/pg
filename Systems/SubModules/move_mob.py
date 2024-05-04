@@ -17,7 +17,7 @@ def move_mob(
     origin['mob'] = 0
     destination['mob'] = ent_id
 
-    mobs_stats[ent_id].subtract_action(movement_cost)
+    mobs_stats[ent_id].subtract_movement(movement_cost)
     mobs_stats[ent_id].tile_id = destination_tile
 
     ent_new_sprite = MobVisual(sprite, destination['rect'], destination['rect.center'])
