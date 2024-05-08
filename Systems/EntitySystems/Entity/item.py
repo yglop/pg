@@ -22,7 +22,3 @@ class BaseWeaponRange(BaseItem):
     def __init__(self):
         self.name = 'BaseWeaponRange'
 
-
-class BaseWeaponMelee(BaseItem):
-    def __init__(self):
-        self.name = 'BaseWeaponMelee'

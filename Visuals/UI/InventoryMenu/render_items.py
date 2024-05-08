@@ -81,11 +81,17 @@ class RenderItems():
         # armour
         if self.IM.buttons.player_armour_button:
             self.render_buttons(self.IM.buttons.player_armour_button, event_list)
-            storage_pos1 = 220
+            storage_pos1 += 16
+        # weapons
+        self.render_text(
+            f'Weapon slots: {self.player.used_hands}/{self.player.hands}', 
+            (414, storage_pos1))
+        storage_pos1 += 16
+        self.render_buttons(self.IM.buttons.player_in_hands_buttons, event_list)
         # storage
         self.render_text(
             f'Storage capacity: {self.player.storage_capacity}/{self.player.max_storage_capacity}', 
-            (414, storage_pos1))
+            (414, storage_pos1 + 16 * len(self.IM.player.in_hands)))
         self.render_buttons(self.IM.buttons.player_storage_buttons, event_list)
 
     def render_loot_items(self, event_list):

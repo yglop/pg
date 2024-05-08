@@ -7,6 +7,7 @@ from Systems.EntitySystems.items_system import ItemSystem
 
 from Systems.EntitySystems.Entity.mob import Mob
 from Systems.EntitySystems.Entity.Items.armour import *
+from Systems.EntitySystems.Entity.Items.weapons_melee import *
 from Systems.EntitySystems.Entity.Items.limbs import *
 from Systems.EntitySystems.Entity.Items.organs import *
 
@@ -58,6 +59,7 @@ class EntityManager():
                 'armour':ArmourP1(),
                 'limbs':limbs_preset['base'],
                 'organs':organs_preset['base'],
+                'storage':[],
             },
             'humanB': {
                 'tile_id':tile_id,
@@ -65,6 +67,7 @@ class EntityManager():
                 'armour':None,
                 'limbs':limbs_preset['base'],
                 'organs':organs_preset['base'],
+                'storage':[],
             },
             'ling': {
                 'tile_id':tile_id,
@@ -72,6 +75,7 @@ class EntityManager():
                 'armour':ArmourP1(),
                 'limbs':limbs_preset['ling'],
                 'organs':organs_preset['base'],
+                'storage':[Sword(),Sword(),],
             },
         }
         if ent_id == 2:

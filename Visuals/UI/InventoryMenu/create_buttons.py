@@ -12,6 +12,7 @@ class CreateButtons():
         self.player_organs_buttons = pg.sprite.RenderPlain()
 
         self.player_armour_button = pg.sprite.RenderPlain()
+        self.player_in_hands_buttons = pg.sprite.RenderPlain()
         self.player_storage_buttons = pg.sprite.RenderPlain()
 
         self.loot_objects = None
@@ -41,6 +42,11 @@ class CreateButtons():
         if self.player.armour:
             player_item = InventoryItemButton(center=center, data=self.player.armour)
             self.player_armour_button.add(player_item)
+            center[1] += 16
+        center[1] += 16
+        for i in self.player.in_hands:
+            player_item = InventoryItemButton(center=center, data=i)
+            self.player_in_hands_buttons.add(player_item)
             center[1] += 16
         center[1] += 16
         for i in self.player.storage:

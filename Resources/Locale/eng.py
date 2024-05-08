@@ -13,5 +13,8 @@ locale_eng = {
     'liver_human_name':'human liver',
 
     'digestive_system_human_name':'human digestive sys',
+
+    ## weapons melee
+    'weapon_melee_sword':'sword',
 }
 

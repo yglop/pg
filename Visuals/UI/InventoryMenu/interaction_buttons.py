@@ -135,15 +135,13 @@ class InteractionButtons():
 
     def equip_item(self, state):
         # player has enough nutrition
-        if hasattr(self.IM.selecred_item.data, 'nutrition'):
-            if (self.IM.selecred_item.data.nutrition + 50 > self.IM.player.nutrition):
-                self.popup('equip_item', 'nutrition is too low')
-                return
-            else:
-                # player has action points
-                if self.IM.player.actions <= 0:
-                    self.popup('drop_item', 'no action points left')
-                    return
+        if hasattr(self.IM.selecred_item.data, 'nutrition') and (self.IM.selecred_item.data.nutrition + 50 > self.IM.player.nutrition):
+            self.popup('equip_item', 'nutrition is too low')
+            return
+        # player has action points
+        if self.IM.player.actions <= 0:
+            self.popup('equip_item', 'no action points left')
+            return
         # equip
         if hasattr(self.IM.selecred_item.data, 'limb_points'):
             if self.IM.player.used_limb_points + self.IM.selecred_item.data.limb_points > self.IM.player.max_limb_points:
@@ -155,13 +153,19 @@ class InteractionButtons():
                 self.popup('equip_item', 'not enough organ points')
                 return
             self.IM.player.organs.append(self.IM.selecred_item.data)
+        elif hasattr(self.IM.selecred_item.data, 'hands_required'):
+            if self.IM.player.used_hands + self.IM.selecred_item.data.hands_required > self.IM.player.hands:
+                self.popup('equip_item', 'not enough hands')
+                return
+            self.IM.player.in_hands.append(self.IM.selecred_item.data)
+            print(self.IM.player.in_hands) # debug
         elif hasattr(self.IM.selecred_item.data, 'protection'):
             if self.IM.player.armour:
                 self.popup('equip_item', 'you already have armour')
                 return
             self.IM.player.armour = self.IM.selecred_item.data
         # if item is equipped
-        self.IM.player.nutrition -= self.IM.selecred_item.data.nutrition + 50
+        self.IM.player.nutrition -= (self.IM.selecred_item.data.nutrition + 50 if hasattr(self.IM.selecred_item.data, 'nutrition') else 50)
         self.IM.player.subtract_action(1)
         # delete
         if state[1] == 'storage':

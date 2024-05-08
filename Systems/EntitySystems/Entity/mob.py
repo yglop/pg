@@ -23,9 +23,13 @@ class Mob():
         self.max_movements = 1
         self.melee_damage = 1
 
+        self.hands = 0
+        self.used_hands = 0
+        self.in_hands = list()
+
         self.max_storage_capacity = 5
         self.storage_capacity = 0
-        self.storage = list()
+        self.storage = data['storage']
 
         self.update_stats()
 
@@ -54,6 +58,8 @@ class Mob():
         melee_damage = 0
         used_limb_points = 0
         used_organ_points = 0
+        hands = 0
+        used_hands = 0
         storage_capacity = 0
 
         for limb in self.limbs:
@@ -61,9 +67,13 @@ class Mob():
             max_movements += limb.movement_points
             melee_damage += limb.melee_damage
             used_limb_points += limb.limb_points
+            hands += limb.hand_points
 
         for organ in self.organs:
             used_organ_points += organ.organ_points
+
+        for weapon in self.in_hands:
+            used_hands += weapon.hands_required
 
         for i in self.storage:
             storage_capacity += i.weight
@@ -73,4 +83,6 @@ class Mob():
         self.melee_damage = melee_damage
         self.used_limb_points = used_limb_points
         self.used_organ_points = used_organ_points
+        self.hands = hands
+        self.used_hands = used_hands
         self.storage_capacity = storage_capacity

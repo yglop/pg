@@ -30,6 +30,7 @@ class InventoryMenu():
         self.buttons.player_limbs_buttons.empty()
         self.buttons.player_organs_buttons.empty()
         self.buttons.player_armour_button.empty()
+        self.buttons.player_in_hands_buttons.empty()
         self.buttons.player_storage_buttons.empty()
         self.buttons.loot_buttons.empty()
         #self.buttons.interaction_buttons.empty()
