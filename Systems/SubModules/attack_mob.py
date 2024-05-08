@@ -15,9 +15,12 @@ def attack(data, atatcker_mob_id, target_mob_id, destination_tile):
             if target_mob.armour:
                 if atatcking_mob.melee_damage > target_mob.armour.protection:
                     target_part.health -= atatcking_mob.melee_damage - target_mob.armour.protection
+                    target_mob.armour.health -= 1
                 else:
                     target_mob.armour.health -= atatcking_mob.melee_damage
                     target_part.health -= 1
+                if target_mob.armour.health <= 0:
+                    target_mob.armour = None
             else:
                 target_part.health -= atatcking_mob.melee_damage
         else:
