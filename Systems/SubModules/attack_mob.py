@@ -24,18 +24,21 @@ def attack(data, atatcker_mob_id, target_mob_id, destination_tile):
             target_part.health -= atatcking_mob.melee_damage
         print(f'attack: {atatcking_mob.name} attacks {target_mob.name}')
     
-    target_critical_organs = list()
+    target_hearts = list()
+    target_lungs = list()
     for organ in target_mob.organs:
-        if organ.critical == True and organ.health > 0:
-            target_critical_organs.append(organ)
-        elif organ.health <= 0:
+        if organ.organ_type == 'heart' and organ.health > 0:
+            target_hearts.append(organ)
+        elif organ.organ_type == 'lungs' and organ.health > 0:
+            target_lungs.append(organ)
+        if organ.health <= 0:
             target_mob.organs.remove(organ)
 
     for limb in target_mob.limbs:
         if limb.health <= 0:
             target_mob.limbs.remove(limb)
 
-    if len(target_critical_organs) == 0:
+    if len(target_hearts) == 0 or len(target_lungs) == 0:
         ## spawn/add loot
         loot = target_mob.limbs + target_mob.organs + target_mob.storage
         if target_mob.armour:

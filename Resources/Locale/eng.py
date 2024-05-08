@@ -6,8 +6,11 @@ locale_eng = {
     'leg_human_name':'human leg',
 
     ## organs
-    'critical_systems_human_name':'human critical sys',
-    'critical_systems_changeling_name':'ling critical sys',
+    'heart_human_name':'human heart',
+
+    'lungs_human_name':'human lungs',
+
+    'liver_human_name':'human liver',
 
     'digestive_system_human_name':'human digestive sys',
 }

@@ -56,8 +56,8 @@ class RenderItems():
                 self.render_selected_item_text(f'melee damage: {self.IM.selecred_item.data.melee_damage}', pos)
             if hasattr(self.IM.selecred_item.data, 'organ_points'):
                 self.render_selected_item_text(f'organ points: {self.IM.selecred_item.data.organ_points}', pos)
-            if hasattr(self.IM.selecred_item.data, 'critical'):
-                self.render_selected_item_text(f'critical: {self.IM.selecred_item.data.critical}', pos)
+            if hasattr(self.IM.selecred_item.data, 'organ_type'):
+                self.render_selected_item_text(f'organ_type: {self.IM.selecred_item.data.organ_type}', pos)
             if hasattr(self.IM.selecred_item.data, 'protection'):
                 self.render_selected_item_text(f'protection: {self.IM.selecred_item.data.protection}', pos)
 

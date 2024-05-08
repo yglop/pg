@@ -44,27 +44,34 @@ class EntityManager():
         self.mobs_visual[tile_data['mob']] = pg.sprite.RenderPlain(new_ent)
    
     def append_mobs_stats(self, tile_id, ent_id):
+        limbs_preset = {
+            'base':[LimbArmHuman(), LimbArmHuman(), LimbLegHuman(), LimbLegHuman()],
+            'ling':[LimbArmHuman(), LimbArmBlade(), LimbLegHuman(), LimbLegHuman()],
+        }
+        organs_preset = {
+            'base':[HeartHuman(), LungsHuman(), LiverHuman(), DigestiveSystemHuman()],
+        }
         equipment_preset = {
             'humanA': {
                 'tile_id':tile_id,
                 'name':f'humanA{str(ent_id)}',
                 'armour':ArmourP1(),
-                'limbs':[LimbArmHuman(), LimbArmHuman(), LimbLegHuman(), LimbLegHuman(),],
-                'organs':[CriticalSystemsHuman(), DigestiveSystemHuman(),],
+                'limbs':limbs_preset['base'],
+                'organs':organs_preset['base'],
             },
             'humanB': {
                 'tile_id':tile_id,
                 'name':f'humanB{str(ent_id)}',
                 'armour':None,
-                'limbs':[LimbArmHuman(), LimbArmHuman(), LimbLegHuman(), LimbLegHuman(),],
-                'organs':[CriticalSystemsHuman(), DigestiveSystemHuman(),],
+                'limbs':limbs_preset['base'],
+                'organs':organs_preset['base'],
             },
             'ling': {
                 'tile_id':tile_id,
                 'name':f'player',
                 'armour':ArmourP1(),
-                'limbs':[LimbArmHuman(), LimbArmBlade(), LimbLegHuman(), LimbLegHuman(),],
-                'organs':[CriticalSystemsChangeling(), DigestiveSystemHuman(),],
+                'limbs':limbs_preset['ling'],
+                'organs':organs_preset['base'],
             },
         }
         if ent_id == 2:
