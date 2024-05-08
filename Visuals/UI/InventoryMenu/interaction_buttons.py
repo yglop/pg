@@ -13,6 +13,12 @@ class InteractionButtons():
         btn = InteractionButton(center=center, state=state)   
         self.interaction_buttons.add(btn)
 
+    def degestive_system_check(self):
+        for i in self.IM.player.organs:
+            if i.organ_type == 'digestive':
+                return True
+        return False
+
     def create_interaction_buttons(self):
         self.interaction_buttons.empty()
         btns_kwords = list()
@@ -29,12 +35,12 @@ class InteractionButtons():
             kword = 'armour'
         elif self.IM.buttons.loot_objects and (self.IM.selecred_item.data in (self.IM.buttons.loot_objects)):
             btns_kwords = ['take', 'equip']
-            if hasattr(self.IM.selecred_item.data, 'nutrition'):
+            if hasattr(self.IM.selecred_item.data, 'nutrition') and self.degestive_system_check():
                 btns_kwords.append('eat')
             kword = 'loot'
         elif self.IM.selecred_item.data in self.IM.player.storage:
             btns_kwords = ['drop', 'equip']
-            if hasattr(self.IM.selecred_item.data, 'nutrition'):
+            if hasattr(self.IM.selecred_item.data, 'nutrition') and self.degestive_system_check():
                 btns_kwords.append('eat')
             kword = 'storage'
 

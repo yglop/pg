@@ -48,11 +48,11 @@ class RenderItems():
                 self.render_selected_item_text(f'nutrition: {self.IM.selecred_item.data.nutrition}', pos)
             if hasattr(self.IM.selecred_item.data, 'limb_points'):
                 self.render_selected_item_text(f'limb points: {self.IM.selecred_item.data.limb_points}', pos)
-            if hasattr(self.IM.selecred_item.data, 'action_points'):
+            if hasattr(self.IM.selecred_item.data, 'action_points') and self.IM.selecred_item.data.action_points != 0:
                 self.render_selected_item_text(f'action points: {self.IM.selecred_item.data.action_points}', pos)
-            if hasattr(self.IM.selecred_item.data, 'movement_points'):
+            if hasattr(self.IM.selecred_item.data, 'movement_points') and self.IM.selecred_item.data.movement_points != 0:
                 self.render_selected_item_text(f'movement points: {self.IM.selecred_item.data.movement_points}', pos)
-            if hasattr(self.IM.selecred_item.data, 'melee_damage'):
+            if hasattr(self.IM.selecred_item.data, 'melee_damage') and self.IM.selecred_item.data.melee_damage != 0:
                 self.render_selected_item_text(f'melee damage: {self.IM.selecred_item.data.melee_damage}', pos)
             if hasattr(self.IM.selecred_item.data, 'organ_points'):
                 self.render_selected_item_text(f'organ points: {self.IM.selecred_item.data.organ_points}', pos)

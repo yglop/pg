@@ -48,5 +48,5 @@ class DigestiveSystemHuman(BaseOrgan):
         self.name = locale['digestive_system_human_name']
         self.max_health = 6
         self.health = 6
-        self.organ_type = 'digenstive'
+        self.organ_type = 'digestive'
 
