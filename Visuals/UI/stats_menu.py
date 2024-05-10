@@ -8,6 +8,7 @@ from Visuals.Buttons.button_inventory import InventoryButton
 class StatsMenu():
     def __init__(self, do_evrything):
         self.do_evrything = do_evrything
+        self.player = self.do_evrything.EM.mobs_stats[2]
         self.screen = self.do_evrything.screen
 
         self.turn_button = EndTurnButton((1100, 52))
@@ -28,10 +29,10 @@ class StatsMenu():
         pg.draw.rect(self.screen, (0,200,100), pg.Rect(1000, 700, 200, 1000))
 
     def render_AP_MP_count(self):
-        c_a_p = self.do_evrything.EM.mobs_stats[2].actions
-        m_a_p = self.do_evrything.EM.mobs_stats[2].max_actions
-        c_m_p = self.do_evrything.EM.mobs_stats[2].movements
-        m_m_p = self.do_evrything.EM.mobs_stats[2].max_movements
+        c_a_p = self.player.actions
+        m_a_p = self.player.max_actions
+        c_m_p = self.player.movements
+        m_m_p = self.player.max_movements
         
         current_action_points = self.font.render(f'AP:{c_a_p}/{m_a_p} MP:{c_m_p}/{m_m_p}', False, (0, 180, 0))
         self.screen.blit(current_action_points, (1050, 10))
@@ -40,7 +41,7 @@ class StatsMenu():
         self.turn_button.update(event_list, self.do_evrything)
         self.turn_button_visual.draw(self.screen)
 
-        loot = self.do_evrything.MS.tile_map[self.do_evrything.EM.mobs_stats[2].tile_id]['loot']
+        loot = self.do_evrything.MS.tile_map[self.player.tile_id]['loot']
         if (loot != 0) and (len(self.do_evrything.EM.interactable_dict[loot]) > 0):
             self.inventory_button.change_image(True)
         else:
@@ -49,10 +50,10 @@ class StatsMenu():
         self.inventory_button_visual.draw(self.screen)
         
     def render_player_info(self):
-        player = self.do_evrything.EM.mobs_stats[2]
+        player = self.player
         text = self.font.render(f'nutrition: {player.nutrition}/{player.max_nutrition}', False, (self.text_colour))
-        self.screen.blit(text, (1000,100))
-
+        self.screen.blit(text, (1000,100))    
+    
     def render_enemy_info(self):
         if self.mob_id in self.do_evrything.EM.mobs_stats:
             self.render_mob_info(self.mob_id, [1000,400])
