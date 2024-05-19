@@ -41,3 +41,4 @@ inventory_menu = pg.image.load("./Resources/Textures/UI/inventory_menu.png")
 
 ## weapons
 weapon_base = pg.image.load("./Resources/Textures/UI/weapon_buttons/weapon-base.png")
+weapon_base_active = pg.image.load("./Resources/Textures/UI/weapon_buttons/weapon-base-active.png")

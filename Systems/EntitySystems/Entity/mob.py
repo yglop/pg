@@ -26,6 +26,7 @@ class Mob():
         self.hands = 0
         self.used_hands = 0
         self.in_hands = list()
+        self.selected_weapon = None
 
         self.max_storage_capacity = 5
         self.storage_capacity = 0

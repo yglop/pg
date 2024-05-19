@@ -40,6 +40,11 @@ class StatsMenu():
                 center[0] -= 192
                 center[1] += 32
 
+    def unselect_weapons(self):
+        for i in self.weapon_buttons:
+            if i.data is not self.player.selected_weapon:
+                i.unselect()
+
     ## renders
     def draw_rectangles(self):
         pg.draw.rect(self.screen, (0,0,100), pg.Rect(1000, 0, 200, 1000))
@@ -70,7 +75,7 @@ class StatsMenu():
         self.inventory_button_visual.draw(self.screen)
 
     def render_weapon_buttons(self, event_list):
-        self.weapon_buttons.update(event_list)
+        self.weapon_buttons.update(event_list, self)
         self.weapon_buttons.draw(self.screen)
         
     def render_player_info(self):

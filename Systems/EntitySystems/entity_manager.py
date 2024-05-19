@@ -74,7 +74,7 @@ class EntityManager():
                 'tile_id':tile_id,
                 'name':f'player',
                 'armour':ArmourP1(),
-                'limbs':limbs_preset['armtest'],
+                'limbs':limbs_preset['base'],
                 'organs':organs_preset['base'],
                 'storage':[Sword(),Sword(),Sword(),Sword(),Sword(),Sword(),Sword(),Sword(),],
             },

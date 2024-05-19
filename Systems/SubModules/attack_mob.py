@@ -1,5 +1,22 @@
 import random
 
+def attack_mob(target_part, target_mob, damage):
+    if target_part == 'body':
+        target_part = random.choice(target_mob.organs)
+        if target_mob.armour:
+            if damage > target_mob.armour.protection:
+                target_part.health -= damage - target_mob.armour.protection
+                target_mob.armour.health -= 1
+            else:
+                target_mob.armour.health -= damage
+                target_part.health -= 1
+            if target_mob.armour.health <= 0:
+                target_mob.armour = None
+        else:
+            target_part.health -= damage
+    else:
+        target_part.health -= damage
+
 def attack(data, atatcker_mob_id, target_mob_id, destination_tile):
     atatcking_mob = data.mobs_stats[atatcker_mob_id]
     target_mob = data.mobs_stats[target_mob_id]
@@ -10,21 +27,11 @@ def attack(data, atatcker_mob_id, target_mob_id, destination_tile):
 
         targets_list = target_mob.limbs + ['body']
         target_part = random.choice(targets_list)
-        if target_part == 'body':
-            target_part = random.choice(target_mob.organs)
-            if target_mob.armour:
-                if atatcking_mob.melee_damage > target_mob.armour.protection:
-                    target_part.health -= atatcking_mob.melee_damage - target_mob.armour.protection
-                    target_mob.armour.health -= 1
-                else:
-                    target_mob.armour.health -= atatcking_mob.melee_damage
-                    target_part.health -= 1
-                if target_mob.armour.health <= 0:
-                    target_mob.armour = None
-            else:
-                target_part.health -= atatcking_mob.melee_damage
+        if atatcking_mob.selected_weapon:
+            attack_mob(target_part, target_mob, atatcking_mob.selected_weapon.melee_damage)
         else:
-            target_part.health -= atatcking_mob.melee_damage
+            attack_mob(target_part, target_mob, atatcking_mob.melee_damage)
+        
         print(f'attack: {atatcking_mob.name} attacks {target_mob.name}')
     
     target_hearts = list()
