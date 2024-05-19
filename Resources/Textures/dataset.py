@@ -38,3 +38,6 @@ button_inventory_interaction = pg.image.load("./Resources/Textures/UI/inventory_
 
 in_game_menu = pg.image.load("./Resources/Textures/UI/in_game_menu.png")
 inventory_menu = pg.image.load("./Resources/Textures/UI/inventory_menu.png")
+
+## weapons
+weapon_base = pg.image.load("./Resources/Textures/UI/weapon_buttons/weapon-base.png")

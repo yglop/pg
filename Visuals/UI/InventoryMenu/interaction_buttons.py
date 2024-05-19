@@ -158,7 +158,6 @@ class InteractionButtons():
                 self.popup('equip_item', 'not enough hands')
                 return
             self.IM.player.in_hands.append(self.IM.selecred_item.data)
-            print(self.IM.player.in_hands) # debug
         elif hasattr(self.IM.selecred_item.data, 'protection'):
             if self.IM.player.armour:
                 self.popup('equip_item', 'you already have armour')

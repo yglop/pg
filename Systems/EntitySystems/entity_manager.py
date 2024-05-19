@@ -48,6 +48,7 @@ class EntityManager():
         limbs_preset = {
             'base':[LimbArmHuman(), LimbArmHuman(), LimbLegHuman(), LimbLegHuman()],
             'ling':[LimbArmHuman(), LimbArmBlade(), LimbLegHuman(), LimbLegHuman()],
+            'armtest':[LimbArmHuman(), LimbArmHuman(), LimbArmHuman(), LimbArmHuman(), LimbArmHuman(), LimbArmHuman(), LimbArmHuman(), LimbArmHuman(), ], # debug
         }
         organs_preset = {
             'base':[HeartHuman(), LungsHuman(), LiverHuman(), DigestiveSystemHuman()],
@@ -73,9 +74,9 @@ class EntityManager():
                 'tile_id':tile_id,
                 'name':f'player',
                 'armour':ArmourP1(),
-                'limbs':limbs_preset['ling'],
+                'limbs':limbs_preset['armtest'],
                 'organs':organs_preset['base'],
-                'storage':[Sword(),Sword(),],
+                'storage':[Sword(),Sword(),Sword(),Sword(),Sword(),Sword(),Sword(),Sword(),],
             },
         }
         if ent_id == 2:

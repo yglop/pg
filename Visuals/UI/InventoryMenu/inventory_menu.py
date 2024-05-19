@@ -37,6 +37,7 @@ class InventoryMenu():
         self.render_items.inventory_menu_canvas_visual.empty()
         del self.buttons
         del self.render_items
+        self.do_evrything.stats_menu.create_weapon_buttons()
 
     def reopen_menu(self, event_list):
         self.player.update_stats()
