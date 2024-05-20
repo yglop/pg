@@ -119,9 +119,9 @@ class StatsMenu():
 
     def render_all(self, event_list):
         self.draw_rectangles()
-        self.render_turn_button(event_list)
-        self.render_loot_button(event_list)
-        self.render_weapon_buttons(event_list)
         self.render_AP_MP_count()
         self.render_player_info()
         self.render_enemy_info()
+        self.render_turn_button(event_list)
+        self.render_loot_button(event_list)
+        self.render_weapon_buttons(event_list)

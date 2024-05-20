@@ -5,6 +5,7 @@ from Visuals.UI.stats_menu import StatsMenu
 from Visuals.UI.escape_menu import EscapeMenu
 from Visuals.UI.InventoryMenu.inventory_menu import InventoryMenu
 from Visuals.UI.popup_window import PopupWindow
+from Visuals.UI.hover_window import HoverWindow
 
 from Systems.EntitySystems.entity_manager import EntityManager
 
@@ -24,18 +25,23 @@ class DoEvrything():
         self.inventory_menu = InventoryMenu(self)
         self.escape_menu = EscapeMenu(self.screen)
         self.popup_window = PopupWindow(self.screen)
+        self.hover_window = HoverWindow(self.screen)
 
     def render_screen(self, event_list):
         self.screen.fill((100,100,100))
-        self.stats_menu.render_all(event_list)
         # tiles
         self.MS.group_tile.update(event_list, self)
         self.MS.group_tile.draw(self.screen)
-        ## entitys
+        # entitys
         self.EM.render_ents(self.screen)
-        ## popups
-        if self.popup_window.is_open == True:
+        # left menu
+        self.stats_menu.render_all(event_list)
+        # popups
+        if self.popup_window.is_open:
             self.popup_window.draw_popup()
+        # hovers
+        if self.hover_window.is_open:
+            self.hover_window.draw_hover()
 
     def runner(self, event_list):
         # keyboard

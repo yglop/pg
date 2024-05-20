@@ -28,6 +28,13 @@ class WeaponButtonBase(pg.sprite.Sprite):
                     self.select()
                     SM.player.selected_weapon = self.data
                     SM.unselect_weapons()
-                    return
-                self.unselect()
-                SM.player.selected_weapon = None
+                else:
+                    self.unselect()
+                    SM.player.selected_weapon = None
+            if self.rect.collidepoint(pg.mouse.get_pos()):
+                SM.do_evrything.hover_window.open_hover(f'{self.data.name} damage:{self.data.melee_damage}', self.rect.center)
+            else:
+                SM.do_evrything.hover_window.close_hover()
+
+        
+                
