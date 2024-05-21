@@ -54,6 +54,8 @@ class RenderItems():
                 self.render_selected_item_text(f'movement points: {self.IM.selecred_item.data.movement_points}', pos)
             if hasattr(self.IM.selecred_item.data, 'melee_damage') and self.IM.selecred_item.data.melee_damage != 0:
                 self.render_selected_item_text(f'melee damage: {self.IM.selecred_item.data.melee_damage}', pos)
+            if hasattr(self.IM.selecred_item.data, 'range_damage') and self.IM.selecred_item.data.range_damage != 0:
+                self.render_selected_item_text(f'range damage: {self.IM.selecred_item.data.range_damage}', pos)
             if hasattr(self.IM.selecred_item.data, 'organ_points'):
                 self.render_selected_item_text(f'organ points: {self.IM.selecred_item.data.organ_points}', pos)
             if hasattr(self.IM.selecred_item.data, 'organ_type'):

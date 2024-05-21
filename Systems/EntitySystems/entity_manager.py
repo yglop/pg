@@ -9,6 +9,7 @@ from Systems.EntitySystems.raycast import raycast
 from Systems.EntitySystems.Entity.mob import Mob
 from Systems.EntitySystems.Entity.Items.armour import *
 from Systems.EntitySystems.Entity.Items.weapons_melee import *
+from Systems.EntitySystems.Entity.Items.weapons_range import *
 from Systems.EntitySystems.Entity.Items.limbs import *
 from Systems.EntitySystems.Entity.Items.organs import *
 
@@ -76,9 +77,9 @@ class EntityManager():
                 'tile_id':tile_id,
                 'name':f'player',
                 'armour':ArmourP1(),
-                'limbs':limbs_preset['base'],
+                'limbs':limbs_preset['ling'],
                 'organs':organs_preset['base'],
-                'storage':[Sword(),Sword(),Sword(),Sword(),Sword(),Sword(),Sword(),Sword(),],
+                'storage':[Pistol(),Sword()],
             },
         }
         if ent_id == 2:

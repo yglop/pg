@@ -32,7 +32,13 @@ class WeaponButtonBase(pg.sprite.Sprite):
                     self.unselect()
                     SM.player.selected_weapon = None
             if self.rect.collidepoint(pg.mouse.get_pos()):
-                SM.do_evrything.hover_window.open_hover(f'{self.data.name} damage:{self.data.melee_damage}', self.rect.center)
+                damage = None
+                if hasattr(self.data, 'melee_damage'):
+                    damage = self.data.melee_damage
+                elif hasattr(self.data, 'range_damage'):
+                    damage = self.data.range_damage
+                    
+                SM.do_evrything.hover_window.open_hover(f'{self.data.name} damage:{damage}', self.rect.center)
             else:
                 SM.do_evrything.hover_window.close_hover()
 

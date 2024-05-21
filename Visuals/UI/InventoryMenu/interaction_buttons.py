@@ -23,7 +23,6 @@ class InteractionButtons():
         self.interaction_buttons.empty()
         btns_kwords = list()
         kword = str()
-        ## kword0
         if self.IM.selecred_item.data in self.IM.player.limbs:
             btns_kwords = ['take', 'drop']
             kword = 'limb'
@@ -38,6 +37,9 @@ class InteractionButtons():
             if hasattr(self.IM.selecred_item.data, 'nutrition') and self.degestive_system_check():
                 btns_kwords.append('eat')
             kword = 'loot'
+        elif self.IM.selecred_item.data in self.IM.player.in_hands:
+            btns_kwords = ['take', 'drop']
+            kword = 'in_hand'
         elif self.IM.selecred_item.data in self.IM.player.storage:
             btns_kwords = ['drop', 'equip']
             if hasattr(self.IM.selecred_item.data, 'nutrition') and self.degestive_system_check():
@@ -73,7 +75,7 @@ class InteractionButtons():
         if self.IM.player.actions <= 0:
             self.popup('take_item', 'no action points left')
             return
-        # item is armour OR item in loot
+        # item is armour OR item in loot OR item is in hands
         if state[1] == 'armour':
             self.IM.player.storage.append(self.IM.selecred_item.data)
             self.IM.player.armour = None
@@ -82,6 +84,11 @@ class InteractionButtons():
         elif state[1] == 'loot':
             self.IM.player.storage.append(self.IM.selecred_item.data)
             self.IM.buttons.loot_objects.remove(self.IM.selecred_item.data)
+            self.IM.player.subtract_action(1)
+            return
+        elif state[1] == 'in_hand':
+            self.IM.player.storage.append(self.IM.selecred_item.data)
+            self.IM.player.in_hands.remove(self.IM.selecred_item.data)
             self.IM.player.subtract_action(1)
             return
         # item in limbs or organs
@@ -120,6 +127,10 @@ class InteractionButtons():
         elif state[1] == 'storage':
             self.create_loot()
             self.IM.player.storage.remove(self.IM.selecred_item.data)
+            return
+        elif state[1] == 'in_hand':
+            self.create_loot()
+            self.IM.player.in_hands.remove(self.IM.selecred_item.data)
             return
         # player has enough nutrition
         if hasattr(self.IM.selecred_item.data, 'nutrition') and (self.IM.selecred_item.data.nutrition + 100 > self.IM.player.nutrition):

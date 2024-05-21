@@ -16,5 +16,8 @@ locale_eng = {
 
     ## weapons melee
     'weapon_melee_sword':'sword',
+
+    ## weapons range
+    'weapon_range_pistol':'pistol',
 }
 

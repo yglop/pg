@@ -50,6 +50,7 @@ class InventoryMenu():
             self.buttons.player_limbs_buttons.sprites() +
             self.buttons.player_organs_buttons.sprites() +
             self.buttons.player_armour_button.sprites() +
+            self.buttons.player_in_hands_buttons.sprites() +
             self.buttons.player_storage_buttons.sprites() +
             self.buttons.loot_buttons.sprites() 
             ):
@@ -61,6 +62,7 @@ class InventoryMenu():
             self.buttons.player_limbs_buttons.sprites() +
             self.buttons.player_organs_buttons.sprites() +
             self.buttons.player_armour_button.sprites() +
+            self.buttons.player_in_hands_buttons.sprites() +
             self.buttons.player_storage_buttons.sprites() +
             self.buttons.loot_buttons.sprites() 
             ):
