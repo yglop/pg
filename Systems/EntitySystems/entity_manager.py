@@ -4,6 +4,7 @@ import random
 from Systems.EntitySystems.player_system import PlayerSystem
 from Systems.EntitySystems.enemy_system import EnemySystem
 from Systems.EntitySystems.items_system import ItemSystem
+from Systems.EntitySystems.raycast import raycast
 
 from Systems.EntitySystems.Entity.mob import Mob
 from Systems.EntitySystems.Entity.Items.armour import *
@@ -83,7 +84,8 @@ class EntityManager():
             self.mobs_stats[ent_id] = Mob(equipment_preset['ling'])
         else:
             self.mobs_stats[ent_id] = Mob(equipment_preset[random.choice(['humanA', 'humanB'])])
-    
+
     def render_ents(self, screen):
         for mob_id, mob_visual in self.mobs_visual.items():
             mob_visual.draw(screen)
+        raycast(self.tile_map, self.mobs_stats, screen)
