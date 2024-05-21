@@ -23,6 +23,7 @@ class EntityManager():
 
         self.mobs_visual = dict()
         self.mobs_stats = dict()
+        self.visible_mobs_visual = dict()
         self.interactable_dict = dict()
         self.interactable_id_count = 1000
 
@@ -85,7 +86,13 @@ class EntityManager():
         else:
             self.mobs_stats[ent_id] = Mob(equipment_preset[random.choice(['humanA', 'humanB'])])
 
+    def update_visible(self, screen):
+        self.visible_mobs_visual.clear()
+        self.visible_mobs_visual = raycast(self.tile_map, self.mobs_stats, self.visible_mobs_visual, screen)
+
     def render_ents(self, screen):
         for mob_id, mob_visual in self.mobs_visual.items():
-            mob_visual.draw(screen)
-        raycast(self.tile_map, self.mobs_stats, screen)
+            if mob_id == 2 or mob_id in self.visible_mobs_visual:
+                mob_visual.draw(screen)
+        self.update_visible(screen)
+        
