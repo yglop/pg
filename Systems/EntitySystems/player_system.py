@@ -3,7 +3,8 @@ import pygame as pg
 from Resources.Textures.dataset import player_sprite
 
 from Systems.SubModules.move_mob import move_mob
-from Systems.SubModules.attack_mob import attack
+from Systems.SubModules.attack_mob import attack_melee, attack_range
+
 
 class PlayerSystem():
     def __init__(self, EntityManager):
@@ -12,21 +13,24 @@ class PlayerSystem():
         self.interactable_dict = EntityManager.interactable_dict
 
         self.mobs_visual = EntityManager.mobs_visual
+        self.visible_mobs_visual = EntityManager.visible_mobs_visual
         self.mobs_stats = EntityManager.mobs_stats
 
     def try_move_player(self, tile_id):
-        if self.tile_map[tile_id]['mob'] == 2:
+        target_mob_id = self.tile_map[tile_id]['mob']
+
+        if target_mob_id == 2:
             print('try_move_player:', tile_id ,"is player's tile")
             return
 
-        if self.tile_map[tile_id]['mob'] == -1:
+        if target_mob_id == -1:
             print('try_move_player:', tile_id ,"is impossible")
             return
 
         for i in self.tile_map[tile_id]['neighbors']:
             if self.tile_map[i]['mob'] == 2:
                 # move
-                if self.tile_map[tile_id]['mob'] == 0:
+                if target_mob_id == 0:
                     if self.mobs_stats[2].is_movement_possable() == False:
                         print('try_move_player: no movement points left')
                         return
@@ -42,12 +46,15 @@ class PlayerSystem():
                         )
                     print('move_player:', 'moved from', i, 'to', tile_id)
                     return
-                # attack
+                # attack melee
                 if self.mobs_stats[2].is_action_possable() == False:
                     print('try_move_player: no action points left')
                     return
-                target_mob_id = self.tile_map[tile_id]['mob']
-                attack(self, 2, target_mob_id, tile_id)
+                attack_melee(self, 2, target_mob_id, tile_id)
                 return
             
+        if target_mob_id != 0 and target_mob_id in self.visible_mobs_visual:
+            attack_range(self, 2, target_mob_id, tile_id)
+            return
+
         print('try_move_player: tile', tile_id, 'is unreachable')

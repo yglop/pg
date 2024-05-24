@@ -17,23 +17,8 @@ def attack_mob(target_part, target_mob, damage):
     else:
         target_part.health -= damage
 
-def attack(data, atatcker_mob_id, target_mob_id, destination_tile):
-    atatcking_mob = data.mobs_stats[atatcker_mob_id]
-    target_mob = data.mobs_stats[target_mob_id]
-    destination = data.tile_map[destination_tile]
 
-    if atatcking_mob.actions >= 1:
-        atatcking_mob.subtract_action(1)
-
-        targets_list = target_mob.limbs + ['body']
-        target_part = random.choice(targets_list)
-        if atatcking_mob.selected_weapon:
-            attack_mob(target_part, target_mob, atatcking_mob.selected_weapon.melee_damage)
-        else:
-            attack_mob(target_part, target_mob, atatcking_mob.melee_damage)
-        
-        print(f'attack: {atatcking_mob.name} attacks {target_mob.name}')
-    
+def spawn_loot(data, target_mob, target_mob_id, destination, destination_tile):
     target_hearts = list()
     target_lungs = list()
     for organ in target_mob.organs:
@@ -68,3 +53,40 @@ def attack(data, atatcker_mob_id, target_mob_id, destination_tile):
         print(f'attack: {target_mob.name} died')
     else:
         print(f'attack: {target_mob.name}')
+
+
+def attack_melee(data, atatcker_mob_id, target_mob_id, destination_tile):
+    atatcking_mob = data.mobs_stats[atatcker_mob_id]
+    target_mob = data.mobs_stats[target_mob_id]
+    destination = data.tile_map[destination_tile]
+
+    if atatcking_mob.actions >= 1:
+        atatcking_mob.subtract_action(1)
+
+        targets_list = target_mob.limbs + ['body']
+        target_part = random.choice(targets_list)
+        if atatcking_mob.selected_weapon:
+            attack_mob(target_part, target_mob, atatcking_mob.selected_weapon.melee_damage)
+        else:
+            attack_mob(target_part, target_mob, atatcking_mob.melee_damage)
+        
+        print(f'attack: {atatcking_mob.name} attacks {target_mob.name}')
+
+        spawn_loot(data, target_mob, target_mob_id, destination, destination_tile)
+
+
+def attack_range(data, atatcker_mob_id, target_mob_id, destination_tile):
+    atatcking_mob = data.mobs_stats[atatcker_mob_id]
+    target_mob = data.mobs_stats[target_mob_id]
+    destination = data.tile_map[destination_tile]
+
+    if atatcking_mob.actions >= 1 and hasattr(atatcking_mob.selected_weapon, 'range_damage'):
+        atatcking_mob.subtract_action(1)
+
+        targets_list = target_mob.limbs + ['body']
+        target_part = random.choice(targets_list)
+        attack_mob(target_part, target_mob, atatcking_mob.selected_weapon.range_damage)
+        
+        print(f'attack: {atatcking_mob.name} attacks {target_mob.name}')
+
+        spawn_loot(data, target_mob, target_mob_id, destination, destination_tile)
