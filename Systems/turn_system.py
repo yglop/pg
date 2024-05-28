@@ -16,5 +16,6 @@ class TurnSystem():
         self.do_enemy_turn()
         self.EM.mobs_stats[2].actions = self.EM.mobs_stats[2].max_actions
         self.EM.mobs_stats[2].movements = self.EM.mobs_stats[2].max_movements
+        self.EM.update_visible()
         print('End Turn')
         

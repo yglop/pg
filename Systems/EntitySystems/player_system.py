@@ -8,13 +8,13 @@ from Systems.SubModules.attack_mob import attack_melee, attack_range
 
 class PlayerSystem():
     def __init__(self, EntityManager):
-        self.tile_map = EntityManager.tile_map
+        self.EM = EntityManager
+        self.tile_map = self.EM.tile_map
 
-        self.interactable_dict = EntityManager.interactable_dict
+        self.interactable_dict = self.EM.interactable_dict
 
-        self.mobs_visual = EntityManager.mobs_visual
-        self.visible_mobs_visual = EntityManager.visible_mobs_visual
-        self.mobs_stats = EntityManager.mobs_stats
+        self.visible_mobs = self.EM.visible_mobs
+        self.mobs_stats = self.EM.mobs_stats
 
     def try_move_player(self, tile_id):
         target_mob_id = self.tile_map[tile_id]['mob']
@@ -41,10 +41,10 @@ class PlayerSystem():
                         tile_map=self.tile_map,
                         movement_cost=1,
                         mobs_stats=self.mobs_stats,
-                        mobs_visual=self.mobs_visual,
                         sprite=player_sprite
                         )
                     print('move_player:', 'moved from', i, 'to', tile_id)
+                    self.EM.update_visible()
                     return
                 # attack melee
                 if self.mobs_stats[2].is_action_possable() == False:
@@ -53,7 +53,7 @@ class PlayerSystem():
                 attack_melee(self, 2, target_mob_id, tile_id)
                 return
             
-        if target_mob_id != 0 and target_mob_id in self.visible_mobs_visual:
+        if target_mob_id != 0 and target_mob_id in self.EM.visible_mobs_ids:
             attack_range(self, 2, target_mob_id, tile_id)
             return
 

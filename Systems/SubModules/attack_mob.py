@@ -47,8 +47,9 @@ def spawn_loot(data, target_mob, target_mob_id, destination, destination_tile):
 
         # delete ent
         del data.mobs_stats[target_mob_id]
-        del data.mobs_visual[target_mob_id]
         data.tile_map[destination_tile]['mob'] = 0
+
+        data.EM.update_visible()
 
         print(f'attack: {target_mob.name} died')
     else:

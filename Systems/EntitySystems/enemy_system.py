@@ -8,10 +8,11 @@ from Systems.SubModules.move_mob import move_mob
 
 class EnemySystem():
     def __init__(self, EntityManager):
-        self.tile_map = EntityManager.tile_map
+        self.EM = EntityManager
+        self.tile_map = self.EM.tile_map
 
-        self.mobs_visual = EntityManager.mobs_visual
-        self.mobs_stats = EntityManager.mobs_stats
+        self.visible_mobs = self.EM.visible_mobs
+        self.mobs_stats = self.EM.mobs_stats
 
     def try_move_enemy(self, ent_id):
         movement_cost = 1
@@ -34,10 +35,6 @@ class EnemySystem():
                     tile_map=self.tile_map,
                     movement_cost=movement_cost,
                     mobs_stats=self.mobs_stats,
-                    mobs_visual=self.mobs_visual,
                     sprite=enemy_sprite
                     )
-
-
-        
             
