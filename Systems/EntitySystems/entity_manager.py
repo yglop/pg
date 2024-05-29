@@ -37,10 +37,11 @@ class EntityManager():
 
     def iterate_through_tile_map(self):
         for tile_id, tile_data in self.tile_map.items():
-            if tile_data['mob'] == 2:
-                self.append_mobs_stats(tile_id, mob_id=tile_data['mob'])
+            mob_id = tile_data['mob']
+            if mob_id == 2:
+                self.append_mobs_stats(tile_id, mob_id)
             elif tile_data['mob'] >= 100:
-                self.append_mobs_stats(tile_id, mob_id=tile_data['mob'])
+                self.append_mobs_stats(tile_id, mob_id)
    
     def append_mobs_stats(self, tile_id, mob_id):
         limbs_preset = {
