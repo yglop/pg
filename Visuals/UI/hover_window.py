@@ -22,5 +22,8 @@ class HoverWindow():
         self.is_open = False
 
     def draw_hover(self):
+        window = pg.Rect(self.pos[0]-2, self.pos[1]-1, len(self.text)*10, 20)
+        pg.draw.rect(self.screen, (35,45,45), window)
+
         text = self.font.render(f'{self.text}', False, (self.text_colour))
         self.screen.blit(text, self.pos)
