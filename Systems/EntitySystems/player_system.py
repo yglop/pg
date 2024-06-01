@@ -18,6 +18,7 @@ class PlayerSystem():
 
     def try_move_player(self, tile_id):
         target_mob_id = self.tile_map[tile_id]['mob']
+        players_tile = self.EM.mobs_stats[2].tile_id
 
         if target_mob_id == 2:
             print('try_move_player:', tile_id ,"is player's tile")
@@ -27,31 +28,30 @@ class PlayerSystem():
             print('try_move_player:', tile_id ,"is impossible")
             return
 
-        for i in self.tile_map[tile_id]['neighbors']:
-            if self.tile_map[i]['mob'] == 2:
-                # move
-                if target_mob_id == 0:
-                    if self.mobs_stats[2].is_movement_possable() == False:
-                        print('try_move_player: no movement points left')
-                        return
-                    move_mob(
-                        destination_tile=tile_id, 
-                        original_tile=i, 
-                        ent_id=2, 
-                        tile_map=self.tile_map,
-                        movement_cost=1,
-                        mobs_stats=self.mobs_stats,
-                        sprite=player_sprite
-                        )
-                    print('move_player:', 'moved from', i, 'to', tile_id)
-                    self.EM.update_visible()
+        if tile_id in self.tile_map[players_tile]['neighbors']:
+            # move
+            if target_mob_id == 0:
+                if self.mobs_stats[2].is_movement_possable() == False:
+                    print('try_move_player: no movement points left')
                     return
-                # attack melee
-                if self.mobs_stats[2].is_action_possable() == False:
-                    print('try_move_player: no action points left')
-                    return
-                attack_melee(self, 2, target_mob_id, tile_id)
+                move_mob(
+                    destination_tile=tile_id, 
+                    original_tile=players_tile, 
+                    ent_id=2, 
+                    tile_map=self.tile_map,
+                    movement_cost=1,
+                    mobs_stats=self.mobs_stats,
+                    sprite=player_sprite
+                    )
+                print('move_player:', 'moved from', players_tile, 'to', tile_id)
+                self.EM.update_visible()
                 return
+            # attack melee
+            if self.mobs_stats[2].is_action_possable() == False:
+                print('try_move_player: no action points left')
+                return
+            attack_melee(self, 2, target_mob_id, tile_id)
+            return
             
         if target_mob_id != 0 and target_mob_id in self.EM.visible_mobs_ids:
             attack_range(self, 2, target_mob_id, tile_id)
