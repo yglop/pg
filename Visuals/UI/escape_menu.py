@@ -27,4 +27,3 @@ class EscapeMenu():
         self.game_menu_canvas.draw(self.screen)
         self.close_game_button.update(event_list)
         self.close_game_button_visual.draw(self.screen)
-        pg.display.flip()

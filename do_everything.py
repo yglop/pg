@@ -49,5 +49,5 @@ class DoEvrything():
             return
 
         self.render_screen(event_list)
-        pg.display.flip()
+        
         
