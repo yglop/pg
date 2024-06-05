@@ -1,7 +1,7 @@
 import pygame as pg
 
 
-def keyboard_handler(event_list, do_evrything):
+def keyboard_handler(event_list, do_evrything, escape_menu):
     for event in event_list:
         # double if... shold change it later, when gonna rework popups
         if event.type == pg.MOUSEBUTTONDOWN:
@@ -22,15 +22,15 @@ def keyboard_handler(event_list, do_evrything):
                     do_evrything.inventory_menu.close_menu()
                 return
 
-            if do_evrything.escape_menu.is_menu_open == True: 
+            if escape_menu.is_menu_open == True: 
                 if event.key == pg.K_ESCAPE:
-                    do_evrything.escape_menu.close_menu()
+                    escape_menu.close_menu()
                 return
 
             if event.key == pg.K_SPACE: 
                 do_evrything.TS.end_turn()
             elif event.key == pg.K_ESCAPE:
-                do_evrything.escape_menu.open_menu()
+                escape_menu.open_menu()
             elif event.key == pg.K_i:
                 do_evrything.inventory_menu.open_menu()
 
