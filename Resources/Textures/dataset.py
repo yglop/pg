@@ -36,6 +36,8 @@ button_inventory_item = pg.image.load("./Resources/Textures/UI/inventory_buttons
 button_inventory_item_active = pg.image.load("./Resources/Textures/UI/inventory_buttons/button-InventoryItemActive.png")
 button_inventory_interaction = pg.image.load("./Resources/Textures/UI/inventory_buttons/button-InventoryInteracton.png")
 
+button_mission = pg.image.load("./Resources/Textures/UI/button_mission.png")
+
 in_game_menu = pg.image.load("./Resources/Textures/UI/in_game_menu.png")
 inventory_menu = pg.image.load("./Resources/Textures/UI/inventory_menu.png")
 

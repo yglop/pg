@@ -1,5 +1,7 @@
 import pygame as pg
 
+from Systems.factions import Factions
+
 from Visuals.Buttons.Hub.button_inventory import HubInventoryButton
 from Visuals.Buttons.Hub.button_mission import HubMissionButton
 
@@ -13,9 +15,8 @@ class HubMenu():
         self.sga24 = pg.font.Font('./Resources/Fonts/enchantment-proper.ttf', 24)
         self.text_colour = (30, 30, 30)
 
+        self.factions = Factions()
         self.is_open = True
-        self.reputation = [0, 1, 2, 3]
-        self.missions = ['object', 'object', 'object']
 
         self.buttons = pg.sprite.RenderPlain()
         self.cerate_buttons()
@@ -23,11 +24,12 @@ class HubMenu():
     def cerate_buttons(self):
         inventory_button = HubInventoryButton((20,20))
         self.buttons.add(inventory_button)
-        pos = [420, 70] # ToDo
-        for i in self.missions:
-            misson_button = HubMissionButton(pos)
+        pos = [470, 70] # ToDo
+        for i in self.factions.missions0:
+            misson_button = HubMissionButton(pos, i.name)
+            print(i.name) # DEBUG
             self.buttons.add(misson_button)
-            pos[1] += 50
+            pos[1] += 34
         
     ## renders
     def draw_rectangles(self):
@@ -48,13 +50,13 @@ class HubMenu():
         # second column
         pos = [420, 20]
         text = self.arial24.render(f'Hazard Extraction', False, (self.text_colour))
-        self.blint_second_column_text(text, pos, self.reputation[0])
+        self.blint_second_column_text(text, pos, self.factions.reputation[0])
         text = self.arial24.render(f'Miliarium Adamantium', False, (self.text_colour))
-        self.blint_second_column_text(text, pos, self.reputation[1])
+        self.blint_second_column_text(text, pos, self.factions.reputation[1])
         text = self.arial24.render(f'Metropoly Fleet Reserch Corp', False, (self.text_colour))
-        self.blint_second_column_text(text, pos, self.reputation[2])
+        self.blint_second_column_text(text, pos, self.factions.reputation[2])
         text = self.sga24.render(f'Space Wizards Confederation', False, (self.text_colour))
-        self.blint_second_column_text(text, pos, self.reputation[3])
+        self.blint_second_column_text(text, pos, self.factions.reputation[3])
 
     def render_buttons(self):
         #self.buttons.update(event_list, self) # ToDO

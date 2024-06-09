@@ -1,14 +1,16 @@
 import pygame as pg
 
-from Resources.Textures.dataset import button_inventory
+from Resources.Textures.dataset import button_mission
 
 
 class HubMissionButton(pg.sprite.Sprite):
-    def __init__(self, center):
+    def __init__(self, center, text):
         super().__init__()
-        self.image = button_inventory # ToDO
+        self.image = button_mission 
         self.rect = self.image.get_rect()
         self.rect.center = center
+
+        self.text = text
 
     def update(self, event_list):
         for event in event_list:
