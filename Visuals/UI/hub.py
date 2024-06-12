@@ -18,18 +18,30 @@ class HubMenu():
         self.factions = Factions()
         self.is_open = True
 
-        self.buttons = pg.sprite.RenderPlain()
+        self.buttons_first_column = pg.sprite.RenderPlain()
+        self.buttons_missions = pg.sprite.RenderPlain()
         self.cerate_buttons()
+
+    def create_mission_btn(self, pos, btn):
+        misson_button = HubMissionButton(pos, btn.name)
+        self.buttons_missions.add(misson_button)
+        pos[1] += 34
 
     def cerate_buttons(self):
         inventory_button = HubInventoryButton((20,20))
-        self.buttons.add(inventory_button)
-        pos = [470, 70] # ToDo
+        self.buttons_first_column.add(inventory_button)
+        pos = [470, 70] 
         for i in self.factions.missions0:
-            misson_button = HubMissionButton(pos, i.name)
-            print(i.name) # DEBUG
-            self.buttons.add(misson_button)
-            pos[1] += 34
+            self.create_mission_btn(pos, i)
+        pos = [470, 170]
+        for i in self.factions.missions1:
+            self.create_mission_btn(pos, i)
+        pos = [470, 270]
+        for i in self.factions.missions2:
+            self.create_mission_btn(pos, i)
+        pos = [470, 374]
+        for i in self.factions.missions3:
+            self.create_mission_btn(pos, i)
         
     ## renders
     def draw_rectangles(self):
@@ -58,9 +70,13 @@ class HubMenu():
         text = self.sga24.render(f'Space Wizards Confederation', False, (self.text_colour))
         self.blint_second_column_text(text, pos, self.factions.reputation[3])
 
+    def render_mission_btn_text(self):
+        pass
+
     def render_buttons(self):
-        #self.buttons.update(event_list, self) # ToDO
-        self.buttons.draw(self.screen)
+        #self.buttons_first_column.update(event_list, self) # ToDO
+        self.buttons_first_column.draw(self.screen)
+        self.buttons_missions.draw(self.screen)
 
     def render_all(self):
         self.draw_rectangles()
