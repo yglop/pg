@@ -11,6 +11,7 @@ class HubMissionButton(pg.sprite.Sprite):
         self.rect.center = center
 
         self.text = text
+        self.text_center = (self.rect.center[0]-144, self.rect.center[1]-10)
 
     def update(self, event_list):
         for event in event_list:

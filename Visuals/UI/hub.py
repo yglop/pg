@@ -30,16 +30,16 @@ class HubMenu():
     def cerate_buttons(self):
         inventory_button = HubInventoryButton((20,20))
         self.buttons_first_column.add(inventory_button)
-        pos = [470, 70] 
+        pos = [572, 70] 
         for i in self.factions.missions0:
             self.create_mission_btn(pos, i)
-        pos = [470, 170]
+        pos[1] = 170
         for i in self.factions.missions1:
             self.create_mission_btn(pos, i)
-        pos = [470, 270]
+        pos[1] = 270
         for i in self.factions.missions2:
             self.create_mission_btn(pos, i)
-        pos = [470, 374]
+        pos[1] = 374
         for i in self.factions.missions3:
             self.create_mission_btn(pos, i)
         
@@ -48,35 +48,38 @@ class HubMenu():
         self.screen.fill((200,255,200))
         pg.draw.rect(self.screen, (200,200,255), pg.Rect(0, 0, 400, 1000))
 
-    def blint_second_column_text(self, text, pos, rep):
+    def blint_second_column_text(self, text, pos, reputation):
         self.screen.blit(text, pos)
-        text = self.arial16.render(str(rep), False, (self.text_colour))
+        text = self.arial16.render(str(reputation), False, self.text_colour)
         self.screen.blit(text, (pos[0]+600, pos[1]+10))
         pos[1] += 100
 
     def render_text(self):
         # first column
         pos = [20, 80]
-        text = self.arial16.render(f'some text', False, (self.text_colour))
+        text = self.arial16.render(f'some text', False, self.text_colour)
         self.screen.blit(text, pos)
         # second column
         pos = [420, 20]
-        text = self.arial24.render(f'Hazard Extraction', False, (self.text_colour))
+        text = self.arial24.render(f'Hazard Extraction', False, self.text_colour)
         self.blint_second_column_text(text, pos, self.factions.reputation[0])
-        text = self.arial24.render(f'Miliarium Adamantium', False, (self.text_colour))
+        text = self.arial24.render(f'Miliarium Adamantium', False, self.text_colour)
         self.blint_second_column_text(text, pos, self.factions.reputation[1])
-        text = self.arial24.render(f'Metropoly Fleet Reserch Corp', False, (self.text_colour))
+        text = self.arial24.render(f'Metropoly Fleet Reserch Corp', False, self.text_colour)
         self.blint_second_column_text(text, pos, self.factions.reputation[2])
-        text = self.sga24.render(f'Space Wizards Confederation', False, (self.text_colour))
+        text = self.sga24.render(f'Space Wizards Confederation', False, self.text_colour)
         self.blint_second_column_text(text, pos, self.factions.reputation[3])
 
     def render_mission_btn_text(self):
-        pass
+        for i in self.buttons_missions:
+            text = self.arial16.render(i.text, False, self.text_colour)
+            self.screen.blit(text, i.text_center)
 
     def render_buttons(self):
         #self.buttons_first_column.update(event_list, self) # ToDO
         self.buttons_first_column.draw(self.screen)
         self.buttons_missions.draw(self.screen)
+        self.render_mission_btn_text()
 
     def render_all(self):
         self.draw_rectangles()
