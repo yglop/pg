@@ -21,22 +21,30 @@ escape_menu = EscapeMenu(screen)
 running = True
 while running:   
     clock.tick(60)
-    
+
     event_list = pg.event.get()
     keyboard_handler(event_list, do_evrything, escape_menu)
+
     # Check events
     for event in event_list:
         if event.type == pg.QUIT:
             running = False
 
+    # escape_m
     if escape_menu.is_menu_open:
         escape_menu.draw_menu(event_list)
         pg.display.flip()
-        continue       
+        continue      
+
+    # hub_m 
     if hub_menu.is_open:
-        hub_menu.render_all()
+        flag = hub_menu.render_all(event_list)
         pg.display.flip()
-        continue 
+        if flag:
+            #do_evrything._init # ToDo
+            pass
+        else:
+            continue 
     
     do_evrything.runner(event_list)
     pg.display.flip()

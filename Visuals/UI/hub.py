@@ -22,8 +22,10 @@ class HubMenu():
         self.buttons_missions = pg.sprite.RenderPlain()
         self.cerate_buttons()
 
-    def create_mission_btn(self, pos, btn):
-        misson_button = HubMissionButton(pos, btn.name)
+        self.selected_mission = None 
+
+    def create_button_mission(self, pos, mission):
+        misson_button = HubMissionButton(pos, mission)
         self.buttons_missions.add(misson_button)
         pos[1] += 34
 
@@ -32,16 +34,16 @@ class HubMenu():
         self.buttons_first_column.add(inventory_button)
         pos = [572, 70] 
         for i in self.factions.missions0:
-            self.create_mission_btn(pos, i)
+            self.create_button_mission(pos, i)
         pos[1] = 170
         for i in self.factions.missions1:
-            self.create_mission_btn(pos, i)
+            self.create_button_mission(pos, i)
         pos[1] = 270
         for i in self.factions.missions2:
-            self.create_mission_btn(pos, i)
+            self.create_button_mission(pos, i)
         pos[1] = 374
         for i in self.factions.missions3:
-            self.create_mission_btn(pos, i)
+            self.create_button_mission(pos, i)
         
     ## renders
     def draw_rectangles(self):
@@ -75,14 +77,24 @@ class HubMenu():
             text = self.arial16.render(i.text, False, self.text_colour)
             self.screen.blit(text, i.text_center)
 
-    def render_buttons(self):
+    def render_buttons(self, event_list):
         #self.buttons_first_column.update(event_list, self) # ToDO
         self.buttons_first_column.draw(self.screen)
         self.buttons_missions.draw(self.screen)
+        self.buttons_missions.update(event_list, self)
         self.render_mission_btn_text()
 
-    def render_all(self):
+    def start_the_game(self):
+        self.factions.rep_change(self.selected_mission.rep_change)
+        self.is_open = False
+        print(f'HUB: mission is selected: {self.selected_mission.name}')
+
+    def render_all(self, event_list):
         self.draw_rectangles()
         self.render_text()
-        self.render_buttons()
-        
+        self.render_buttons(event_list)
+
+        if self.selected_mission:
+            self.start_the_game()
+            return True
+        return False       

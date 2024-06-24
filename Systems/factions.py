@@ -2,6 +2,7 @@ import pygame as pg
 
 from Systems.mission import Mission
 
+
 class Factions():
     def __init__(self):
         self.reputation = [10, 10, 10, 10]
@@ -30,3 +31,7 @@ class Factions():
 
         if self.reputation[3] >= 0:
             self.missions3.append(Mission('SWC mission_0rep'))
+
+    def rep_change(self, change):
+        for i in range(4):
+            self.reputation[i] += change[i]

@@ -23,6 +23,19 @@ class DoEvrything():
         self.popup_window = PopupWindow(self.screen)
         self.hover_window = HoverWindow(self.screen)
 
+    '''
+    def _init(self):
+        self.MS = MapSystem()
+        self.EM = EntityManager(self.MS)
+        self.TS = TurnSystem(self.EM)
+
+        self.stats_menu = StatsMenu(self)
+        self.inventory_menu = InventoryMenu(self)
+        self.popup_window = PopupWindow(self.screen)
+        self.hover_window = HoverWindow(self.screen)
+        print('hui')
+    '''
+
     def render_screen(self, event_list):
         self.screen.fill((100,100,100))
         # tiles
