@@ -28,13 +28,14 @@ class DoEvrything():
         self.popup_window = PopupWindow(self.screen)
         self.hover_window = HoverWindow(self.screen)
         
-    def star_the_game(self):
+    def star_the_game(self, event_list):
         self.MS = MapSystem()
         self.EM = EntityManager(self.MS)
         self.TS = TurnSystem(self.EM)
 
         self.stats_menu = StatsMenu(self)
         self.inventory_menu = InventoryMenu(self)
+        event_list.clear()
 
     def render_screen(self, event_list):
         self.screen.fill((100,100,100))
@@ -62,7 +63,7 @@ class DoEvrything():
         if self.hub_menu.is_open:
             flag = self.hub_menu.render_all(event_list)
             if flag:
-                self.star_the_game()
+                self.star_the_game(event_list)
             else:
                 return 
         if self.inventory_menu.is_menu_open == True:
