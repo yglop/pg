@@ -1,5 +1,6 @@
 import pygame as pg
 
+from Visuals.Buttons.button_end_mission import EndMissionButton
 from Visuals.Buttons.button_end_turn import EndTurnButton
 from Visuals.Buttons.button_inventory import InventoryButton
 from Visuals.Buttons.weapon_buttons import WeaponButtonBase
@@ -16,6 +17,9 @@ class StatsMenu():
 
         self.inventory_button = InventoryButton((1170, 52))
         self.inventory_button_visual = pg.sprite.RenderPlain(self.inventory_button)
+
+        self.end_mission_button = EndMissionButton((1030, 52))
+        self.end_mission_button_visual = pg.sprite.RenderPlain(self.end_mission_button)
 
         self.weapon_buttons = pg.sprite.RenderPlain()
         self.create_weapon_buttons()
@@ -61,20 +65,27 @@ class StatsMenu():
         current_action_points = self.font.render(f'AP:{c_a_p}/{m_a_p} MP:{c_m_p}/{m_m_p}', False, (0, 180, 0))
         self.screen.blit(current_action_points, (1050, 10))
 
-    def render_turn_button(self, event_list):
+    def render_buttons(self, event_list):
+        # end mission
+        flag = self.end_mission_button.update(event_list, self.do_evrything)
+        if flag:
+            return True
+        self.end_mission_button_visual.draw(self.screen)
+
+        # turn
         self.turn_button.update(event_list, self.do_evrything)
         self.turn_button_visual.draw(self.screen)
 
-    def render_loot_button(self, event_list):
-        loot = self.do_evrything.MS.tile_map[self.player.tile_id]['loot']
+        # inventory
+        loot = self.do_evrything.MS.tile_map[self.player.tile_id]['loot'] # ToDo: plase it to another method
         if (loot != 0) and (len(self.do_evrything.EM.interactable_dict[loot]) > 0):
             self.inventory_button.change_image(True)
         else:
-            self.inventory_button.change_image(False)
+            self.inventory_button.change_image(False) # end
         self.inventory_button.update(event_list, self.do_evrything)
         self.inventory_button_visual.draw(self.screen)
-
-    def render_weapon_buttons(self, event_list):
+        
+        # weapon
         self.weapon_buttons.update(event_list, self)
         self.weapon_buttons.draw(self.screen)
         
@@ -122,6 +133,6 @@ class StatsMenu():
         self.render_AP_MP_count()
         self.render_player_info()
         self.render_enemy_info()
-        self.render_turn_button(event_list)
-        self.render_loot_button(event_list)
-        self.render_weapon_buttons(event_list)
+        flag = self.render_buttons(event_list)
+        if flag:
+            return True

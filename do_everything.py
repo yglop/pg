@@ -37,6 +37,17 @@ class DoEvrything():
         self.inventory_menu = InventoryMenu(self)
         event_list.clear()
 
+    def end_the_mission(self, event_list): # BUG! THIS IS SHIT. IT'S LEAKING MEMORY!!!
+        self.MS = None
+        self.EM = None
+        self.TS = None
+        self.stats_menu = None
+        self.inventory_menu = None
+
+        self.hub_menu.is_open = True
+        self.hub_menu.selected_mission = None
+        event_list.clear()
+
     def render_screen(self, event_list):
         self.screen.fill((100,100,100))
         # tiles
@@ -44,8 +55,10 @@ class DoEvrything():
         self.MS.group_tile.draw(self.screen)
         # entitys
         self.EM.render_ents(self.screen)
-        # left menu
-        self.stats_menu.render_all(event_list)
+        # stats menu
+        flag = self.stats_menu.render_all(event_list)
+        if flag:
+            return
         # popups
         if self.popup_window.is_open:
             self.popup_window.draw_popup()
