@@ -21,12 +21,13 @@ class DoEvrything():
         self.EM = None
         self.TS = None
         self.stats_menu = None
-        self.inventory_menu = None
 
         self.hub_menu = HubMenu(self.screen)
         self.escape_menu = EscapeMenu(self.screen)
         self.popup_window = PopupWindow(self.screen)
         self.hover_window = HoverWindow(self.screen)
+
+        self.inventory_menu = InventoryMenu(self)
         
     def star_the_game(self, event_list):
         self.MS = MapSystem()
@@ -34,7 +35,6 @@ class DoEvrything():
         self.TS = TurnSystem(self.EM)
 
         self.stats_menu = StatsMenu(self)
-        self.inventory_menu = InventoryMenu(self)
         event_list.clear()
 
     def end_the_mission(self, event_list): # BUG! THIS IS SHIT. IT'S LEAKING MEMORY!!!
@@ -77,6 +77,8 @@ class DoEvrything():
             flag = self.hub_menu.render_all(event_list)
             if flag:
                 self.star_the_game(event_list)
+            elif self.inventory_menu.is_menu_open == True:
+                pass
             else:
                 return 
         if self.inventory_menu.is_menu_open == True:

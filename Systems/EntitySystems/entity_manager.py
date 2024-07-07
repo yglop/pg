@@ -7,11 +7,7 @@ from Systems.EntitySystems.items_system import ItemSystem
 from Systems.EntitySystems.raycast import raycast
 
 from Systems.EntitySystems.Entity.mob import Mob
-from Systems.EntitySystems.Entity.Items.armour import *
-from Systems.EntitySystems.Entity.Items.weapons_melee import *
-from Systems.EntitySystems.Entity.Items.weapons_range import *
-from Systems.EntitySystems.Entity.Items.limbs import *
-from Systems.EntitySystems.Entity.Items.organs import *
+from Systems.EntitySystems.Entity.presets import *
 
 from Visuals.mob_visual import MobVisual
 from Resources.Textures.dataset import player_sprite, enemy_sprite
@@ -44,44 +40,13 @@ class EntityManager():
                 self.append_mobs_stats(tile_id, mob_id)
    
     def append_mobs_stats(self, tile_id, mob_id):
-        limbs_preset = {
-            'base':[LimbArmHuman(), LimbArmHuman(), LimbLegHuman(), LimbLegHuman()],
-            'ling':[LimbArmHuman(), LimbArmBlade(), LimbLegHuman(), LimbLegHuman()],
-            'armtest':[LimbArmHuman(), LimbArmHuman(), LimbArmHuman(), LimbArmHuman(), LimbArmHuman(), LimbArmHuman(), LimbArmHuman(), LimbArmHuman(), ], # debug
-        }
-        organs_preset = {
-            'base':[HeartHuman(), LungsHuman(), LiverHuman(), DigestiveSystemHuman()],
-        }
-        equipment_preset = {
-            'humanA': {
-                'tile_id':tile_id,
-                'name':f'humanA{str(mob_id)}',
-                'armour':ArmourP1(),
-                'limbs':limbs_preset['base'],
-                'organs':organs_preset['base'],
-                'storage':[],
-            },
-            'humanB': {
-                'tile_id':tile_id,
-                'name':f'humanB{str(mob_id)}',
-                'armour':None,
-                'limbs':limbs_preset['base'],
-                'organs':organs_preset['base'],
-                'storage':[],
-            },
-            'ling': {
-                'tile_id':tile_id,
-                'name':f'player',
-                'armour':ArmourP1(),
-                'limbs':limbs_preset['ling'],
-                'organs':organs_preset['base'],
-                'storage':[Pistol(),Sword()],
-            },
-        }
+        _equipment_preset = None
         if mob_id == 2:
-            self.mobs_stats[mob_id] = Mob(equipment_preset['ling'])
+            _equipment_preset = equipment_preset['ling']
         else:
-            self.mobs_stats[mob_id] = Mob(equipment_preset[random.choice(['humanA', 'humanB'])])
+            _equipment_preset = equipment_preset[random.choice(['humanA', 'humanB'])]
+        _equipment_preset['tile_id'] = tile_id
+        self.mobs_stats[mob_id] = Mob(_equipment_preset)
 
     def create_mobs_visual(self):
         for mob_id in self.visible_mobs_ids:

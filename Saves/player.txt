@@ -1,0 +1,7 @@
+0,0
+player
+ArmourP1
+LimbArmHuman,LimbArmBlade,LimbLegHuman,LimbLegHuman
+HeartHuman,LungsHuman,LiverHuman,DigestiveSystemHuman
+Pistol,Sword
+            

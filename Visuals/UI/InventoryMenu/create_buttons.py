@@ -20,7 +20,8 @@ class CreateButtons():
 
         self.create_first_column_buttons()
         self.create_second_column_buttons()
-        self.create_loot_buttons()
+        if do_evrything.hub_menu.is_open == False:
+            self.create_loot_buttons()
 
     def create_first_column_buttons(self):
         center = [304,228]

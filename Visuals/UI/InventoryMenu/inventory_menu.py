@@ -4,12 +4,15 @@ from Visuals.UI.InventoryMenu.create_buttons import CreateButtons
 from Visuals.UI.InventoryMenu.render_items import RenderItems
 from Visuals.UI.InventoryMenu.interaction_buttons import InteractionButtons
 
+from Systems.EntitySystems.Entity.mob import Mob
+from Systems.save_manager import SaveManager
+
 
 class InventoryMenu():
     def __init__(self, do_evrything):
         self.do_evrything = do_evrything
         self.screen = self.do_evrything.screen
-        self.player = self.do_evrything.EM.mobs_stats[2]
+        self.player = None
 
         self.is_menu_open = False
         self.buttons = None
@@ -18,8 +21,17 @@ class InventoryMenu():
 
         self.selecred_item = None
 
+    def get_player(self):
+        if self.do_evrything.hub_menu.is_open == True:
+            sm = SaveManager()
+            sm.load_save()
+            self.player = Mob(sm.player) # BUG it will breake the game 
+        else:
+            self.player = self.do_evrything.EM.mobs_stats[2]
+
     def open_menu(self):
         self.is_menu_open = True
+        self.get_player()
         self.buttons = CreateButtons(self.do_evrything, self.player)
         self.interaction_buttons = InteractionButtons(self)
         self.render_items = RenderItems(self)
@@ -37,7 +49,8 @@ class InventoryMenu():
         self.render_items.inventory_menu_canvas_visual.empty()
         del self.buttons
         del self.render_items
-        self.do_evrything.stats_menu.create_weapon_buttons()
+        if self.do_evrything.hub_menu.is_open == False:
+            self.do_evrything.stats_menu.create_weapon_buttons()
 
     def reopen_menu(self, event_list):
         self.player.update_stats()
