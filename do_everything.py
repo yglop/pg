@@ -14,6 +14,7 @@ from Systems.turn_system import TurnSystem
 from Systems.map_system import MapSystem
 from Systems.save_manager import SaveManager
 
+
 class DoEvrything():
     def __init__(self, screen):
         self.screen = screen
@@ -32,7 +33,7 @@ class DoEvrything():
 
         self.inventory_menu = InventoryMenu(self)
 
-        self.star_the_game(list()) # DEBUG
+        #self.star_the_game(list()) # DEBUG
         
     def star_the_game(self, event_list):
         self.MS = MapSystem()

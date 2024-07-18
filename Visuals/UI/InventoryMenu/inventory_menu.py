@@ -24,7 +24,7 @@ class InventoryMenu():
     def get_player(self):
         if self.is_hub_open == True:
             self.do_evrything.save_manager.load_save()
-            self.player = Mob(self.do_evrything.save_manager.player) # BUG it will breake the game 
+            self.player = Mob(self.do_evrything.save_manager.player)
         else:
             self.player = self.do_evrything.EM.mobs_stats[2]
 
@@ -44,7 +44,7 @@ class InventoryMenu():
         self.buttons.player_in_hands_buttons.empty()
         self.buttons.player_storage_buttons.empty()
         self.buttons.loot_buttons.empty()
-        #self.buttons.interaction_buttons.empty()
+        self.interaction_buttons.interaction_buttons.empty() # cringe
         self.render_items.inventory_menu_canvas_visual.empty()
         del self.buttons
         del self.render_items

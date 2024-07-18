@@ -31,11 +31,11 @@ class SaveManager():
             _storage.append(deepcopy(all_items[i]))
 
         self.player = {
-            'tile_id':tile_id,
             'name':data[1],
             'armour':_armour,
             'limbs':_limbs,
             'organs':_organs,
             'storage':_storage,
+            'tile_id':tile_id,
         }
             

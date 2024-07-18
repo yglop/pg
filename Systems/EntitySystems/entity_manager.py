@@ -12,6 +12,8 @@ from Systems.EntitySystems.Entity.presets import *
 from Visuals.mob_visual import MobVisual
 from Resources.Textures.dataset import player_sprite, enemy_sprite
 
+from copy import deepcopy
+
 
 class EntityManager():
     def __init__(self, MS, SM):
@@ -30,26 +32,22 @@ class EntityManager():
         self.ES = EnemySystem(self)
         self.IS = ItemSystem()
 
-        self.iterate_through_tile_map()
+        self.create_mobs_stats()
         self.update_visible()
 
-    def iterate_through_tile_map(self):
+    def create_mobs_stats(self):
         for tile_id, tile_data in self.tile_map.items():
             mob_id = tile_data['mob']
+            _equipment_preset = None
             if mob_id == 2:
-                self.append_mobs_stats(tile_id, mob_id)
+                self.save_manager.load_save()
+                _equipment_preset = self.save_manager.player
             elif tile_data['mob'] >= 100:
-                self.append_mobs_stats(tile_id, mob_id)
-   
-    def append_mobs_stats(self, tile_id, mob_id):
-        _equipment_preset = None
-        if mob_id == 2:
-            self.save_manager.load_save()
-            _equipment_preset = self.save_manager.player
-        else:
-            _equipment_preset = equipment_preset[random.choice(['humanA', 'humanB'])].copy()
-        _equipment_preset['tile_id'] = tile_id
-        self.mobs_stats[mob_id] = Mob(_equipment_preset)
+                _equipment_preset = deepcopy(equipment_preset[random.choice(['humanA', 'humanB'])])
+            else:
+                continue
+            _equipment_preset['tile_id'] = tile_id
+            self.mobs_stats[mob_id] = Mob(_equipment_preset)
 
     def create_mobs_visual(self):
         for mob_id in self.visible_mobs_ids:

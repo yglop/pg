@@ -56,7 +56,7 @@ class CreateButtons():
             center[1] += 16
 
     def create_loot_buttons(self):
-        tile_loot = self.do_evrything.MS.tile_map[self.player.tile_id]['loot']
+        tile_loot = self.do_evrything.MS.tile_map[(self.player.tile_id[0],self.player.tile_id[1])]['loot']
         if tile_loot != 0:
             self.loot_objects = self.do_evrything.EM.interactable_dict[tile_loot]
             center = [896,526]
