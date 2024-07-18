@@ -12,6 +12,7 @@ from Systems.keyboard_handler import keyboard_handler
 from Systems.EntitySystems.entity_manager import EntityManager
 from Systems.turn_system import TurnSystem
 from Systems.map_system import MapSystem
+from Systems.save_manager import SaveManager
 
 class DoEvrything():
     def __init__(self, screen):
@@ -22,16 +23,20 @@ class DoEvrything():
         self.TS = None
         self.stats_menu = None
 
+        self.save_manager = SaveManager()
+
         self.hub_menu = HubMenu(self.screen)
         self.escape_menu = EscapeMenu(self.screen)
         self.popup_window = PopupWindow(self.screen)
         self.hover_window = HoverWindow(self.screen)
 
         self.inventory_menu = InventoryMenu(self)
+
+        self.star_the_game(list()) # DEBUG
         
     def star_the_game(self, event_list):
         self.MS = MapSystem()
-        self.EM = EntityManager(self.MS)
+        self.EM = EntityManager(self.MS, self.save_manager)
         self.TS = TurnSystem(self.EM)
 
         self.stats_menu = StatsMenu(self)

@@ -14,7 +14,7 @@ from Resources.Textures.dataset import player_sprite, enemy_sprite
 
 
 class EntityManager():
-    def __init__(self, MS):
+    def __init__(self, MS, SM):
         self.tile_map = MS.tile_map
         self.grid_size = MS.grid_size
 
@@ -23,6 +23,8 @@ class EntityManager():
         self.mobs_stats = dict()
         self.interactable_dict = dict()
         self.interactable_id_count = 1000
+
+        self.save_manager = SM
 
         self.PS = PlayerSystem(self) 
         self.ES = EnemySystem(self)
@@ -42,9 +44,10 @@ class EntityManager():
     def append_mobs_stats(self, tile_id, mob_id):
         _equipment_preset = None
         if mob_id == 2:
-            _equipment_preset = equipment_preset['ling']
+            self.save_manager.load_save()
+            _equipment_preset = self.save_manager.player
         else:
-            _equipment_preset = equipment_preset[random.choice(['humanA', 'humanB'])]
+            _equipment_preset = equipment_preset[random.choice(['humanA', 'humanB'])].copy()
         _equipment_preset['tile_id'] = tile_id
         self.mobs_stats[mob_id] = Mob(_equipment_preset)
 

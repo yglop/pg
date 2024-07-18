@@ -16,7 +16,7 @@ class HubMenu():
         self.text_colour = (30, 30, 30)
 
         self.factions = Factions()
-        self.is_open = True
+        self.is_open = False
 
         self.buttons_first_column = pg.sprite.RenderPlain()
         self.buttons_missions = pg.sprite.RenderPlain()

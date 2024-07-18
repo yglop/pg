@@ -1,34 +1,39 @@
 from Systems.EntitySystems.Entity.dataset import *
 
+from copy import deepcopy
+
+
 limbs_preset = {
-    'base':[limbs['LimbArmHuman'], limbs['LimbArmHuman'], limbs['LimbLegHuman'], limbs['LimbLegHuman']],
-    'ling':[limbs['LimbArmHuman'], limbs['LimbArmBlade'], limbs['LimbLegHuman'], limbs['LimbLegHuman']],
+    'base':[
+        deepcopy(limbs['LimbArmHuman']),
+        deepcopy(limbs['LimbArmHuman']), 
+        deepcopy(limbs['LimbLegHuman']), 
+        deepcopy(limbs['LimbLegHuman'])
+        ],
 }
 
 organs_preset = {
-    'base':[organs['HeartHuman'], organs['LungsHuman'], organs['LiverHuman'], organs['DigestiveSystemHuman']],
+    'base':[
+        deepcopy(organs['HeartHuman']), 
+        deepcopy(organs['LungsHuman']), 
+        deepcopy(organs['LiverHuman']), 
+        deepcopy(organs['DigestiveSystemHuman'])
+        ],
 }
 
 equipment_preset = {
     'humanA': {
         'name':f'humanA',
-        'armour':armour['ArmourP1'],
-        'limbs':limbs_preset['base'],
-        'organs':organs_preset['base'],
+        'armour':deepcopy(armour['ArmourP1']),
+        'limbs':deepcopy(limbs_preset['base']),
+        'organs':deepcopy(organs_preset['base']),
         'storage':[],
     },
     'humanB': {
         'name':f'humanB',
         'armour':None,
-        'limbs':limbs_preset['base'],
-        'organs':organs_preset['base'],
+        'limbs':deepcopy(limbs_preset['base']),
+        'organs':deepcopy(organs_preset['base']),
         'storage':[],
-    },
-    'ling': {
-        'name':f'player',
-        'armour':ArmourP1(),
-        'limbs':limbs_preset['ling'],
-        'organs':organs_preset['base'],
-        'storage':[other_items['Pistol'], other_items['Sword']],
     },
 }
