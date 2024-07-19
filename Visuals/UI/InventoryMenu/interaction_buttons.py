@@ -66,7 +66,7 @@ class InteractionButtons():
             self.eat_item(state)
 
     def popup(self, func_name ,text):
-        print(f'{func_name}: {text}') 
+        print(f'{func_name}: {text}') #console_log
         self.IM.do_evrything.popup_window.open_popup(text)
 
     def take_item(self, state):

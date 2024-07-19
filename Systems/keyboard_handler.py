@@ -10,7 +10,7 @@ def keyboard_handler(event_list, do_evrything):
                 do_evrything.render_screen(event_list)
         elif event.type == pg.KEYDOWN:
             if event.key == pg.K_ESCAPE and (event.mod & pg.KMOD_SHIFT):
-                print('keyboard_handler: quit')
+                print('keyboard_handler: quit') #console_log
                 pg.quit()   
 
             if do_evrything.popup_window.is_open == True:

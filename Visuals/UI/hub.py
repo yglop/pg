@@ -87,7 +87,7 @@ class HubMenu():
     def start_the_game(self):
         self.factions.rep_change(self.selected_mission.rep_change)
         self.is_open = False
-        print(f'HUB: mission is selected: {self.selected_mission.name}')
+        print(f'HUB: mission is selected: {self.selected_mission.name}') #console_log
 
     def render_all(self, event_list):
         self.draw_rectangles()

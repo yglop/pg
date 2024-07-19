@@ -25,7 +25,7 @@ class EnemySystem():
                     directions.append(i)
 
             if len(directions) == 0:
-                print('try_move_enemy: no possuble direction')
+                print('try_move_enemy: no possuble direction') #console_log
                 return
 
             move_mob(

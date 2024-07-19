@@ -51,7 +51,7 @@ def spawn_loot(data, target_mob, target_mob_id, destination, destination_tile):
 
         data.EM.update_visible()
 
-        print(f'spawn_loot: {target_mob.name} died')
+        print(f'spawn_loot: {target_mob.name} died') #console_log
 
 
 def attack_melee(data, atatcker_mob_id, target_mob_id, destination_tile):
@@ -69,7 +69,7 @@ def attack_melee(data, atatcker_mob_id, target_mob_id, destination_tile):
         else:
             attack_mob(target_part, target_mob, atatcking_mob.melee_damage)
         
-        print(f'attack: {atatcking_mob.name} attacks {target_mob.name}')
+        print(f'attack: {atatcking_mob.name} attacks {target_mob.name}') #console_log
 
         spawn_loot(data, target_mob, target_mob_id, destination, destination_tile)
 
@@ -86,6 +86,6 @@ def attack_range(data, atatcker_mob_id, target_mob_id, destination_tile):
         target_part = random.choice(targets_list)
         attack_mob(target_part, target_mob, atatcking_mob.selected_weapon.range_damage)
         
-        print(f'attack: {atatcking_mob.name} attacks {target_mob.name}')
+        print(f'attack: {atatcking_mob.name} attacks {target_mob.name}') #console_log
 
         spawn_loot(data, target_mob, target_mob_id, destination, destination_tile)
