@@ -21,18 +21,18 @@ class PlayerSystem():
         players_tile = self.EM.mobs_stats[2].tile_id
 
         if target_mob_id == 2:
-            print('try_move_player:', tile_id ,"is player's tile")
+            print('try_move_player:', tile_id ,"is player's tile") #console_log
             return
 
         if target_mob_id == -1:
-            print('try_move_player:', tile_id ,"is impossible")
+            print('try_move_player:', tile_id ,"is impossible") #console_log
             return
 
         if tile_id in self.tile_map[players_tile]['neighbors']:
             # move
             if target_mob_id == 0:
                 if self.mobs_stats[2].is_movement_possable() == False:
-                    print('try_move_player: no movement points left')
+                    print('try_move_player: no movement points left') #console_log
                     return
                 move_mob(
                     destination_tile=tile_id, 
@@ -43,18 +43,23 @@ class PlayerSystem():
                     mobs_stats=self.mobs_stats,
                     sprite=player_sprite
                     )
-                print('move_player:', 'moved from', players_tile, 'to', tile_id)
+                print('move_player:', 'moved from', players_tile, 'to', tile_id) #console_log
                 self.EM.update_visible()
                 return
             # attack melee
             if self.mobs_stats[2].is_action_possable() == False:
-                print('try_move_player: no action points left')
+                print('try_move_player: no action points left') #console_log
                 return
-            attack_melee(self, 2, target_mob_id, tile_id)
+            if self.mobs_stats[2].selected_weapon == None or hasattr(self.mobs_stats[2].selected_weapon, 'melee_damage'):
+                attack_melee(self, 2, target_mob_id, tile_id)
+            elif hasattr(self.mobs_stats[2].selected_weapon, 'range_damage'):
+                attack_range(self, 2, target_mob_id, tile_id)
+            else:
+                print('!try_move_player: something wrong happend') #console_log
             return
             
         if target_mob_id != 0 and target_mob_id in self.EM.visible_mobs_ids:
             attack_range(self, 2, target_mob_id, tile_id)
             return
 
-        print('try_move_player: tile', tile_id, 'is unreachable')
+        print('try_move_player: tile', tile_id, 'is unreachable') #console_log

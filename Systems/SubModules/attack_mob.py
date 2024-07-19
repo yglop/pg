@@ -51,9 +51,7 @@ def spawn_loot(data, target_mob, target_mob_id, destination, destination_tile):
 
         data.EM.update_visible()
 
-        print(f'attack: {target_mob.name} died')
-    else:
-        print(f'attack: {target_mob.name}')
+        print(f'spawn_loot: {target_mob.name} died')
 
 
 def attack_melee(data, atatcker_mob_id, target_mob_id, destination_tile):
