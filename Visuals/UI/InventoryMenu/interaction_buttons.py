@@ -11,8 +11,7 @@ class InteractionButtons():
 
     def create_interaction_button(self, center, state):
         btn = InteractionButton(center=center, state=state)   
-        if self.IM.is_hub_open == False:
-            self.interaction_buttons.add(btn)
+        self.interaction_buttons.add(btn)
 
     def degestive_system_check(self):
         for i in self.IM.player.organs:
@@ -22,6 +21,9 @@ class InteractionButtons():
 
     def create_interaction_buttons(self):
         self.interaction_buttons.empty()
+        if self.IM.do_evrything.hub_menu.is_open == True:
+            return
+
         btns_kwords = list()
         kword = str()
         if self.IM.selecred_item.data in self.IM.player.limbs:

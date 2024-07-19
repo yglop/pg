@@ -48,7 +48,6 @@ class DoEvrything():
         self.EM = None
         self.TS = None
         self.stats_menu = None
-        self.inventory_menu = None
 
         self.hub_menu.is_open = True
         self.hub_menu.selected_mission = None
@@ -79,20 +78,18 @@ class DoEvrything():
         if self.escape_menu.is_menu_open:
             self.escape_menu.draw_menu(event_list)
             return      
-        if self.hub_menu.is_open:
-            flag = self.hub_menu.render_all(event_list)
-            if flag:
-                self.star_the_game(event_list)
-            elif self.inventory_menu.is_menu_open == True:
-                pass
-            else:
-                return 
         if self.inventory_menu.is_menu_open == True:
             self.inventory_menu.render_all(event_list)
             ## popups
             if self.popup_window.is_open == True:
                 self.popup_window.draw_popup()
             return
+        if self.hub_menu.is_open:
+            flag = self.hub_menu.render_all(event_list)
+            if flag:
+                self.star_the_game(event_list)
+            else:
+                return 
 
         self.render_screen(event_list)
         

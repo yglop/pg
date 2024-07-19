@@ -19,10 +19,9 @@ class InventoryMenu():
         self.render_items = None
 
         self.selecred_item = None
-        self.is_hub_open = self.do_evrything.hub_menu.is_open
 
     def get_player(self):
-        if self.is_hub_open == True:
+        if self.do_evrything.hub_menu.is_open == True:
             self.do_evrything.save_manager.load_save()
             self.player = Mob(self.do_evrything.save_manager.player)
         else:
@@ -48,7 +47,7 @@ class InventoryMenu():
         self.render_items.inventory_menu_canvas_visual.empty()
         del self.buttons
         del self.render_items
-        if self.is_hub_open == False:
+        if self.do_evrything.hub_menu.is_open == False:
             self.do_evrything.stats_menu.create_weapon_buttons()
 
     def reopen_menu(self, event_list):
@@ -78,7 +77,7 @@ class InventoryMenu():
             self.buttons.player_storage_buttons.sprites() +
             self.buttons.loot_buttons.sprites() 
             ):
-            if i.selected and self.is_hub_open == False:
+            if i.selected:
                 self.interaction_buttons.create_interaction_buttons()
                 return
         self.selecred_item = None
