@@ -43,11 +43,21 @@ class DoEvrything():
         self.stats_menu = StatsMenu(self)
         event_list.clear()
 
-    def end_the_mission(self, event_list): # BUG! THIS IS SHIT. IT'S LEAKING MEMORY!!!
-        self.MS = None
-        self.EM = None
-        self.TS = None
-        self.stats_menu = None
+    def end_the_mission(self, event_list):
+        self.MS.group_tile.empty()
+        self.MS.tile_map.clear()
+
+        self.EM.visible_mobs.empty()
+        self.EM.visible_mobs_ids.clear()
+        self.EM.mobs_stats.clear()
+        self.EM.interactable_dict.clear()
+
+        del self.TS
+
+        self.stats_menu.turn_button_visual.empty()
+        self.stats_menu.inventory_button_visual.empty()
+        self.stats_menu.end_mission_button_visual.empty()
+        self.stats_menu.weapon_buttons.empty()
 
         self.hub_menu.is_open = True
         self.hub_menu.selected_mission = None
