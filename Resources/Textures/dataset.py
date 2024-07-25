@@ -12,9 +12,9 @@ tile_sprites_64 = (
 
 tile_sprites_32 = (
         pg.image.load("./Resources/Textures/tiles/x32/tile-empty.png"), 
-        pg.image.load("./Resources/Textures/tiles/x32/tile-blue.png"), 
-        pg.image.load("./Resources/Textures/tiles/x32/tile-green.png"), 
-        pg.image.load("./Resources/Textures/tiles/x32/tile-red.png"), 
+        pg.image.load("./Resources/Textures/tiles/ss/wall.png"), 
+        pg.image.load("./Resources/Textures/tiles/ss/floor1.png"), 
+        pg.image.load("./Resources/Textures/tiles/ss/floor.png"), 
         pg.image.load("./Resources/Textures/tiles/x32/tile-yellow.png"),
     )
 
