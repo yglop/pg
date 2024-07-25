@@ -67,8 +67,18 @@ class MapSystem():
 
     def create_tiles(self, visible_tiles):
         self.group_tile.empty()
+
         for tile_id in visible_tiles:
             tile = [tile_id, self.tile_map[tile_id]]  
+
+            x = tile_id[0] - visible_tiles[0][0]
+            y = tile_id[1] - visible_tiles[0][1]
+
+            pos_x = 256 + 32 * x
+            pos_y = 256 + 32 * y
+
+            tile[1]['rect.center'] = (pos_x, pos_y)
+
             new_tile = TileVisual(tile)
 
             self.group_tile.add(new_tile)
