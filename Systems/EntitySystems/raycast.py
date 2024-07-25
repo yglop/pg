@@ -43,18 +43,21 @@ def lineRectIntersectionPoints(line, rect, tile_sprite):
     return result
 
 # Check to see if the Player can see any NPCs
-def raycast(tile_map, mobs_stats):
+def raycast(tile_map, visible_tiles, mobs_stats):
     visible_mobs_ids = [2,]
     player_tile = tile_map[mobs_stats[2].tile_id]
     for mob_id, mob in mobs_stats.items():
         if mob_id == 2:
             continue
+        if mob.tile_id not in visible_tiles:
+            continue
+
         mob_tile = tile_map[mob.tile_id]
-        
+
         line_of_sight = [player_tile['rect.center'][0], player_tile['rect.center'][1], mob_tile['rect.center'][0], mob_tile['rect.center'][1]]
         flag = True
-        for tile_id, tile_data in tile_map.items():
-            intersection_points = lineRectIntersectionPoints(line_of_sight, tile_data['rect'], tile_data['image'])
+        for tile_id in visible_tiles:
+            intersection_points = lineRectIntersectionPoints(line_of_sight, tile_map[tile_id]['rect'], tile_map[tile_id]['image'])
             if (len(intersection_points) > 0):
                 flag = False
                 break # seen already

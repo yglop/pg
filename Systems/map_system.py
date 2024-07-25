@@ -15,7 +15,7 @@ class MapSystem():
 
         self.create_tile_map()
         self.set_entd_ids()
-        self.create_tiles()
+        #self.create_tiles()
 
     def create_tile_map(self):
         game_map = generate_map(
@@ -65,9 +65,10 @@ class MapSystem():
                 enemy_count += 1
                 self.tile_map[tile_id]['mob'] += enemy_count
 
-    def create_tiles(self):
-        for tile_id, tile_data in self.tile_map.items():  
-            tile = [tile_id, tile_data]  
+    def create_tiles(self, visible_tiles):
+        self.group_tile.empty()
+        for tile_id in visible_tiles:
+            tile = [tile_id, self.tile_map[tile_id]]  
             new_tile = TileVisual(tile)
 
             self.group_tile.add(new_tile)
