@@ -1,6 +1,6 @@
 import pygame as pg
 
-from Mapgen.map_gen import generate_map
+from mapgen.mapgen import mapgen
 from Systems.SubModules.get_neighbors import get_neighbors
 
 from Visuals.tile_visual import TileVisual
@@ -13,32 +13,29 @@ class MapSystem():
         self.tile_map = dict() 
         self.group_tile = pg.sprite.RenderPlain()
 
+        self.mapgen = mapgen()
+
         self.create_tile_map()
         self.set_entd_ids()
         #self.create_tiles()
 
     def create_tile_map(self):
-        game_map = generate_map(
-            max_rooms=10,
-            room_min_size=3,
-            room_max_size=8,
-            map_width=self.grid_size, 
-            map_height=self.grid_size
-            )
+        game_map = self.mapgen.str_map
+        self.grid_size = self.mapgen.MAP_SIZE
 
         tile_image_preset = {
-            0: tile_sprites_32[1],
-            1: tile_sprites_32[2],
-            2: tile_sprites_32[2],
-            8: tile_sprites_32[3],
-            9: tile_sprites_32[2],
+            '#': tile_sprites_32[1],
+            '!': tile_sprites_32[2],
+            '.': tile_sprites_32[2],
+            ',': tile_sprites_32[3],
+            '.': tile_sprites_32[2],
         }
         tile_ent_preset = {
-            0: -1,
-            1: 2,
-            2: 100,
-            8: 0,
-            9: 0,
+            '#': -1,
+            '!': 2,
+            '': 100,
+            '.': 0,
+            ',': 0,
         }
 
         for i in range(self.grid_size):
