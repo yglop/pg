@@ -1,4 +1,5 @@
 import pygame as pg
+import random
 
 from mapgen.mapgen import mapgen
 from Systems.SubModules.get_neighbors import get_neighbors
@@ -9,11 +10,12 @@ from Resources.Textures.dataset import tile_sprites_32
 
 class MapSystem():
     def __init__(self):
-        self.grid_size = 30
         self.tile_map = dict() 
         self.group_tile = pg.sprite.RenderPlain()
 
         self.mapgen = mapgen()
+        self.grid_size = self.mapgen.MAP_SIZE
+        self.mapgen.create_map()
 
         self.create_tile_map()
         self.set_entd_ids()
@@ -21,21 +23,18 @@ class MapSystem():
 
     def create_tile_map(self):
         game_map = self.mapgen.str_map
-        self.grid_size = self.mapgen.MAP_SIZE
 
         tile_image_preset = {
             '#': tile_sprites_32[1],
             '!': tile_sprites_32[2],
             '.': tile_sprites_32[2],
             ',': tile_sprites_32[3],
-            '.': tile_sprites_32[2],
         }
         tile_ent_preset = {
             '#': -1,
             '!': 2,
-            '': 100,
-            '.': 0,
-            ',': 0,
+            '.': 100,
+            ',': 0, 
         }
 
         for i in range(self.grid_size):
@@ -59,6 +58,10 @@ class MapSystem():
         enemy_count = 1
         for tile_id, tile_data in self.tile_map.items():
             if tile_data['mob'] >= 100:
+                chose_enemy = random.choice([0,0,0,0,0,0,0,0,0,0,0,0,0,100]) # 1/14
+                if chose_enemy == 0:
+                    tile_data['mob'] = 0
+                    continue
                 enemy_count += 1
                 self.tile_map[tile_id]['mob'] += enemy_count
 
