@@ -1,4 +1,5 @@
 import random
+import pygame as pg
 
 def attack_mob(target_part, target_mob, damage):
     if target_part == 'body':
@@ -34,6 +35,10 @@ def spawn_loot(data, target_mob, target_mob_id, destination, destination_tile):
             target_mob.limbs.remove(limb)
 
     if len(target_hearts) == 0 or len(target_lungs) == 0:
+        if target_mob_id == 2: # if player is killed
+            print('game over')
+            pg.quit()
+
         ## spawn/add loot
         loot = target_mob.limbs + target_mob.organs + target_mob.storage
         if target_mob.armour:
